@@ -83,7 +83,7 @@ namespace TCPServer
             try
             {
                 // 循环接收客户端发送的所有数据
-                while (false != client.Connected && (i = stream.Read(bytes, 0, bytes.Length)) > 0)
+                while ((i = stream.Read(bytes, 0, bytes.Length)) > 0)
                 {
                     // 提取远程客户端的ip地址
                     IPEndPoint clientEndPoint = (IPEndPoint)client.Client.RemoteEndPoint; //抽象协议转具体协议实例
