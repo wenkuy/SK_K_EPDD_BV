@@ -1,0 +1,15 @@
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.GeneratedMSBuildEditorConfig.editorconfig
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.AssemblyInfoInputs.cache
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.AssemblyInfo.cs
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.csproj.CoreCompileInputs.cache
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.exe
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.deps.json
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.runtimeconfig.json
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.runtimeconfig.dev.json
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.dll
+E:\K_WPF\CS_K_WPF\Server\bin\Debug\net5.0\TCPServer.pdb
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.dll
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\refint\TCPServer.dll
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.pdb
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\TCPServer.genruntimeconfig.cache
+E:\K_WPF\CS_K_WPF\Server\obj\Debug\net5.0\ref\TCPServer.dll
