@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TCPServer;
+using UdpSenderProj;
 
 namespace CS_K_WPF
 {
@@ -20,9 +21,19 @@ namespace CS_K_WPF
         public MainWindow()
         {
             InitializeComponent();
-             
-            TcpServerFun tcpServer = new TcpServerFun();
-            tcpServer.TcpServerRun();
+
+            Task.Run(() =>
+            {
+
+                TcpServerFun tcpServer = new TcpServerFun();
+                tcpServer.TcpServerRun();
+            });
+
+            Task.Run(() =>
+            {
+                UdpReceive udpReceive = new UdpReceive();
+                udpReceive.UdpReceiveRun();
+            });
         }
     }
 }

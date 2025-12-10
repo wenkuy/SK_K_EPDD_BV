@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS_K_WPF", "CS_K_WPF\CS_K_W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPServer", "Server\TCPServer.csproj", "{5FF91121-69A7-4D05-8673-F441AEA6D62E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpSenderProj", "UdpSender\UdpSenderProj.csproj", "{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5FF91121-69A7-4D05-8673-F441AEA6D62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF91121-69A7-4D05-8673-F441AEA6D62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF91121-69A7-4D05-8673-F441AEA6D62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

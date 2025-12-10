@@ -11,6 +11,16 @@
         "runtime": {
           "bin/placeholder/TCPServer.dll": {}
         }
+      },
+      "UdpSenderProj/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/UdpSenderProj.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UdpSenderProj.dll": {}
+        }
       }
     }
   },
@@ -19,11 +29,17 @@
       "type": "project",
       "path": "../Server/TCPServer.csproj",
       "msbuildProject": "../Server/TCPServer.csproj"
+    },
+    "UdpSenderProj/1.0.0": {
+      "type": "project",
+      "path": "../UdpSender/UdpSenderProj.csproj",
+      "msbuildProject": "../UdpSender/UdpSenderProj.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "TCPServer >= 1.0.0"
+      "TCPServer >= 1.0.0",
+      "UdpSenderProj >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -60,6 +76,9 @@
           "projectReferences": {
             "E:\\K_WPF\\CS_K_WPF\\Server\\TCPServer.csproj": {
               "projectPath": "E:\\K_WPF\\CS_K_WPF\\Server\\TCPServer.csproj"
+            },
+            "E:\\K_WPF\\CS_K_WPF\\UdpSender\\UdpSenderProj.csproj": {
+              "projectPath": "E:\\K_WPF\\CS_K_WPF\\UdpSender\\UdpSenderProj.csproj"
             }
           }
         }
