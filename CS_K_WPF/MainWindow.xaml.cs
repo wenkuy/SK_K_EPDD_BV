@@ -35,5 +35,21 @@ namespace CS_K_WPF
                 udpReceive.UdpReceiveRun();
             });
         }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(WindowState.Maximized == this.WindowState)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+
+            // 调用Window的DragMove()方法，实现拖动
+            this.DragMove();
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
     }
 }

@@ -13,4 +13,9 @@
     <ProjectReference Include="..\UdpSender\UdpSenderProj.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="model\" />
+    <Folder Include="viewModel\" />
+  </ItemGroup>
+
 </Project>
