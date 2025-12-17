@@ -14,8 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="model\" />
     <Folder Include="viewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 
 </Project>
