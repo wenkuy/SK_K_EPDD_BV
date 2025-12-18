@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.Base
+namespace CS_K_WPF.Base.Enum
 {
     /// <summary>
     /// 职员类型

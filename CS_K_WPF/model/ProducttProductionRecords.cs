@@ -19,12 +19,10 @@ namespace CS_K_WPF.model
         /// </summary>
         public string ProductNumber { get; set; } = "";
 
-
         /// <summary>
-        /// 商品产出时间
+        /// 该商品的生产耗时
         /// </summary>
-        public string ProductOutputTime { get; set; } = "";
-
+        public float TimeConsumed { get; set; }
         /// <summary>
         /// 商品质检结果
         /// </summary>

@@ -23,6 +23,11 @@ namespace CS_K_WPF.model
         /// 原材料编号
         /// </summary>
         public string MaterialNumber { get; set; } = "";
+
+        /// <summary>
+        /// 商品编号
+        /// </summary>
+        public string ProductNumber{ get; set; } = "";
         
         /// <summary>
         /// 生产环境参数

@@ -1,4 +1,4 @@
-﻿using CS_K_WPF.Base.Enum;
+﻿using CS_K_WPF.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 
 namespace CS_K_WPF.model
 {
-    public class EquipmentStateRecords
+    public class MaterialRecord
     {
+        /// <summary>
+        /// 原材料ID
+        /// </summary>
         public int Id { get; set; }
         /// <summary>
         /// 记录时间
         /// </summary>
         public string RecordTime { get; set; } = string.Empty;
         /// <summary>
-        /// 设备编号
+        /// 原材料编号
         /// </summary>
-        public string EquipmentNumber { get; set; } = string.Empty; 
-
+        public string MaterialNumber { get; set; } = string.Empty;
         /// <summary>
-        /// 设备状态
+        /// 质检参数
         /// </summary>
-        public EEquipmentState EquipmentState { get; set; }
-
+        public QualityControl QualityPArams { get; set; }
         /// <summary>
-        /// 故障代码(0；无错误)
+        /// 原材料批次（备用）
         /// </summary>
-        public EEquipmentErrorCode ErrorCode { get; set; }
+        public string Batch { get; set; } = string.Empty;
     }
 }

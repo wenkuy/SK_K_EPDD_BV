@@ -1,4 +1,4 @@
-﻿using CS_K_WPF.Base;
+﻿using CS_K_WPF.Base.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
