@@ -1,9 +1,12 @@
-﻿<Application x:Class="CS_K_WPF.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CS_K_WPF"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="CS_K_WPF.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CS_K_WPF"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <local:ModelLocator x:Key="ModelLocator" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

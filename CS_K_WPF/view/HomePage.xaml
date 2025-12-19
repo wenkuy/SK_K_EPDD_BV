@@ -8,6 +8,7 @@
     Title="HomePage"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding Source={StaticResource ModelLocator}, Path=LocHomePageVM}"
     mc:Ignorable="d">
 
     <Grid>
@@ -17,6 +18,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <TextBlock
+            Grid.Row="0"
+            FontSize="40"
+            Text="ll" />
 
         <!--  首页  -->
         <Grid Grid.Row="1">
@@ -38,12 +43,12 @@
                         <TextBlock Text="生产中" />
                     </Grid>
 
-                    <DataGrid>
+                    <DataGrid ItemsSource="{Binding Products}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="机型" />
-                            <DataGridTextColumn x:Name="产品类型" />
-                            <DataGridTextColumn x:Name="已生产" />
-                            <DataGridTextColumn x:Name="良率" />
+                            <DataGridTextColumn Binding="{Binding Path=EquipmentNumber}" Header="机型" />
+                            <DataGridTextColumn Binding="{Binding Path=ProductNumber}" Header="产品类型" />
+                            <DataGridTextColumn Header="温度" />
+                            <DataGridTextColumn Header="湿度" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -81,12 +86,10 @@
                     <TextBlock Grid.Column="4" Text="故障率" />
                 </Grid>
                 <DataGrid>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="时间" />
-                        <DataGridTextColumn x:Name="总产量" />
-                        <DataGridTextColumn x:Name="总合格率" />
-                        <DataGridTextColumn x:Name="故障率" />
-                    </DataGrid.Columns>
+                    <DataGridTextColumn Header="时间" />
+                    <DataGridTextColumn Header="总产量" />
+                    <DataGridTextColumn Header="总合格率" />
+                    <DataGridTextColumn Header="故障率" />
                 </DataGrid>
             </StackPanel>
 

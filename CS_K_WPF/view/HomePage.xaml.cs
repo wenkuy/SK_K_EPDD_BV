@@ -23,6 +23,7 @@ namespace CS_K_WPF
         public HomePage()
         {
             InitializeComponent();
+            
         }
     }
 }

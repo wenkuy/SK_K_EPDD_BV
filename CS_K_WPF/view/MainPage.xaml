@@ -23,7 +23,7 @@
 
         <!--  导航内容  -->
         <Grid Grid.Column="1">
-            <!--<Frame Source="HomePage.xaml"/>-->
+            <Frame Source="HomePage.xaml"/>
             <!--<Frame Source="MonitorPage.xaml"/>-->
             <!--<Frame Source="EquipmentPage.xaml"/>-->
             <!--<Frame Source="EditEquipmentWnd.xaml"/>窗体不能这么用 -->
