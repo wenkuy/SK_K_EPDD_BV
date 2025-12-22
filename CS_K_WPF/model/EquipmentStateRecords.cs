@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CS_K_WPF.model
 {
-    public class EquipmentStateRecords
+    public class EquipmentStateRecord
     {
         public int Id { get; set; }
         /// <summary>

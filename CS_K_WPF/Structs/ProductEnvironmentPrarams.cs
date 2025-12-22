@@ -12,7 +12,7 @@ namespace CS_K_WPF.Structs
     /// </summary>
     public struct ProductEnvironmentPraram
     {
-        public float Temperature;  
-        public float Humidity;  
+        public float Temperature { get; set; }
+        public float Humidity { get; set; }
     }
 }

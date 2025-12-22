@@ -14,6 +14,8 @@ namespace CS_K_WPF
         public static ModelLocator Instance => new();
 
         public HomePageVM LocHomePageVM { get; set; }
+        public NavigationPageVM LocNavigationPageVM { get; set; }
+        public MainPageVM LocMainPageVM { get; set; }
 
 
         public ModelLocator()
@@ -21,15 +23,22 @@ namespace CS_K_WPF
             Register();
         }
 
+        /// <summary>
+        /// DI注入
+        /// </summary>
         private void Register()
         {
             using (var root = new ServiceCollection()
-                 .AddScoped<HomePageVM>()
+                 .AddScoped<HomePageVM>()  //【1】先注册服务
+                 .AddScoped<NavigationPageVM>()
+                 .AddScoped<MainPageVM>()
                  .BuildServiceProvider())
             {
                 using (var scop = root.CreateScope())
                 {
-                    LocHomePageVM = scop.ServiceProvider.GetRequiredService<HomePageVM>();
+                    LocHomePageVM = scop.ServiceProvider.GetRequiredService<HomePageVM>(); //【2】享受服务
+                    LocNavigationPageVM = scop.ServiceProvider.GetRequiredService<NavigationPageVM>();
+                    LocMainPageVM = scop.ServiceProvider.GetRequiredService<MainPageVM>();
                 }
             }
         }

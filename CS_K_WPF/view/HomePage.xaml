@@ -14,14 +14,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="40*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            FontSize="40"
-            Text="ll" />
+
 
         <!--  首页  -->
         <Grid Grid.Row="1">
@@ -37,18 +34,36 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  生产中  -->
-                <StackPanel Grid.Column="0">
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
                     <Grid>
                         <Border Background="LightGray" />
                         <TextBlock Text="生产中" />
                     </Grid>
 
-                    <DataGrid ItemsSource="{Binding Products}">
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        GridLinesVisibility="None"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Products}"
+                        SelectionUnit="FullRow">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=EquipmentNumber}" Header="机型" />
-                            <DataGridTextColumn Binding="{Binding Path=ProductNumber}" Header="产品类型" />
-                            <DataGridTextColumn Header="温度" />
-                            <DataGridTextColumn Header="湿度" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=EquipmentNumber}"
+                                Header="机型" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=ProductNumber}"
+                                Header="产品类型" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=Param.Temperature}"
+                                Header="温度" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=Param.Humidity}"
+                                Header="湿度" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -57,13 +72,24 @@
                 <StackPanel Grid.Column="1">
                     <Grid>
                         <Border Background="LightGray" />
-                        <TextBlock Text="生产中" />
+                        <TextBlock Text="设备状态" />
                     </Grid>
 
-                    <DataGrid>
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        GridLinesVisibility="None"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding EquipmentStateRecords}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn />
-                            <DataGridTextColumn />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=EquipmentNumber}"
+                                Header="设备编号" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Path=EquipmentState}"
+                                Header="设备状态" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -71,25 +97,13 @@
 
             <!--  生产记录  -->
             <StackPanel Grid.Row="1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border Name="背景条" Background="LightGray" />
-                    <TextBlock Grid.Column="1" Text="时间" />
-                    <TextBlock Grid.Column="2" Text="总产量" />
-                    <TextBlock Grid.Column="3" Text="总合格率" />
-                    <TextBlock Grid.Column="4" Text="故障率" />
-                </Grid>
-                <DataGrid>
-                    <DataGridTextColumn Header="时间" />
-                    <DataGridTextColumn Header="总产量" />
-                    <DataGridTextColumn Header="总合格率" />
-                    <DataGridTextColumn Header="故障率" />
+                <DataGrid AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="时间" />
+                        <DataGridTextColumn Width="*" Header="总产量" />
+                        <DataGridTextColumn Width="*" Header="总合格率" />
+                        <DataGridTextColumn Width="*" Header="故障率" />
+                    </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
 

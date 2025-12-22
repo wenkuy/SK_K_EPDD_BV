@@ -8,6 +8,7 @@
     Title="MainPage"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding Source={StaticResource ModelLocator}, Path=LocMainPageVM}"
     mc:Ignorable="d">
 
     <Grid>
@@ -23,10 +24,12 @@
 
         <!--  导航内容  -->
         <Grid Grid.Column="1">
-            <Frame Source="HomePage.xaml"/>
+
+            <Frame Source="{Binding PagePath}" />
+            <!--<Frame Source="HomePage.xaml"/>-->
             <!--<Frame Source="MonitorPage.xaml"/>-->
             <!--<Frame Source="EquipmentPage.xaml"/>-->
-            <!--<Frame Source="EditEquipmentWnd.xaml"/>窗体不能这么用 -->
+            <!--<Frame Source="EditEquipmentWnd.xaml"/>窗体不能这么用，换方式 -->
         </Grid>
 
     </Grid>

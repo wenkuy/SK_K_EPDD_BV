@@ -8,6 +8,7 @@
     Title="NavigationPage"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding Source={StaticResource ModelLocator}, Path=LocNavigationPageVM}"
     mc:Ignorable="d">
 
     <Grid>
@@ -15,22 +16,27 @@
             <StackPanel VerticalAlignment="Center">
                 <Button
                     Height="80"
+                    Command="{Binding HomePageCommand}"
                     Content="首页"
                     FontSize="30" />
                 <Button
                     Height="80"
+                    Command="{Binding MonitorPageCommand}"
                     Content="实时监控"
                     FontSize="30" />
                 <Button
                     Height="80"
+                    Command="{Binding EquipmentPageCommand}"
                     Content="生产设备"
                     FontSize="30" />
                 <Button
                     Height="80"
+                    Command="{Binding UserPageCommand}"
                     Content="用户管理"
                     FontSize="30" />
                 <Button
                     Height="80"
+                    Command="{Binding SettingPageCommand}"
                     Content="系统设置"
                     FontSize="30" />
             </StackPanel>

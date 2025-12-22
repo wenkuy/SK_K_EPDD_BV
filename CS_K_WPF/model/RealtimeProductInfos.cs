@@ -32,7 +32,7 @@ namespace CS_K_WPF.model
         /// <summary>
         /// 生产环境参数
         /// </summary>
-        public ProductEnvironmentPraram Praram { get; set; }
+        public ProductEnvironmentPraram Param { get; set; }
         
     }
 }
