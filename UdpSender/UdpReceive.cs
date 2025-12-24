@@ -12,13 +12,14 @@ namespace UdpSenderProj
 {
     public class UdpReceive
     {
+        public static  Action<byte[]> UDPMessAction ;
         private Queue<CacheMes> CacheMessages = new Queue<CacheMes>();
         private static readonly object _lockobj = new object();
 
         public UdpReceive()
         {
            
-            
+
         }
 
         public void UdpReceiveRun()
@@ -44,10 +45,7 @@ namespace UdpSenderProj
                     {
                         // 接收数据
                         IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0); //自动填充“发送端的IP+端口”
-                        byte[] receiveBytes = receiver.Receive(ref senderEndPoint);
-
-                        // 解析数据为字符串
-                        string message = Encoding.UTF8.GetString(receiveBytes);
+                        byte[] dates = receiver.Receive(ref senderEndPoint);
 
                         // 消息放入队列
                         string ip = senderEndPoint.Address.MapToIPv4().ToString();
@@ -55,7 +53,7 @@ namespace UdpSenderProj
 
                         lock (_lockobj)
                         {
-                            CacheMessages.Enqueue(new CacheMes() { IP = ip, Port = port, Mes = message });
+                            CacheMessages.Enqueue(new CacheMes() { IP = ip, Port = port, Datas = dates });
 
                             //队列缓存限制
                             if (CacheMessages.Count > 100)
@@ -79,16 +77,22 @@ namespace UdpSenderProj
         /// </summary>
         private void AnalyzeDatasFromCache()
         {
+            byte[] dates = new byte[1];
             while (true)
             {
                 lock (_lockobj)
                 {
                     if (CacheMessages.Count > 0)
                     {
-                        CacheMes cacheMes = CacheMessages.Dequeue();
-                        Debug.WriteLine($"ip{cacheMes.IP} port{cacheMes.Port} 的【UDP】数据是：{cacheMes.Mes}");
+                        dates = CacheMessages.Dequeue().Datas;
+                        Debug.WriteLine($"手打字节数：{dates.Length}");
                     }
                 }
+                if (dates.Length > 1)
+                {
+                    UDPMessAction?.Invoke(dates);
+                }
+                dates = new byte[1];
             }
         }
     }

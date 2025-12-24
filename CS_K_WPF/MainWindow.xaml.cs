@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using CS_K_WPF.ReceiveMess;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +22,9 @@ namespace CS_K_WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
+            ReceiveMessages receiveMessages = new ReceiveMessages();  
 
             Task.Run(() =>
             {

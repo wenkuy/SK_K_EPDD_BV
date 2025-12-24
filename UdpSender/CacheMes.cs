@@ -11,6 +11,6 @@ namespace UdpSenderProj
     {
         internal string  IP { get; set; }   
         internal int  Port { get; set; }   
-        internal string Mes { get; set; }
+        internal byte[] Datas{ get; set; }
     }
 }

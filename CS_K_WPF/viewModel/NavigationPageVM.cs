@@ -25,7 +25,7 @@ namespace CS_K_WPF.viewModel
             SettingPageCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new Uri("SettingPage.xaml", UriKind.Relative)));
 
 
-            //首次主动显示HomePage页面
+            //首次主动显示HomePage页面【为什么这里没反应，首次没有自动加载首页】
             WeakReferenceMessenger.Default.Send(new Uri("HomePage.xaml", UriKind.Relative));
         }
 
