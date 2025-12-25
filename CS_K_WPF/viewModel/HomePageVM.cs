@@ -13,16 +13,28 @@ namespace CS_K_WPF.viewModel
 {
     public partial class HomePageVM : ObservableObject
     {
+        [ObservableProperty]
+        private ProducttProductionRecord realtimeProduct = new();
+
+        partial void OnRealtimeProductChanged(ProducttProductionRecord e)
+        {
+            DynamicData(e);
+        }
+
+
 
         /// <summary>
         /// 商品生产实时信息
         /// </summary>
-        public ObservableCollection<RealtimeProductInfo> Products
+        public ObservableCollection<ProducttProductionRecord> Products
         {
             get { return products; }
-            set { SetProperty(ref products, value); }
+            set
+            {
+                SetProperty(ref products, value);
+            }
         }
-        private ObservableCollection<RealtimeProductInfo> products = new ObservableCollection<RealtimeProductInfo>();
+        private ObservableCollection<ProducttProductionRecord> products = new ObservableCollection<ProducttProductionRecord>();
 
 
 
@@ -34,28 +46,34 @@ namespace CS_K_WPF.viewModel
 
         public HomePageVM()
         {
-            RealtimeProductInfo k1 = new RealtimeProductInfo();
-            k1.EquipmentNumber = "ajbadh";
-            k1.ProductNumber = "1564516545";
-            k1.Param = new ProductEnvironmentPraram() { Temperature = 20, Humidity = 11.5f };
-            Products.Add(k1);
-
-            RealtimeProductInfo k2 = new RealtimeProductInfo();
-            k2.EquipmentNumber = "aj----badh";
-            k2.ProductNumber = "236";
-            k2.Param = new ProductEnvironmentPraram() { Temperature = 21.5f, Humidity = 10.5f };
-            Products.Add(k2);
-
             EquipmentStateRecord e1 = new EquipmentStateRecord();
             e1.EquipmentState = EEquipmentState.Running;
             e1.EquipmentNumber = "AK001";
             EquipmentStateRecords.Add(e1);
-
-            EquipmentStateRecord e2 = new EquipmentStateRecord();
-            e2.EquipmentState = EEquipmentState.Running;
-            e2.EquipmentNumber = "AK003";
-            EquipmentStateRecords.Add(e2);
         }
 
+        public void GetMesData(ProducttProductionRecord e1)
+        {
+            RealtimeProduct = e1;
+        }
+
+        private void DynamicData(ProducttProductionRecord mes)
+        {
+            if (!Products.Any(e => e.ProductNumber == mes.ProductNumber)) //不包含就添加
+            {
+                Products.Add(mes);
+            }
+            else
+            {
+                for (int i = 0; i < Products.Count; i++)
+                {
+                    if (Products[i].ProductNumber == mes.ProductNumber)
+                    {
+                        Products[i] = mes;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
