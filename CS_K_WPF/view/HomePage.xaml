@@ -50,7 +50,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Path=EquipmentNumber}"
+                                Binding="{Binding Path=EmployeeId}"
                                 Header="机型" />
                             <DataGridTextColumn
                                 Width="*"

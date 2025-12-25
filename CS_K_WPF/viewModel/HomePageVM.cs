@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace CS_K_WPF.viewModel
 {
@@ -18,7 +20,8 @@ namespace CS_K_WPF.viewModel
 
         partial void OnRealtimeProductChanged(ProducttProductionRecord e)
         {
-            DynamicData(e);
+            //这种方式少用，不规范
+            Application.Current.Dispatcher.Invoke(()=> DynamicData(e)); 
         }
 
 
