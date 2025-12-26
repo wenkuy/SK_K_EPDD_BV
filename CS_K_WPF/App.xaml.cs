@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using BaseProj;
+using CommunityToolkit.Mvvm.Messaging;
 using CS_K_WPF.viewModel;
 using System.Configuration;
 using System.Data;
@@ -11,13 +12,8 @@ namespace CS_K_WPF
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private void Register()
-        {
-            
-        }
+        
+       
 
     }
 

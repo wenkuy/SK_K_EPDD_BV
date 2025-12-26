@@ -1,4 +1,5 @@
-﻿using CS_K_WPF.ReceiveMess;
+﻿using BaseProj;
+using CS_K_WPF.ReceiveMess;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,8 +24,11 @@ namespace CS_K_WPF
         {
             InitializeComponent();
 
-            //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
-            ReceiveMessages receiveMessages = new ReceiveMessages();  
+       
+            CommonDispatcherHelper.Init();
+       
+        //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
+        ReceiveMessages receiveMessages = new ReceiveMessages();  
 
             Task.Run(() =>
             {

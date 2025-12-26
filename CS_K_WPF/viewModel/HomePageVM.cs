@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BaseProj;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CS_K_WPF.Base.Enum;
 using CS_K_WPF.model;
 using CS_K_WPF.Structs;
@@ -21,7 +22,12 @@ namespace CS_K_WPF.viewModel
         partial void OnRealtimeProductChanged(ProducttProductionRecord e)
         {
             //这种方式少用，不规范
-            Application.Current.Dispatcher.Invoke(()=> DynamicData(e)); 
+            //Application.Current.Dispatcher.Invoke(() => DynamicData(e));
+            CommonDispatcherHelper.ExecuteOnUiThread(() =>
+            {
+                DynamicData(e);
+            });
+            //DispacherHelper.ExecuteOnUiThread(() => { DynamicData(e); });
         }
 
 

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BaseProj\BaseProj.csproj" />
     <ProjectReference Include="..\Server\TCPServer.csproj" />
     <ProjectReference Include="..\UdpSender\UdpSenderProj.csproj" />
   </ItemGroup>
