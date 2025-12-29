@@ -6,7 +6,8 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--<local:ModelLocator x:Key="ModelLocator" />--><!--  这个会创建实例，导致报错，因为为了安全把构造给私有化了-->
+            <!--<local:ModelLocator x:Key="ModelLocator" />-->
+            <!--  这个会创建实例，导致报错，因为为了安全把构造给私有化了  -->
             <ObjectDataProvider x:Key="ModelLocator" ObjectInstance="{x:Static local:ModelLocator.Instance}" />
         </ResourceDictionary>
     </Application.Resources>

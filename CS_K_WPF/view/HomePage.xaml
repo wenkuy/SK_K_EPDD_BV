@@ -80,7 +80,7 @@
                         CanUserAddRows="False"
                         GridLinesVisibility="None"
                         IsReadOnly="True"
-                        ItemsSource="{Binding EquipmentStateRecords}">
+                        ItemsSource="{Binding EquipmentStateRecordsCollections}">
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"

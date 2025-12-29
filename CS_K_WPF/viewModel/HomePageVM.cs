@@ -19,17 +19,44 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private ProducttProductionRecord realtimeProduct = new();
 
+        [ObservableProperty]
+        private EquipmentStateRecord equipmentUDPInfo = new();
+
+        [ObservableProperty]
+        private MaterialRecord materialUDPInfo = new();
+
+
+
         partial void OnRealtimeProductChanged(ProducttProductionRecord e)
         {
-            //这种方式少用，不规范
+            //【方式1】这种方式少用，不规范
             //Application.Current.Dispatcher.Invoke(() => DynamicData(e));
-            CommonDispatcherHelper.ExecuteOnUiThread(() =>
-            {
-                DynamicData(e);
-            });
+
+            //【方式2】
+            CommonDispatcherHelper.ExecuteOnUiThread(() => {ProductsDynamicData(e);});
+
+            //【方式3】
             //DispacherHelper.ExecuteOnUiThread(() => { DynamicData(e); });
         }
 
+        partial void OnEquipmentUDPInfoChanged(EquipmentStateRecord e)
+        {
+            //处理设备状态变更的逻辑
+            CommonDispatcherHelper.ExecuteOnUiThread(() =>
+            {
+                EquipmentStateDynamicData(e);
+            });
+
+        }
+
+        partial void OnMaterialUDPInfoChanged(MaterialRecord e)
+        {
+            //处理物料信息变更的逻辑
+            CommonDispatcherHelper.ExecuteOnUiThread(() =>
+            {
+                MaterialDynamicData(e);
+            });
+        }
 
 
         /// <summary>
@@ -49,24 +76,33 @@ namespace CS_K_WPF.viewModel
 
         //自动生成属性
         [ObservableProperty]
-        private ObservableCollection<EquipmentStateRecord> equipmentStateRecords = new ObservableCollection<EquipmentStateRecord>();
+        private ObservableCollection<EquipmentStateRecord> equipmentStateRecordsCollections = new ObservableCollection<EquipmentStateRecord>();
 
+        [ObservableProperty]
+        private ObservableCollection<MaterialRecord> materialsInfoColloections = new ObservableCollection<MaterialRecord>();
 
 
         public HomePageVM()
         {
-            EquipmentStateRecord e1 = new EquipmentStateRecord();
-            e1.EquipmentState = EEquipmentState.Running;
-            e1.EquipmentNumber = "AK001";
-            EquipmentStateRecords.Add(e1);
+         
         }
 
-        public void GetMesData(ProducttProductionRecord e1)
+        public void Udp_ProductDates(ProducttProductionRecord e1)
         {
             RealtimeProduct = e1;
         }
+        public void Udp_MaterialDates(MaterialRecord e1)
+        {
+            MaterialUDPInfo = e1;
+        }
 
-        private void DynamicData(ProducttProductionRecord mes)
+        public void Udp_EquipmentRecodeDates(EquipmentStateRecord e1)
+        {
+            EquipmentUDPInfo = e1;
+        }
+
+
+        private void ProductsDynamicData(ProducttProductionRecord mes)
         {
             if (!Products.Any(e => e.ProductNumber == mes.ProductNumber)) //不包含就添加
             {
@@ -79,6 +115,44 @@ namespace CS_K_WPF.viewModel
                     if (Products[i].ProductNumber == mes.ProductNumber)
                     {
                         Products[i] = mes;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void EquipmentStateDynamicData(EquipmentStateRecord mes)
+        {
+            if (!EquipmentStateRecordsCollections.Any(e => e.EquipmentNumber == mes.EquipmentNumber)) //不包含就添加
+            {
+                EquipmentStateRecordsCollections.Add(mes);
+            }
+            else
+            {
+                for (int i = 0; i < EquipmentStateRecordsCollections.Count; i++)
+                {
+                    if (EquipmentStateRecordsCollections[i].EquipmentNumber == mes.EquipmentNumber)
+                    {
+                        EquipmentStateRecordsCollections[i] = mes;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void MaterialDynamicData(MaterialRecord mes)
+        {
+            if (!MaterialsInfoColloections.Any(e => e.MaterialNumber == mes.MaterialNumber)) //不包含就添加
+            {
+                MaterialsInfoColloections.Add(mes);
+            }
+            else
+            {
+                for (int i = 0; i < MaterialsInfoColloections.Count; i++)
+                {
+                    if (MaterialsInfoColloections[i].MaterialNumber == mes.MaterialNumber)
+                    {
+                        MaterialsInfoColloections[i] = mes;
                         break;
                     }
                 }
