@@ -1,14 +1,14 @@
-﻿using CS_K_WPF.model;
-using Protocals;
+﻿using Database;
+using Database.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UdpSenderProj;
-using static CS_K_WPF.ReceiveMess.Protocals;
+using static CS_K_WPF.Protocals;
 
-namespace CS_K_WPF.ReceiveMess
+namespace CS_K_WPF
 {
     public class ReceiveMessages
     {
@@ -39,6 +39,7 @@ namespace CS_K_WPF.ReceiveMess
                 case 1: //商品信息
                     productInfo = ProtocolParsing.Deserialize<ProducttProductionRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_ProductDates(productInfo);
+                    ServiceProvider.DatabaseServicesProvider().DBSaveObj<ProducttProductionRecord>(productInfo);
                     break;
                 case 2: //设备状态信息
                     equipmentStateInfo = ProtocolParsing.Deserialize<EquipmentStateRecord>(content);

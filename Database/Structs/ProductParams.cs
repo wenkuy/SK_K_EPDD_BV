@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.Structs
+namespace Database.Structs
 {
 
     /// <summary>

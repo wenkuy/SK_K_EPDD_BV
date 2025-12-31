@@ -1,8 +1,6 @@
 ﻿using BaseProj;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CS_K_WPF.Base.Enum;
-using CS_K_WPF.model;
-using CS_K_WPF.Structs;
+using Database.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

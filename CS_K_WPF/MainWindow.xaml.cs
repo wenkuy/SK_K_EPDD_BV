@@ -1,5 +1,4 @@
 ﻿using BaseProj;
-using CS_K_WPF.ReceiveMess;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;

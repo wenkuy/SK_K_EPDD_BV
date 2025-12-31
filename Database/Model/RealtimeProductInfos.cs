@@ -1,11 +1,11 @@
-﻿using CS_K_WPF.Structs;
+﻿using Database.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.model
+namespace Database.Model
 {
     public class RealtimeProductInfo
     {

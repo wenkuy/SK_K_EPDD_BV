@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.Structs
+namespace Database.Structs
 {
 
     /// <summary>
     /// 生产的环境参数
     /// </summary>
     [ProtoContract]
-    public struct ProductEnvironmentPraram
+    public class ProductEnvironmentPraram
     {
         [ProtoMember(1)]
         public float Temperature { get; set; }

@@ -1,4 +1,5 @@
-﻿using CS_K_WPF.Base.Enum;
+﻿
+using Database.Enum;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.model
+namespace Database.Model
 {
     [ProtoContract]
     public class EquipmentStateRecord

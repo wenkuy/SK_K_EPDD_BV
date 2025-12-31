@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.Base.Enum
+namespace Database.Enum
 {
     [ProtoContract]
     public enum EEquipmentState
