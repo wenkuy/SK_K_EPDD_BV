@@ -18,6 +18,7 @@ namespace CS_K_WPF.viewModel
 
         public NavigationPageVM()
         {
+            //这边是通过Message机制，发送页面路径的Uri消息
             HomePageCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new Uri("HomePage.xaml", UriKind.Relative)));
             MonitorPageCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new Uri("MonitorPage.xaml", UriKind.Relative)));
             EquipmentPageCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new Uri("EquipmentPage.xaml", UriKind.Relative)));

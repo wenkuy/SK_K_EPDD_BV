@@ -39,7 +39,7 @@ namespace CS_K_WPF
                 case 1: //商品信息
                     productInfo = ProtocolParsing.Deserialize<ProducttProductionRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_ProductDates(productInfo);
-                    ServiceProvider.DatabaseServicesProvider().DBSaveObj<ProducttProductionRecord>(productInfo);
+                    ServiceProvider.DatabaseServicesProvider().DBSaveObj(productInfo); //保存到数据库
                     break;
                 case 2: //设备状态信息
                     equipmentStateInfo = ProtocolParsing.Deserialize<EquipmentStateRecord>(content);
@@ -48,6 +48,7 @@ namespace CS_K_WPF
                 case 3: //原料信息
                     MaterialInfo = ProtocolParsing.Deserialize<MaterialRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_MaterialDates(MaterialInfo);
+                    ServiceProvider.DatabaseServicesProvider().DBSaveObj(MaterialInfo);//保存到数据库
                     break;
 
                 default:

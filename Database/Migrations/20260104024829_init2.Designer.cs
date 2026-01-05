@@ -3,6 +3,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(CSK_DBContext))]
-    partial class CSK_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20260104024829_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,25 +23,6 @@ namespace Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Database.Model.LineProductionRecord", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
-
-                    b.Property<float>("ProductConsumed")
-                        .HasColumnType("real");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("T_LineProductionRecords", (string)null);
-                });
 
             modelBuilder.Entity("Database.Model.MaterialRecord", b =>
                 {
@@ -85,69 +69,6 @@ namespace Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_ProducttProductionRecords", (string)null);
-                });
-
-            modelBuilder.Entity("Database.Model.LineProductionRecord", b =>
-                {
-                    b.OwnsOne("Database.Structs.ProductOutput", "ProductsOutput", b1 =>
-                        {
-                            b1.Property<int>("LineProductionRecordID")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Product_1")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Product_2")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Product_3")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Product_4")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Product_5")
-                                .HasColumnType("int");
-
-                            b1.HasKey("LineProductionRecordID");
-
-                            b1.ToTable("T_LineProductionRecords");
-
-                            b1.WithOwner()
-                                .HasForeignKey("LineProductionRecordID");
-                        });
-
-                    b.OwnsOne("Database.Structs.ProductQualifiedRate", "ProductsRate", b1 =>
-                        {
-                            b1.Property<int>("LineProductionRecordID")
-                                .HasColumnType("int");
-
-                            b1.Property<float>("Product1Rate")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Product2Rate")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Product3Rate")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Product4Rate")
-                                .HasColumnType("real");
-
-                            b1.Property<float>("Product5Rate")
-                                .HasColumnType("real");
-
-                            b1.HasKey("LineProductionRecordID");
-
-                            b1.ToTable("T_LineProductionRecords");
-
-                            b1.WithOwner()
-                                .HasForeignKey("LineProductionRecordID");
-                        });
-
-                    b.Navigation("ProductsOutput");
-
-                    b.Navigation("ProductsRate");
                 });
 
             modelBuilder.Entity("Database.Model.MaterialRecord", b =>
