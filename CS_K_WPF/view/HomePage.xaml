@@ -105,6 +105,13 @@
                         <DataGridTextColumn Width="*" Header="故障率" />
                     </DataGrid.Columns>
                 </DataGrid>
+                <Button
+                    Width="100"
+                    Height="70"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ButtonClickCMD}"
+                    Content="显示记录"
+                    FontSize="32" />
             </StackPanel>
 
         </Grid>

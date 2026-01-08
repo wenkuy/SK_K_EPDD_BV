@@ -1,5 +1,7 @@
 ﻿using BaseProj;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Database;
 using Database.Model;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,8 @@ namespace CS_K_WPF.viewModel
         private MaterialRecord materialUDPInfo = new();
 
 
+        public RelayCommand ButtonClickCMD { get; }
+
 
         partial void OnRealtimeProductChanged(ProducttProductionRecord e)
         {
@@ -31,7 +35,7 @@ namespace CS_K_WPF.viewModel
             //Application.Current.Dispatcher.Invoke(() => DynamicData(e));
 
             //【方式2】
-            CommonDispatcherHelper.ExecuteOnUiThread(() => {ProductsDynamicData(e);});
+            CommonDispatcherHelper.ExecuteOnUiThread(() => { ProductsDynamicData(e); });
 
             //【方式3】
             //DispacherHelper.ExecuteOnUiThread(() => { DynamicData(e); });
@@ -79,10 +83,17 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private ObservableCollection<MaterialRecord> materialsInfoColloections = new ObservableCollection<MaterialRecord>();
 
+        [ObservableProperty]
+        private ObservableCollection<LineProductionRecord> lineProductionRecordColloections = new ObservableCollection<LineProductionRecord>();
 
         public HomePageVM()
         {
-         
+            ButtonClickCMD = new RelayCommand(async () =>
+            {
+                //统计过去2小时的数据
+                LineProductionRecord r = await Task.Run<LineProductionRecord>(() => StatisticalData(2));
+                LineProductionRecordColloections.Add(r);
+            });
         }
 
         public void Udp_ProductDates(ProducttProductionRecord e1)
@@ -155,6 +166,49 @@ namespace CS_K_WPF.viewModel
                     }
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 统计time内的数据
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="hours">按时长计算</param>
+        /// <returns></returns>
+        private LineProductionRecord StatisticalData(float hours = 12)
+        {
+            // 1.获取time时间内的记录
+            //ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
+            //   e => StrTimeToDateTime.StrToDateTIme(e.ProductTime) >= startTime && StrTimeToDateTime.StrToDateTIme(e.ProductTime) <= startTime.AddHours(hours));
+
+            //1. 按小时 -天 -周 -月 -年统计
+            string strtime = ServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e=>true).ProductTime;
+            DateTime time = StrTimeToDateTime.StrToDateTime(strtime);
+
+            //ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
+            //  e => time <= StrTimeToDateTime.StrToDateTime(e.ProductTime) && StrTimeToDateTime.StrToDateTime(e.ProductTime) <= time.AddHours(hours));
+            ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
+              e => e.ProductNumber == "A-XH-GHTY0215");
+
+
+            // 2.统计分析
+            // 2.1统计time内产量 合格率  故障率
+            int goods = 0;
+            for (int i = 0; i < productRocords.Length; i++)
+            {
+                if(true == productRocords[i].QualityInspectionResult)
+                {
+                    goods++;
+                }
+            }
+
+            //删除测试
+            ServiceProvider.DatabaseServicesProvider().DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
+
+            //修改测试
+            ServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity,99.5f));
+
+            return new LineProductionRecord() { ProductsRate = new Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
         }
     }
 }

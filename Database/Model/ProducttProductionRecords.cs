@@ -38,9 +38,15 @@ namespace Database.Model
         public bool QualityInspectionResult { get; set; }
 
         /// <summary>
-        /// 生产环境参数
+        /// 生产时间
         /// </summary>
         [ProtoMember(6)]
+        public string ProductTime { get; set; }
+
+        /// <summary>
+        /// 生产环境参数
+        /// </summary>
+        [ProtoMember(7)]
         public ProductEnvironmentPraram Param { get; set; }
 
     }

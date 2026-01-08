@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -8,46 +10,55 @@ using System.Threading.Tasks;
 
 namespace Database
 {
+    /// <summary>
+    /// 不可鞥每个类都写一套查询，所以搞了泛型操作类，实现对数据库的增删查改
+    /// </summary>
     public class OperationDate : IDBRecordPOperation
     {
+        
         private readonly CSK_DBContext _dbc;
         public OperationDate(CSK_DBContext dbc)
         {
             _dbc = dbc;
         }
-        public bool DBDeleteObj<T>(T t)
+        public bool DBDeleteObj<T>(Expression<Func<T, bool>> expression) where T : class
         {
-
-            if (t == null)
-            {
-                return false; // Return false if the input object is null
-            }
 
             try
             {
-                _dbc.Remove(t); // Attempt to remove the entity
-                _dbc.SaveChanges(); // Save changes to the database
-                return true; // Return true if the operation succeeds
+                _dbc.Set<T>().Where(expression).ExecuteDelete();//查出符合条件的数据，批量删除
+                return true;
             }
             catch (Exception)
             {
-                return false; // Return false if an exception occurs
+                return false ;
             }
-
         }
 
-        public bool DBGetObj<T>(Expression<Func<T, bool>> expression) where T : class
+
+        public T[] DBGetObjs<T>(Expression<Func<T, bool>> expression) where T : class
+        {
+            try
+            {
+                return _dbc.Set<T>().Where(expression).ToArray();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public T DBGetSingleObj<T>(Expression<Func<T, bool>> expression) where T : class
         {
 
             try
             {
-                // Check if any object matching the expression exists in the database
-                var result = _dbc.Set<T>().Any(expression);  //•	Set<T>() 是 DbContext 的一个方法，用于获取指定实体类型 T 的 
-                return result; // Return true if found, false otherwise
+                // Attempt to retrieve a single entity matching the expression
+                return _dbc.Set<T>().FirstOrDefault(expression);
             }
             catch (Exception)
             {
-                return false; // Return false if an exception occurs
+                return null; // Return false if an exception occurs
             }
 
         }
@@ -70,7 +81,28 @@ namespace Database
             {
                 return false; // Return false if an exception occurs
             }
+        }
 
+        /// <summary>
+        /// 编辑对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <param name="updateExpression"></param>
+        /// <returns></returns>
+        public bool EditObj<T>(Expression<Func<T, bool>> expression, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> updateExpression) where T : class
+        {
+            // 1. SetPropertyCalls 就是EFCore定义的一个类，记录要更新的属性和值
+            // 2. Func<SetPropertyCalls<T>, SetPropertyCalls<T>> 是为了实现链式调用
+            try
+            {
+                _dbc.Set<T>().Where(expression).ExecuteUpdate(updateExpression);//查出符合条件的数据，批量更新
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
