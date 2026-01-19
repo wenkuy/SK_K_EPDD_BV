@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Threading;
 
 namespace CS_K_WPF.viewModel
@@ -29,16 +30,31 @@ namespace CS_K_WPF.viewModel
         public RelayCommand ButtonClickCMD { get; }
 
 
+        // 在 HomePageVM 类的开头添加
+        private readonly object _LockOnProducts = new object();
+
         partial void OnRealtimeProductChanged(ProducttProductionRecord e)
         {
             //【方式1】这种方式少用，不规范
-            //Application.Current.Dispatcher.Invoke(() => DynamicData(e));
+            //Application.Current.Dispatcher.Invoke(() => ProductsDynamicData(e));
+            //Application.Current.Dispatcher.BeginInvoke(() => ProductsDynamicData(e));
 
-            //【方式2】
-            CommonDispatcherHelper.ExecuteOnUiThread(() => { ProductsDynamicData(e); });
+            //【方式2】ok
+            CommonDispatcherHelper.BeginExecuteOnUiThread(() => { ProductsDynamicData(e); });
 
-            //【方式3】
+            //【方式3】ok
             //DispacherHelper.ExecuteOnUiThread(() => { DynamicData(e); });
+
+            //【方式4】 这个是利用Binding订阅OnllectionChanged触发，Binding自己在会去检查线程上下文，并做出切换线程的处理。利用的就是Binding的辅助功能。
+            //因为Binding在订阅的时候，会记住当前的线程上下文，所以后续触发CollectionChanged事件时，Binding会帮我们切换到正确的线程上下文去处理UI更新。
+            //lock (_LockOnProducts)
+            //{
+            //    ProductsDynamicData(e);
+            //}
+            /*失败原因：当你的 Products 绑定到 DataGrid、ListView 这类控件时，WPF 会自动为它创建一个 CollectionView（用来管理排序、过滤、分组等 UI 显示逻辑）。
+            但是CollectionView 是线程敏感的，它要求所有对源集合（Products）的修改必须在 UI 线程执行。但是Binding 把「处理 CollectionChanged 事件、更新 UI 控件」
+            的逻辑切换到了 UI 线程，但「修改源集合（Products.Add/Products[i] = mes）」这个操作本身，依然在后台线程执行。所以失败！！！*/
+
         }
 
         partial void OnEquipmentUDPInfoChanged(EquipmentStateRecord e)
@@ -130,6 +146,7 @@ namespace CS_K_WPF.viewModel
             }
         }
 
+
         private void EquipmentStateDynamicData(EquipmentStateRecord mes)
         {
             if (!EquipmentStateRecordsCollections.Any(e => e.EquipmentNumber == mes.EquipmentNumber)) //不包含就添加
@@ -182,7 +199,7 @@ namespace CS_K_WPF.viewModel
             //   e => StrTimeToDateTime.StrToDateTIme(e.ProductTime) >= startTime && StrTimeToDateTime.StrToDateTIme(e.ProductTime) <= startTime.AddHours(hours));
 
             //1. 按小时 -天 -周 -月 -年统计
-            string strtime = ServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e=>true).ProductTime;
+            string strtime = ServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
             DateTime time = StrTimeToDateTime.StrToDateTime(strtime);
 
             //ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
@@ -196,7 +213,7 @@ namespace CS_K_WPF.viewModel
             int goods = 0;
             for (int i = 0; i < productRocords.Length; i++)
             {
-                if(true == productRocords[i].QualityInspectionResult)
+                if (true == productRocords[i].QualityInspectionResult)
                 {
                     goods++;
                 }
@@ -206,7 +223,7 @@ namespace CS_K_WPF.viewModel
             ServiceProvider.DatabaseServicesProvider().DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
 
             //修改测试
-            ServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity,99.5f));
+            ServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
 
             return new LineProductionRecord() { ProductsRate = new Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
         }
