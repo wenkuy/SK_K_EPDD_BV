@@ -33,7 +33,7 @@ namespace BaseProj
             }
             else
             {
-                 // 调度到UI线程执行（同步）相当于WPF版本的Dispatcher.Invoke()（同步）
+                // 调度到UI线程执行（同步）相当于WPF版本的Dispatcher.Invoke()（同步）
                 uiDispatcher.Send(_ => action.Invoke(), null);
             }
         }
