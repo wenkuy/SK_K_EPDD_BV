@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Database
 {
-    public static class ServiceProvider
+    public static class DatebaseServiceProvider
     {
         // 全局容器实例（只初始化一次）
         private static IServiceProvider _serviceProvider;

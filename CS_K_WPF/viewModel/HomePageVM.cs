@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Database;
 using Database.Model;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +27,7 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private MaterialRecord materialUDPInfo = new();
 
+        private IServiceProvider serviceProvider;
 
         public RelayCommand ButtonClickCMD { get; }
 
@@ -102,8 +104,9 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private ObservableCollection<LineProductionRecord> lineProductionRecordColloections = new ObservableCollection<LineProductionRecord>();
 
-        public HomePageVM()
+        public HomePageVM(IServiceProvider serviceProvider)
         {
+            this.serviceProvider = serviceProvider;
             ButtonClickCMD = new RelayCommand(async () =>
             {
                 //统计过去2小时的数据
@@ -111,6 +114,10 @@ namespace CS_K_WPF.viewModel
                 LineProductionRecordColloections.Add(r);
             });
         }
+
+    
+
+
 
         public void Udp_ProductDates(ProducttProductionRecord e1)
         {
@@ -199,12 +206,12 @@ namespace CS_K_WPF.viewModel
             //   e => StrTimeToDateTime.StrToDateTIme(e.ProductTime) >= startTime && StrTimeToDateTime.StrToDateTIme(e.ProductTime) <= startTime.AddHours(hours));
 
             //1. 按小时 -天 -周 -月 -年统计
-            string strtime = ServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
+            string strtime = DatebaseServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
             DateTime time = StrTimeToDateTime.StrToDateTime(strtime);
 
             //ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
             //  e => time <= StrTimeToDateTime.StrToDateTime(e.ProductTime) && StrTimeToDateTime.StrToDateTime(e.ProductTime) <= time.AddHours(hours));
-            ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
+            ProducttProductionRecord[] productRocords = DatebaseServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
               e => e.ProductNumber == "A-XH-GHTY0215");
 
 
@@ -220,10 +227,10 @@ namespace CS_K_WPF.viewModel
             }
 
             //删除测试
-            ServiceProvider.DatabaseServicesProvider().DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
+            DatebaseServiceProvider.DatabaseServicesProvider().DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
 
             //修改测试
-            ServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
+            DatebaseServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
 
             return new LineProductionRecord() { ProductsRate = new Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
         }
