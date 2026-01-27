@@ -1,0 +1,34 @@
+﻿using BaseProj;
+using CommunityToolkit.Mvvm.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+
+namespace DataAnalasisProj.View
+{
+    public class ViewManeger
+    {
+
+        public static void ViewRegisterManeger()
+        {
+            //typeOf() 返回该实例，但仅一个占位象征，徒有表象(仅存在元数据，不存在业务数据)，因此不能访问其成员，
+            WeakReferenceMessenger.Default.Register<OpenAnalysisWindowMes>(typeof(DataAnalysisWnd), (obj, message) => { (new DataAnalysisWnd()).Show(); });
+
+            //内存泄漏风险，因为传了一个“幽灵实例”new DataAnalysisWnd()
+            //WeakReferenceMessenger.Default.Register<OpenAnalysisWindowMes>(new DataAnalysisWnd(), (obj, message) => { (new DataAnalysisWnd()).Show(); });
+        }
+
+        /// <summary>
+        /// 通用注册方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void ViewRegisterManegerGeneral<TMes, TWnd>() where TWnd : Window, new() where TMes : class
+        {
+            WeakReferenceMessenger.Default.Register<TMes>(typeof(TWnd), (obj, message) => { (new TWnd()).Show(); });
+        }
+    }
+}

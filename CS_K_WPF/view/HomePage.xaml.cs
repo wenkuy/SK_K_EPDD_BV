@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using BaseProj;
+using CommunityToolkit.Mvvm.Messaging;
 using CS_K_WPF.view;
+using DataAnalasisProj.View;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -30,15 +32,24 @@ namespace CS_K_WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //【内部方式】（放弃）
             // 方式1- 大型项目
-            //WeakReferenceMessenger.Default.Register<DataAnalysisWnd>(this, () => { });
+            //WeakReferenceMessenger.Default....;
 
             // 方式2 - 直接DI获取实例对象（与直接[new DataAnalysisWnd()] 就差一个DI）
             //App.GlobalServiceProvider.GetRequiredService<DataAnalysisWnd>().Show();
 
             // 方式3 - DI和窗口操作封装结合
-            IWindowOperation wnd = App.GlobalServiceProvider.GetRequiredService<IWindowOperation>();
-            wnd.OpenWindow<DataAnalysisWnd>();
+            //IWindowOperation wnd = App.GlobalServiceProvider.GetRequiredService<IWindowOperation>();
+            //wnd.OpenWindow<DataAnalysisWnd>();
+
+
+            //【外部模块方式】（使用）
+            // 方式1 - 调用测试：引用，调出弹窗，ok[这个经测试，耦合高，所以放弃该方式]
+            //new DataAnalasisProj.View.DataAnalysisWnd().Show();
+
+            //方式1 - 主项目通过CommunicationToolKit.MVVM的方式实现对DataAnalysisProj项目的窗体的调用
+            WeakReferenceMessenger.Default.Send(new OpenAnalysisWindowMes());
         }
     }
 }

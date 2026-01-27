@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BaseProj;
+using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace CS_K_WPF.view
+namespace DataAnalasisProj.View
 {
     /// <summary>
     /// DataAnalysisWnd.xaml 的交互逻辑

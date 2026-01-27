@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF.viewModel
+namespace BaseProj
 {
-    public class DataAnalysisWndVM
-    {
-    }
+    public class OpenAnalysisWindowMes{}
+
 }

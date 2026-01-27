@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using CS_K_WPF.view;
 using CS_K_WPF.viewModel;
+using DataAnalasisProj.View;
 using Database;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Meta;
@@ -32,6 +33,10 @@ namespace CS_K_WPF
 
             //这个数数据库模块的初始化必须在应用程序启动时就进行，否则后续调用会报错
             DatebaseServiceProvider.Initialize();
+
+            //数据分析模块需要在这里提前注册消息
+            //ViewManeger.ViewRegisterManeger();
+            ViewManeger.ViewRegisterManegerGeneral<OpenAnalysisWindowMes,DataAnalysisWnd>();
         }
 
 
