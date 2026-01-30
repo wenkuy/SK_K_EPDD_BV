@@ -6,16 +6,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+	  <!-- 全局抑制所有 NU1701 警告 -->
+	  <NoWarn>$(NoWarn);NU1701</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Dragablz" Version="0.0.3.234" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc6.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+
   </ItemGroup>
 
   <ItemGroup>
