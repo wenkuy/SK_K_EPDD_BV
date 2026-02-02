@@ -2,7 +2,9 @@
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -155,13 +157,23 @@ namespace DataAnalasisProj.View
             var line = new LineSeries<int> 
             { 
                 Name = "温度", 
-                Values = GetIntDatas() 
+                Values = GetIntDatas(),
+                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 3 },
+                LineSmoothness = 0.65, // 折线平滑度（0=直线，1=最弯曲，默认0.65）
+                EnableNullSplitting = true, // 遇到null值时断开折线（默认true）
+                Fill = new SolidColorPaint(SKColors.Blue.WithAlpha(60)),
+             
+
+                // 数据点样式（几何图形）
+                GeometrySize = 14, // 数据点几何图形大小（默认14）
+                GeometryFill = new SolidColorPaint(SKColors.White), // 数据点填充色
+                GeometryStroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 2 }, // 数据点边框
             };
             series.Add(line);
-            //chart.SeriesSource = series;
-            Binding binding = new Binding();
-            binding.Source = series;
-            BindingOperations.SetBinding(chart, CartesianChart.SeriesSourceProperty, binding);
+            chart.Series = series;
+            //Binding binding = new Binding();
+            //binding.Source = series;
+            //BindingOperations.SetBinding(chart, CartesianChart.SeriesSourceProperty, binding);
 
 
         }
