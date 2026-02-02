@@ -13,49 +13,7 @@
     Height="450"
     mc:Ignorable="d">
     <Window.Resources>
-        <ResourceDictionary>
-            <!--  1. 引入 Dragablz 内置样式  -->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
-            <!--  2. 自定义InterTabClient实例  -->
-            <local:CustomInterTabClient x:Key="CustomInterTabClient" />
-
-            <!--  3. 全局InterTabController  -->
-            <dragablz:InterTabController
-                x:Key="TabController"
-                InterTabClient="{StaticResource CustomInterTabClient}"
-                Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-
-            <!--  4. 主标签控件样式  -->
-            <Style x:Key="TabStyle" TargetType="{x:Type dragablz:TabablzControl}">
-                <Setter Property="InterTabController" Value="{StaticResource TabController}" />
-                <Setter Property="ItemsSource" Value="{Binding Items}" />
-                <Setter Property="ShowDefaultCloseButton" Value="True" />
-                <Setter Property="FixedHeaderCount" Value="1" />
-            </Style>
-
-            <!--  5. 浮动项模板  -->
-            <DataTemplate x:Key="FloatItemTemplate">
-                <ContentControl
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Content="{Binding Content}" />
-            </DataTemplate>
-
-            <!--  6. Layout分支模板  -->
-            <DataTemplate x:Key="BranchTemplate">
-                <dragablz:TabablzControl Style="{StaticResource TabStyle}">
-                    <dragablz:TabablzControl.InterTabController>
-                        <dragablz:InterTabController InterTabClient="{StaticResource CustomInterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-                    </dragablz:TabablzControl.InterTabController>
-                </dragablz:TabablzControl>
-            </DataTemplate>
-
-
-
-        </ResourceDictionary>
+        <ResourceDictionary />
     </Window.Resources>
 
     <Grid>
@@ -73,6 +31,9 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
@@ -83,7 +44,27 @@
                     HorizontalAlignment="Left"
                     Click="AddChartButton_Click"
                     Content="新建表格" />
-                <Slider Grid.Column="1" />
+                <Button
+                    Grid.Column="1"
+                    Command="{x:Static dockablz:Layout.TileFloatingItemsCommand}"
+                    CommandTarget="{Binding ElementName=DragLyout}">
+                    Tile Grid
+                </Button>
+                <Button
+                    Grid.Column="2"
+                    Command="{x:Static dockablz:Layout.TileFloatingItemsVerticallyCommand}"
+                    CommandTarget="{Binding ElementName=DragLyout}">
+                    Tile Horizontal
+                </Button>
+                <Button
+                    Grid.Column="3"
+                    Command="{x:Static dockablz:Layout.TileFloatingItemsHorizontallyCommand}"
+                    CommandTarget="{Binding ElementName=DragLyout}">
+                    Tile Vertical
+                </Button>
+
+                <!--  滑块  -->
+                <Slider Grid.Column="4" />
             </Grid>
         </Grid>
 
@@ -103,19 +84,6 @@
                     x:Name="DragLyout"
                     FloatingItemDisplayMemberPath="SimpleContent"
                     FloatingItemHeaderMemberPath="Name" />
-
-                <!--<dockablz:Layout
-                    x:Name="MdiLayout"
-                    FloatingItemDisplayMemberPath="SimpleContent"
-                    FloatingItemHeaderMemberPath="Name">
-                    <dockablz:Layout.FloatingItems>
-                        <local:SimpleViewModel Name="One" SimpleContent="MDI Child One" />
-                        <local:SimpleViewModel Name="Two" SimpleContent="MDI Child Two" />
-                        <local:SimpleViewModel Name="Three" SimpleContent="MDI Child Three" />
-                        <local:SimpleViewModel Name="Four" SimpleContent="MDI Child Four" />
-                        <local:SimpleViewModel Name="Five" SimpleContent="MDI Child Five" />
-                    </dockablz:Layout.FloatingItems>
-                </dockablz:Layout>-->
             </Grid>
 
             <Grid Grid.Column="1">

@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using Dragablz;
 
 namespace DataAnalasisProj.View
 {
@@ -41,8 +42,7 @@ namespace DataAnalasisProj.View
                 SimpleContent = new CartesianChart()
                 {
                     // 关键设置：让图表自动拉伸填满父容器
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
+            
                     Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
               
                 },
@@ -196,5 +196,8 @@ namespace DataAnalasisProj.View
             }
             return datas;
         }
+
+        private readonly DragablzItemsControl _floatingItems;
+       
     }
 }
