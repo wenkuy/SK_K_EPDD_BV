@@ -22,7 +22,8 @@ namespace DataAnalasisProj.View
             InitializeComponent();
             ToolItems = new ObservableCollection<HeaderedItemViewModel>();
             // 正确绑定方式：直接赋值给 LayoutablzControl 的 ToolItems 属性
-            DragLyout.FloatingItemsSource = ToolItems;
+            
+            //DragLyout.FloatingItemsSource = ToolItems;
         }
 
         /// <summary>
@@ -32,18 +33,27 @@ namespace DataAnalasisProj.View
         /// <param name="e"></param>
         private void AddChartButton_Click(object sender, RoutedEventArgs e)
         {
-            ToolItems.Add(new HeaderedItemViewModel()
+            //ToolItems.Add(new HeaderedItemViewModel()
+            //{
+            //    Header = $"图表 {ToolItems.Count + 1}",
+            //    Content = new CartesianChart()
+            //    {
+            //        // 关键设置：让图表自动拉伸填满父容器
+            //        HorizontalAlignment = HorizontalAlignment.Stretch,
+            //        VerticalAlignment = VerticalAlignment.Stretch,
+            //        Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
+            //        Width = 400, // 给浮动面板一个基础宽高
+            //        Height = 300
+            //    },
+            //});
+
+            MyGrid.Children.Add(new CartesianChart()
             {
-                Header = $"图表 {ToolItems.Count + 1}",
-                Content = new CartesianChart()
-                {
-                    // 关键设置：让图表自动拉伸填满父容器
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                    Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
-                    Width = 400, // 给浮动面板一个基础宽高
-                    Height = 300
-                },
+                // 关键设置：让图表自动拉伸填满父容器
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
+         
             });
         }
 
@@ -87,16 +97,16 @@ namespace DataAnalasisProj.View
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
             //var kk = DragLyout.FloatingItems.CurrentItem;
-            var kk = DragLyout.FloatingItems[0];
-            var activeFloatingItem = kk as HeaderedItemViewModel;
-            if (activeFloatingItem == null)
-            {
-                MessageBox.Show("请先选中一个浮动图表窗口！");
-                return;
-            }
+            var kk = MyGrid.Children[0];
+            //var activeFloatingItem = kk as HeaderedItemViewModel;
+            //if (activeFloatingItem == null)
+            //{
+            //    MessageBox.Show("请先选中一个浮动图表窗口！");
+            //    return;
+            //}
 
             // 2. 提取浮动项中的 CartesianChart（你的浮动项 Content 就是 Chart）
-            var targetChart = activeFloatingItem.Content as CartesianChart;
+            var targetChart = MyGrid.Children[0] as CartesianChart;
             if (targetChart == null)
             {
                 MessageBox.Show("选中的浮动窗口中未找到图表！");
@@ -116,6 +126,10 @@ namespace DataAnalasisProj.View
                 {
                     Name = "X 轴",
                     Labeler = value => $"{(int)value}", // 标签显示整数索引
+                    MinLimit = 0,
+                    MaxLimit = 300,
+                     // 强制显示刻度，确保轴渲染完整
+                   ShowSeparatorLines = true,
                 }
             };
 
@@ -125,6 +139,9 @@ namespace DataAnalasisProj.View
                 {
                     Name = "Y 轴",
                     Labeler = value => $"{(int)value}", // 关键：标签显示整数，去掉小数位
+                    MinLimit =0,
+                    MaxLimit = 30,
+                    ShowSeparatorLines = true,
                 }
             };
             chart.XAxes = xAxes;
@@ -135,7 +152,11 @@ namespace DataAnalasisProj.View
 
             var series = new ObservableCollection<ISeries>();
             //var line = new LineSeries<ObservablePoint>{ Name = "温度",Values = GetDatas()};
-            var line = new LineSeries<int> { Name = "温度", Values = GetIntDatas() };
+            var line = new LineSeries<int> 
+            { 
+                Name = "温度", 
+                Values = GetIntDatas() 
+            };
             series.Add(line);
             //chart.SeriesSource = series;
             Binding binding = new Binding();

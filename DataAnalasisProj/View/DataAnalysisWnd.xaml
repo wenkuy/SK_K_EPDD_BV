@@ -94,21 +94,21 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Background="#383838">
+            <Grid x:Name="MyGrid" Grid.Column="0" Background="#383838">
                 <!--  图表控件  -->
-                <dockablz:Layout
+                <!--<dockablz:Layout
                     x:Name="DragLyout"
                     BranchTemplate="{StaticResource BranchTemplate}"
                     FloatingItemTemplate="{StaticResource FloatItemTemplate}"
                     IsFloatDropZoneEnabled="True"
                     Partition="2AE89D18-F236-4D20-9605-6C03319038E6">
 
-                    <dragablz:TabablzControl x:Name="InitialTabablzControl" Style="{StaticResource TabStyle}">
+                    --><!--<dragablz:TabablzControl x:Name="InitialTabablzControl" Style="{StaticResource TabStyle}">
                         <dragablz:TabablzControl.InterTabController>
                             <dragablz:InterTabController InterTabClient="{StaticResource CustomInterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
                         </dragablz:TabablzControl.InterTabController>
-                    </dragablz:TabablzControl>
-                </dockablz:Layout>
+                    </dragablz:TabablzControl>--><!--
+                </dockablz:Layout>-->
             </Grid>
 
             <Grid Grid.Column="1">
