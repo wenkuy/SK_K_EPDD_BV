@@ -6,7 +6,7 @@
     xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
     xmlns:local="clr-namespace:DataAnalasisProj.View"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
     Title="DataAnalysisWnd"
     Width="800"
@@ -94,21 +94,28 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <Grid x:Name="MyGrid" Grid.Column="0" Background="#383838">
-                  <!--图表控件-->  
+            <Grid
+                x:Name="MyGrid"
+                Grid.Column="0"
+                Background="#383838">
+                <!--  图表控件  -->
                 <dockablz:Layout
                     x:Name="DragLyout"
-                    BranchTemplate="{StaticResource BranchTemplate}"
-                    FloatingItemTemplate="{StaticResource FloatItemTemplate}"
-                    IsFloatDropZoneEnabled="True"
-                    Partition="2AE89D18-F236-4D20-9605-6C03319038E6">
+                    FloatingItemDisplayMemberPath="SimpleContent"
+                    FloatingItemHeaderMemberPath="Name" />
 
-                    <!--<dragablz:TabablzControl x:Name="InitialTabablzControl" Style="{StaticResource TabStyle}">
-                        <dragablz:TabablzControl.InterTabController>
-                            <dragablz:InterTabController InterTabClient="{StaticResource CustomInterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-                        </dragablz:TabablzControl.InterTabController>
-                    </dragablz:TabablzControl>-->
-                </dockablz:Layout>
+                <!--<dockablz:Layout
+                    x:Name="MdiLayout"
+                    FloatingItemDisplayMemberPath="SimpleContent"
+                    FloatingItemHeaderMemberPath="Name">
+                    <dockablz:Layout.FloatingItems>
+                        <local:SimpleViewModel Name="One" SimpleContent="MDI Child One" />
+                        <local:SimpleViewModel Name="Two" SimpleContent="MDI Child Two" />
+                        <local:SimpleViewModel Name="Three" SimpleContent="MDI Child Three" />
+                        <local:SimpleViewModel Name="Four" SimpleContent="MDI Child Four" />
+                        <local:SimpleViewModel Name="Five" SimpleContent="MDI Child Five" />
+                    </dockablz:Layout.FloatingItems>
+                </dockablz:Layout>-->
             </Grid>
 
             <Grid Grid.Column="1">

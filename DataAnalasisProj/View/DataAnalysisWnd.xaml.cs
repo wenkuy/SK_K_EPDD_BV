@@ -18,11 +18,11 @@ namespace DataAnalasisProj.View
     /// </summary>
     public partial class DataAnalysisWnd : Window
     {
-        public ObservableCollection<HeaderedItemViewModel> ToolItems { get; }
+        public ObservableCollection<SimpleViewModel> ToolItems { get; }
         public DataAnalysisWnd()
         {
             InitializeComponent();
-            ToolItems = new ObservableCollection<HeaderedItemViewModel>();
+            ToolItems = new ObservableCollection<SimpleViewModel>();
             // 正确绑定方式：直接赋值给 LayoutablzControl 的 ToolItems 属性
 
             DragLyout.FloatingItemsSource = ToolItems;
@@ -35,17 +35,16 @@ namespace DataAnalasisProj.View
         /// <param name="e"></param>
         private void AddChartButton_Click(object sender, RoutedEventArgs e)
         {
-            ToolItems.Add(new HeaderedItemViewModel()
+            ToolItems.Add(new SimpleViewModel()
             {
-                Header = $"图表 {ToolItems.Count + 1}",
-                Content = new CartesianChart()
+                Name = $"图表 {ToolItems.Count + 1}",
+                SimpleContent = new CartesianChart()
                 {
                     // 关键设置：让图表自动拉伸填满父容器
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
                     Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
-                    Width = 400, // 给浮动面板一个基础宽高
-                    Height = 300
+              
                 },
             });
 
@@ -98,10 +97,8 @@ namespace DataAnalasisProj.View
         /// <param name="e"></param>
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            //var kk = DragLyout.FloatingItems.CurrentItem;
-            //var kk = MyGrid.Children[0];
-             var kk = DragLyout.FloatingItems[0];
-            var activeFloatingItem = kk as HeaderedItemViewModel;
+            var kk = DragLyout.FloatingItems[0];
+            var activeFloatingItem = kk as SimpleViewModel;
             if (activeFloatingItem == null)
             {
                 MessageBox.Show("请先选中一个浮动图表窗口！");
@@ -110,7 +107,7 @@ namespace DataAnalasisProj.View
 
             // 2. 提取浮动项中的 CartesianChart（你的浮动项 Content 就是 Chart）
             //var targetChart = MyGrid.Children[0] as CartesianChart;
-            var targetChart = activeFloatingItem.Content as CartesianChart;
+            var targetChart = activeFloatingItem.SimpleContent as CartesianChart;
             if (targetChart == null)
             {
                 MessageBox.Show("选中的浮动窗口中未找到图表！");
@@ -120,7 +117,6 @@ namespace DataAnalasisProj.View
             CartesianChart chart = targetChart;
 
 
-            //var axes = MyChart.XAxes;
 
 
             // 3. 修复：必须显式添加X/Y轴，且匹配int数据范围（核心中的核心）
@@ -151,20 +147,20 @@ namespace DataAnalasisProj.View
             chart.XAxes = xAxes;
             chart.YAxes = yAxes;
 
-           
+
 
 
             var series = new ObservableCollection<ISeries>();
             //var line = new LineSeries<ObservablePoint>{ Name = "温度",Values = GetDatas()};
-            var line = new LineSeries<int> 
-            { 
-                Name = "温度", 
+            var line = new LineSeries<int>
+            {
+                Name = "温度",
                 Values = GetIntDatas(),
                 Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 3 },
                 LineSmoothness = 0.65, // 折线平滑度（0=直线，1=最弯曲，默认0.65）
                 EnableNullSplitting = true, // 遇到null值时断开折线（默认true）
                 Fill = new SolidColorPaint(SKColors.Blue.WithAlpha(60)),
-             
+
 
                 // 数据点样式（几何图形）
                 GeometrySize = 14, // 数据点几何图形大小（默认14）
@@ -173,10 +169,6 @@ namespace DataAnalasisProj.View
             };
             series.Add(line);
             chart.Series = series;
-            //Binding binding = new Binding();
-            //binding.Source = series;
-            //BindingOperations.SetBinding(chart, CartesianChart.SeriesSourceProperty, binding);
-
 
         }
 
