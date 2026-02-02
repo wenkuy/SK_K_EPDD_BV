@@ -24,8 +24,8 @@ namespace DataAnalasisProj.View
             InitializeComponent();
             ToolItems = new ObservableCollection<HeaderedItemViewModel>();
             // 正确绑定方式：直接赋值给 LayoutablzControl 的 ToolItems 属性
-            
-            //DragLyout.FloatingItemsSource = ToolItems;
+
+            DragLyout.FloatingItemsSource = ToolItems;
         }
 
         /// <summary>
@@ -35,28 +35,28 @@ namespace DataAnalasisProj.View
         /// <param name="e"></param>
         private void AddChartButton_Click(object sender, RoutedEventArgs e)
         {
-            //ToolItems.Add(new HeaderedItemViewModel()
-            //{
-            //    Header = $"图表 {ToolItems.Count + 1}",
-            //    Content = new CartesianChart()
-            //    {
-            //        // 关键设置：让图表自动拉伸填满父容器
-            //        HorizontalAlignment = HorizontalAlignment.Stretch,
-            //        VerticalAlignment = VerticalAlignment.Stretch,
-            //        Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
-            //        Width = 400, // 给浮动面板一个基础宽高
-            //        Height = 300
-            //    },
-            //});
-
-            MyGrid.Children.Add(new CartesianChart()
+            ToolItems.Add(new HeaderedItemViewModel()
             {
-                // 关键设置：让图表自动拉伸填满父容器
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
-         
+                Header = $"图表 {ToolItems.Count + 1}",
+                Content = new CartesianChart()
+                {
+                    // 关键设置：让图表自动拉伸填满父容器
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
+                    Width = 400, // 给浮动面板一个基础宽高
+                    Height = 300
+                },
             });
+
+            //MyGrid.Children.Add(new CartesianChart()
+            //{
+            //    // 关键设置：让图表自动拉伸填满父容器
+            //    HorizontalAlignment = HorizontalAlignment.Stretch,
+            //    VerticalAlignment = VerticalAlignment.Stretch,
+            //    Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
+
+            //});
         }
 
         private void AddSeriesButton_Click(object sender, RoutedEventArgs e)
@@ -99,16 +99,18 @@ namespace DataAnalasisProj.View
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
             //var kk = DragLyout.FloatingItems.CurrentItem;
-            var kk = MyGrid.Children[0];
-            //var activeFloatingItem = kk as HeaderedItemViewModel;
-            //if (activeFloatingItem == null)
-            //{
-            //    MessageBox.Show("请先选中一个浮动图表窗口！");
-            //    return;
-            //}
+            //var kk = MyGrid.Children[0];
+             var kk = DragLyout.FloatingItems[0];
+            var activeFloatingItem = kk as HeaderedItemViewModel;
+            if (activeFloatingItem == null)
+            {
+                MessageBox.Show("请先选中一个浮动图表窗口！");
+                return;
+            }
 
             // 2. 提取浮动项中的 CartesianChart（你的浮动项 Content 就是 Chart）
-            var targetChart = MyGrid.Children[0] as CartesianChart;
+            //var targetChart = MyGrid.Children[0] as CartesianChart;
+            var targetChart = activeFloatingItem.Content as CartesianChart;
             if (targetChart == null)
             {
                 MessageBox.Show("选中的浮动窗口中未找到图表！");
