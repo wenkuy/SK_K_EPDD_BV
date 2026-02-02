@@ -6,28 +6,56 @@
     xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
     xmlns:local="clr-namespace:DataAnalasisProj.View"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:wpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
     Title="DataAnalysisWnd"
     Width="800"
     Height="450"
     mc:Ignorable="d">
     <Window.Resources>
+        <ResourceDictionary>
+            <!--  1. 引入 Dragablz 内置样式  -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <dragablz:InterTabController x:Key="TabController" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
-        <!--  2. 主标签控件样式（简化版）  -->
-        <Style x:Key="TabStyle" TargetType="{x:Type dragablz:TabablzControl}">
-            <Setter Property="InterTabController" Value="{StaticResource TabController}" />
-            <Setter Property="ItemsSource" Value="{Binding Items}" />
-            <Setter Property="ShowDefaultCloseButton" Value="True" />
-        </Style>
-        <DataTemplate x:Key="FloatItemTemplate">
-            <!--  直接渲染HeaderedItemViewModel的Content（即CartesianChart）  -->
-            <ContentControl
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Content="{Binding Content}" />
-        </DataTemplate>
+            <!--  2. 自定义InterTabClient实例  -->
+            <local:CustomInterTabClient x:Key="CustomInterTabClient" />
 
+            <!--  3. 全局InterTabController  -->
+            <dragablz:InterTabController
+                x:Key="TabController"
+                InterTabClient="{StaticResource CustomInterTabClient}"
+                Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+
+            <!--  4. 主标签控件样式  -->
+            <Style x:Key="TabStyle" TargetType="{x:Type dragablz:TabablzControl}">
+                <Setter Property="InterTabController" Value="{StaticResource TabController}" />
+                <Setter Property="ItemsSource" Value="{Binding Items}" />
+                <Setter Property="ShowDefaultCloseButton" Value="True" />
+                <Setter Property="FixedHeaderCount" Value="1" />
+            </Style>
+
+            <!--  5. 浮动项模板  -->
+            <DataTemplate x:Key="FloatItemTemplate">
+                <ContentControl
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Content="{Binding Content}" />
+            </DataTemplate>
+
+            <!--  6. Layout分支模板  -->
+            <DataTemplate x:Key="BranchTemplate">
+                <dragablz:TabablzControl Style="{StaticResource TabStyle}">
+                    <dragablz:TabablzControl.InterTabController>
+                        <dragablz:InterTabController InterTabClient="{StaticResource CustomInterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                    </dragablz:TabablzControl.InterTabController>
+                </dragablz:TabablzControl>
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
@@ -70,13 +98,16 @@
                 <!--  图表控件  -->
                 <dockablz:Layout
                     x:Name="DragLyout"
+                    BranchTemplate="{StaticResource BranchTemplate}"
                     FloatingItemTemplate="{StaticResource FloatItemTemplate}"
                     IsFloatDropZoneEnabled="True"
                     Partition="2AE89D18-F236-4D20-9605-6C03319038E6">
-                    <dragablz:TabablzControl
-                        x:Name="DragControl"
-                        FixedHeaderCount="1"
-                        Style="{StaticResource TabStyle}" />
+
+                    <dragablz:TabablzControl x:Name="InitialTabablzControl" Style="{StaticResource TabStyle}">
+                        <dragablz:TabablzControl.InterTabController>
+                            <dragablz:InterTabController InterTabClient="{StaticResource CustomInterTabClient}" Partition="2AE89D18-F236-4D20-9605-6C03319038E6" />
+                        </dragablz:TabablzControl.InterTabController>
+                    </dragablz:TabablzControl>
                 </dockablz:Layout>
             </Grid>
 
@@ -97,6 +128,18 @@
                         FontSize="20" />
                 </StackPanel>
                 <TabControl Name="TabCtrl" Grid.Row="1" />
+
+                <!--<wpf:CartesianChart
+                     x:Name="MyChart"
+                    Grid.Row="1"
+                    SeriesSource="{Binding Data}">
+                    <wpf:CartesianChart.XAxes>
+                        <wpf:AxesCollection>
+                            <wpf:XamlAxis Labels="{Binding Labels}"/>
+                        </wpf:AxesCollection>
+                    </wpf:CartesianChart.XAxes>
+                </wpf:CartesianChart>-->
+
             </Grid>
         </Grid>
     </Grid>

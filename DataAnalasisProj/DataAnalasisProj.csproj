@@ -13,13 +13,14 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Dragablz" Version="0.0.3.234" />
-    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc6.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
 
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BaseProj\BaseProj.csproj" />
+    <ProjectReference Include="C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\LiveChartsCore\LiveChartsCore.csproj" />
+    <ProjectReference Include="C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\skiasharp\LiveChartsCore.SkiaSharp.WPF\LiveChartsCore.SkiaSharpView.WPF.csproj" />
   </ItemGroup>
 
 </Project>
