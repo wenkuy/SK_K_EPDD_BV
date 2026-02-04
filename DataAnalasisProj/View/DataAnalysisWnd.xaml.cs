@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using LiveChartsGeneratedCode;
 using System.Windows.Input;
+using LiveChartsCore.Measure;
 
 namespace DataAnalasisProj.View
 {
@@ -43,7 +44,9 @@ namespace DataAnalasisProj.View
             CartesianChart chart = new CartesianChart()
             {
                 Background = Brushes.LightBlue, // 背景色
-                ZoomMode = LiveChartsCore.Measure.ZoomAndPanMode.X, // 缩放模式：仅X轴缩放/平移
+                ZoomMode = ZoomAndPanMode.X, // 缩放模式：仅X轴缩放/平移
+                LegendTextSize = 15,
+                LegendPosition = LegendPosition.Top
             };
 
             chart.MouseLeftButtonDown += CheckedChart;
@@ -113,12 +116,9 @@ namespace DataAnalasisProj.View
             foreach (var itm in tabItems[currentChart])
             {
                 TabCtrl.Items.Add(itm);
+                //选中该item，内容才会显示
                 itm.IsSelected = true;
             }
-
-
-            //选中该item，内容才会显示
-            //item.IsSelected = true;
         }
 
 
@@ -218,19 +218,17 @@ namespace DataAnalasisProj.View
             {
                 Name = "温度",
                 Values = GetIntDatas(),
-                Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 3 },
+                //Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 3 }, //不写就是随即
                 LineSmoothness = 0.65, // 折线平滑度（0=直线，1=最弯曲，默认0.65）
                 EnableNullSplitting = true, // 遇到null值时断开折线（默认true）
-                Fill = new SolidColorPaint(SKColors.Blue.WithAlpha(60)),
+                //Fill = new SolidColorPaint(SKColors.Blue.WithAlpha(60)), //默认Fill
 
 
                 // 数据点样式（几何图形）
-                GeometrySize = 14, // 数据点几何图形大小（默认14）
+                GeometrySize = 1, // 数据点几何图形大小（默认14）
                 GeometryFill = new SolidColorPaint(SKColors.White), // 数据点填充色
                 GeometryStroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 2 }, // 数据点边框
             };
-            //series.Add(line);
-            //chart.Series = series;
             chartAndSeries[chart].Add(line);
             chart.Series = chartAndSeries[chart];
         }
@@ -264,7 +262,7 @@ namespace DataAnalasisProj.View
 
 
         private int tabControl_selectedindex;
-     
+
 
         private void TabCtrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
