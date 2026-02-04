@@ -10,7 +10,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using Dragablz;
+using LiveChartsGeneratedCode;
+using System.Windows.Input;
 
 namespace DataAnalasisProj.View
 {
@@ -20,48 +21,53 @@ namespace DataAnalasisProj.View
     public partial class DataAnalysisWnd : Window
     {
         public ObservableCollection<SimpleViewModel> ToolItems { get; }
+        private Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>> chartAndSeries = new Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>>();
+
         public DataAnalysisWnd()
         {
             InitializeComponent();
-            ToolItems = new ObservableCollection<SimpleViewModel>();
-            // 正确绑定方式：直接赋值给 LayoutablzControl 的 ToolItems 属性
+            ToolItems = new ObservableCollection<SimpleViewModel>();//界面xaml上绑定了这个类的两个属性
+            DragLyout.FloatingItemsSource = ToolItems; // 设置浮动项的数据源
 
-            DragLyout.FloatingItemsSource = ToolItems;
         }
 
         /// <summary>
-        /// 添加图表Chart
+        /// 为浮动项添加内容：添加Chart
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void AddChartButton_Click(object sender, RoutedEventArgs e)
         {
+            CartesianChart chart = new CartesianChart()
+            {
+                Background = Brushes.LightBlue, // 背景色
+                ZoomMode = LiveChartsCore.Measure.ZoomAndPanMode.X, // 缩放模式：仅X轴缩放/平移
+            };
+
+            chart.MouseLeftButtonDown += CheckedChart;
+
             ToolItems.Add(new SimpleViewModel()
             {
                 Name = $"图表 {ToolItems.Count + 1}",
-                SimpleContent = new CartesianChart()
-                {
-                    // 关键设置：让图表自动拉伸填满父容器
-            
-                    Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
-              
-                },
+                SimpleContent = chart,
             });
 
-            //MyGrid.Children.Add(new CartesianChart()
-            //{
-            //    // 关键设置：让图表自动拉伸填满父容器
-            //    HorizontalAlignment = HorizontalAlignment.Stretch,
-            //    VerticalAlignment = VerticalAlignment.Stretch,
-            //    Background = Brushes.LightBlue, // 加背景色，能直观看到图表控件
+            chartAndSeries.Add(chart, new ObservableCollection<ISeries>());
+        }
 
-            //});
+
+        private string floatingPanelHeaderName;
+        private void CheckedChart(object obj, MouseButtonEventArgs e)
+        {
+            //获取当前chart的parent的header内容
+            var chart = obj as CartesianChart;
+            if (null == chart) return;
+            var parentItem = chart.Parent as HeaderedDragablzItem;
+            floatingPanelHeaderName = parentItem?.HeaderContent?.ToString();
         }
 
         private void AddSeriesButton_Click(object sender, RoutedEventArgs e)
         {
             TabItem item = new TabItem();
-            item.Header = "曲线";
+            item.Header = $"曲线 {TabCtrl.Items.Count +1}";
 
             //新建一个Grid
             Grid grid = new Grid();
@@ -90,15 +96,25 @@ namespace DataAnalasisProj.View
             TabCtrl.Items.RemoveAt(TabCtrl.Items.Count - 1);
         }
 
+
+
+
         /// <summary>
         /// 确认
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            var kk = DragLyout.FloatingItems[0];
-            var activeFloatingItem = kk as SimpleViewModel;
+            if (null == floatingPanelHeaderName) return;
+            SimpleViewModel activeFloatingItem = null;
+            foreach (var item in DragLyout.FloatingItems)
+            {
+                if (floatingPanelHeaderName == ((SimpleViewModel)item).Name)
+                {
+                    activeFloatingItem = (SimpleViewModel)item;
+                    break;
+                }
+            }
+
             if (activeFloatingItem == null)
             {
                 MessageBox.Show("请先选中一个浮动图表窗口！");
@@ -106,7 +122,6 @@ namespace DataAnalasisProj.View
             }
 
             // 2. 提取浮动项中的 CartesianChart（你的浮动项 Content 就是 Chart）
-            //var targetChart = MyGrid.Children[0] as CartesianChart;
             var targetChart = activeFloatingItem.SimpleContent as CartesianChart;
             if (targetChart == null)
             {
@@ -117,37 +132,37 @@ namespace DataAnalasisProj.View
             CartesianChart chart = targetChart;
 
 
-
+            #region 轴设置(需要可设)
 
             // 3. 修复：必须显式添加X/Y轴，且匹配int数据范围（核心中的核心）
-            var xAxes = new Axis[]
-            {
-                new Axis
-                {
-                    Name = "X 轴",
-                    Labeler = value => $"{(int)value}", // 标签显示整数索引
-                    MinLimit = 0,
-                    MaxLimit = 300,
-                     // 强制显示刻度，确保轴渲染完整
-                   ShowSeparatorLines = true,
-                }
-            };
+            //var xAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        Name = "X 轴",
+            //        Labeler = value => $"{(int)value}", // 标签显示整数索引
+            //        MinLimit = 0,
+            //        MaxLimit = 300,
+            //         // 强制显示刻度，确保轴渲染完整
+            //       ShowSeparatorLines = true,
+            //    }
+            //};
 
-            var yAxes = new Axis[]
-            {
-                new Axis
-                {
-                    Name = "Y 轴",
-                    Labeler = value => $"{(int)value}", // 关键：标签显示整数，去掉小数位
-                    MinLimit =0,
-                    MaxLimit = 30,
-                    ShowSeparatorLines = true,
-                }
-            };
-            chart.XAxes = xAxes;
-            chart.YAxes = yAxes;
+            //var yAxes = new Axis[]
+            //{
+            //    new Axis
+            //    {
+            //        Name = "Y 轴",
+            //        Labeler = value => $"{(int)value}", // 关键：标签显示整数，去掉小数位
+            //        MinLimit =0,
+            //        MaxLimit = 30,
+            //        ShowSeparatorLines = true,
+            //    }
+            //};
+            //chart.XAxes = xAxes;
+            //chart.YAxes = yAxes;
 
-
+            #endregion
 
 
             var series = new ObservableCollection<ISeries>();
@@ -167,9 +182,10 @@ namespace DataAnalasisProj.View
                 GeometryFill = new SolidColorPaint(SKColors.White), // 数据点填充色
                 GeometryStroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 2 }, // 数据点边框
             };
-            series.Add(line);
-            chart.Series = series;
-
+            //series.Add(line);
+            //chart.Series = series;
+            chartAndSeries[chart].Add(line);
+            chart.Series = chartAndSeries[chart];
         }
 
 
@@ -198,6 +214,6 @@ namespace DataAnalasisProj.View
         }
 
         private readonly DragablzItemsControl _floatingItems;
-       
+
     }
 }

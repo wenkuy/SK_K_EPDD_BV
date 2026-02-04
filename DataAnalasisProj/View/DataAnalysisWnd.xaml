@@ -79,10 +79,10 @@
                 x:Name="MyGrid"
                 Grid.Column="0"
                 Background="#383838">
-                <!--  图表控件  -->
+                <!--  可拖拽的布局控件  -->
                 <dockablz:Layout
                     x:Name="DragLyout"
-                    FloatingItemDisplayMemberPath="SimpleContent"
+                    FloatingItemDisplayMemberPath="SimpleContent" 
                     FloatingItemHeaderMemberPath="Name" />
             </Grid>
 
@@ -103,18 +103,6 @@
                         FontSize="20" />
                 </StackPanel>
                 <TabControl Name="TabCtrl" Grid.Row="1" />
-
-                <!--<wpf:CartesianChart
-                     x:Name="MyChart"
-                    Grid.Row="1"
-                    SeriesSource="{Binding Data}">
-                    <wpf:CartesianChart.XAxes>
-                        <wpf:AxesCollection>
-                            <wpf:XamlAxis Labels="{Binding Labels}"/>
-                        </wpf:AxesCollection>
-                    </wpf:CartesianChart.XAxes>
-                </wpf:CartesianChart>-->
-
             </Grid>
         </Grid>
     </Grid>
