@@ -102,7 +102,7 @@
                         Content="删除曲线"
                         FontSize="20" />
                 </StackPanel>
-                <TabControl Name="TabCtrl" Grid.Row="1" />
+                <TabControl Name="TabCtrl" Grid.Row="1" SelectionChanged="TabCtrl_SelectionChanged"/>
             </Grid>
         </Grid>
     </Grid>

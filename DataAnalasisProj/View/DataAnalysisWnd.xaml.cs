@@ -22,6 +22,10 @@ namespace DataAnalasisProj.View
     {
         public ObservableCollection<SimpleViewModel> ToolItems { get; }
         private Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>> chartAndSeries = new Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>>();
+        private Dictionary<SourceGenCartesianChart, ObservableCollection<TabItem>> tabItems = new Dictionary<SourceGenCartesianChart, ObservableCollection<TabItem>>();
+
+        private string floatingPanelHeaderName;
+        private CartesianChart currentChart;
 
         public DataAnalysisWnd()
         {
@@ -54,7 +58,6 @@ namespace DataAnalasisProj.View
         }
 
 
-        private string floatingPanelHeaderName;
         private void CheckedChart(object obj, MouseButtonEventArgs e)
         {
             //获取当前chart的parent的header内容
@@ -62,12 +65,30 @@ namespace DataAnalasisProj.View
             if (null == chart) return;
             var parentItem = chart.Parent as HeaderedDragablzItem;
             floatingPanelHeaderName = parentItem?.HeaderContent?.ToString();
+            currentChart = chart;
+
+            //显示该chart的items
+            TabCtrl.Items.Clear();
+            if (!tabItems.ContainsKey(currentChart))
+            {
+                tabItems.Add(currentChart, new ObservableCollection<TabItem>());
+            }
+
+            if (!tabItems.TryGetValue(currentChart, out var collection) || collection?.Count == 0)
+            {
+                return;
+            }
+            foreach (var item in tabItems[currentChart])
+            {
+                TabCtrl.Items.Add(item);
+                item.IsSelected = true;
+            }
         }
 
         private void AddSeriesButton_Click(object sender, RoutedEventArgs e)
         {
             TabItem item = new TabItem();
-            item.Header = $"曲线 {TabCtrl.Items.Count +1}";
+            item.Header = $"曲线 {TabCtrl.Items.Count + 1}";
 
             //新建一个Grid
             Grid grid = new Grid();
@@ -85,15 +106,41 @@ namespace DataAnalasisProj.View
             Grid.SetRow(comfirm, 1);
 
             item.Content = grid;
-            TabCtrl.Items.Add(item);
+
+            //TabCtrl.Items.Add(item);
+            TabCtrl.Items.Clear();
+            tabItems[currentChart].Add(item);
+            foreach (var itm in tabItems[currentChart])
+            {
+                TabCtrl.Items.Add(itm);
+                itm.IsSelected = true;
+            }
+
 
             //选中该item，内容才会显示
-            item.IsSelected = true;
+            //item.IsSelected = true;
         }
 
+
+        /// <summary>
+        /// 删除曲线
+        /// </summary>
         private void DeleteSeriesButton_Click(object sender, RoutedEventArgs e)
         {
-            TabCtrl.Items.RemoveAt(TabCtrl.Items.Count - 1);
+            int index = tabControl_selectedindex;
+            if (0 == TabCtrl.Items.Count) return;
+            //TabCtrl.Items.RemoveAt(TabCtrl.Items.Count - 1);
+
+            tabItems[currentChart].RemoveAt(index);
+            TabCtrl.Items.Clear();
+            foreach (var itm in tabItems[currentChart])
+            {
+                TabCtrl.Items.Add(itm);
+                itm.IsSelected = true;
+            }
+
+            chartAndSeries[currentChart].RemoveAt(index);
+            currentChart.Series = chartAndSeries[currentChart];
         }
 
 
@@ -215,5 +262,13 @@ namespace DataAnalasisProj.View
 
         private readonly DragablzItemsControl _floatingItems;
 
+
+        private int tabControl_selectedindex;
+     
+
+        private void TabCtrl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tabControl_selectedindex = TabCtrl.SelectedIndex;
+        }
     }
 }
