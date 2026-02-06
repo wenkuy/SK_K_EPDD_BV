@@ -18,7 +18,6 @@ namespace CS_K_WPF
         }
 
 
-
         public void DelMessage(byte[] bytes)
         {
             // 1.提取头部信息
