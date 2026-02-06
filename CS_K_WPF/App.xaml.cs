@@ -4,6 +4,7 @@ using CS_K_WPF.view;
 using CS_K_WPF.viewModel;
 using DataAnalasisProj.View;
 using Database;
+using LoggerProj;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Meta;
 using System.Configuration;
@@ -18,18 +19,19 @@ namespace CS_K_WPF
     public partial class App : Application
     {
         /// <summary>
-        /// 这个是DI的全局容器
+        /// 这个是DI的全局容器，可以在应用程序的任何地方使用它来获取服务实例
         /// </summary>
         public static IServiceProvider GlobalServiceProvider;
-        private ServiceCollection service;
+        private IServiceCollection service;
         public App()
         {
-            //这是一个全局的DI服务容器，可以在应用程序的任何地方使用它来获取服务实例
             service  = new ServiceCollection();
             RegisterWndServices();
             RegisterPageServides();
-            GlobalServiceProvider = service.BuildServiceProvider();
+            GlobalServiceProvider = service.BuildServiceProvider(); //服务容器构建完成，不可再添加服务，只能获取服务【重点】
 
+            //日志注册
+            LogRegister.Register(service);
 
             //这个数数据库模块的初始化必须在应用程序启动时就进行，否则后续调用会报错
             DatebaseServiceProvider.Initialize();

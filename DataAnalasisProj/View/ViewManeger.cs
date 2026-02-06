@@ -12,7 +12,9 @@ namespace DataAnalasisProj.View
 {
     public class ViewManeger
     {
-
+        /// <summary>
+        /// 窗体注册管理器 --- 这个是定死的
+        /// </summary>
         public static void ViewRegisterManeger()
         {
             //typeOf() 返回该实例，但仅一个占位象征，徒有表象(仅存在元数据，不存在业务数据)，因此不能访问其成员，
@@ -23,7 +25,7 @@ namespace DataAnalasisProj.View
         }
 
         /// <summary>
-        /// 通用注册方法
+        /// 窗体注册管理器 --- 泛型灵活方式
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public static void ViewRegisterManegerGeneral<TMes, TWnd>() where TWnd : Window, new() where TMes : class

@@ -40,6 +40,7 @@ namespace CS_K_WPF
                     productInfo = ProtocolParsing.Deserialize<ProducttProductionRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_ProductDates(productInfo);
                     DatebaseServiceProvider.DatabaseServicesProvider().DBSaveObj(productInfo); //保存到数据库
+
                     break;
                 case 2: //设备状态信息
                     equipmentStateInfo = ProtocolParsing.Deserialize<EquipmentStateRecord>(content);
