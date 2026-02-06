@@ -85,7 +85,7 @@ namespace UdpSenderProj
                     if (CacheMessages.Count > 0)
                     {
                         dates = CacheMessages.Dequeue().Datas;
-                        Debug.WriteLine($"手打字节数：{dates.Length}");
+                        //Debug.WriteLine($"手打字节数：{dates.Length}");
                     }
                 }
                 if (dates.Length > 1)

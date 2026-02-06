@@ -1,4 +1,5 @@
 ﻿using BaseProj;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,11 +24,11 @@ namespace CS_K_WPF
         {
             InitializeComponent();
 
-       
+
             CommonDispatcherHelper.Init();
-       
-        //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
-        ReceiveMessages receiveMessages = new ReceiveMessages();  
+
+            //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
+            ReceiveMessages receiveMessages = App.GlobalServiceProvider.GetRequiredService<ReceiveMessages>();
 
             Task.Run(() =>
             {
@@ -45,7 +46,7 @@ namespace CS_K_WPF
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(WindowState.Maximized == this.WindowState)
+            if (WindowState.Maximized == this.WindowState)
             {
                 this.WindowState = WindowState.Normal;
             }

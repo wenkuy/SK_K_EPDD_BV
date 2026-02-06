@@ -1,5 +1,7 @@
 ﻿using Database;
 using Database.Model;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,12 @@ namespace CS_K_WPF
 {
     public class ReceiveMessages
     {
-        public ReceiveMessages()
+        private ILogger<ReceiveMessages> _logger;
+        public ReceiveMessages(ILogger<ReceiveMessages> logger)
         {
             UdpReceive.UDPMessAction = DelMessage;
+            _logger = logger;
         }
-
 
         public void DelMessage(byte[] bytes)
         {
@@ -39,7 +42,8 @@ namespace CS_K_WPF
                     productInfo = ProtocolParsing.Deserialize<ProducttProductionRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_ProductDates(productInfo);
                     DatebaseServiceProvider.DatabaseServicesProvider().DBSaveObj(productInfo); //保存到数据库
-
+                    _logger.LogInformation($"LogInformation: 设备编号:{productInfo.ProductNumber}, 产品批次:{productInfo.Param.Humidity}");
+                    
                     break;
                 case 2: //设备状态信息
                     equipmentStateInfo = ProtocolParsing.Deserialize<EquipmentStateRecord>(content);
