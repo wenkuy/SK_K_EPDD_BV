@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPServer", "Server\TCPServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpSenderProj", "UdpSender\UdpSenderProj.csproj", "{C16BD8E3-3CA6-4DD1-B7A9-B0A0C2AE3430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProj", "BaseProj\BaseProj.csproj", "{64E0282A-874C-455B-8E97-B3396B5C0EE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Base", "BaseProj\CS.Base.csproj", "{64E0282A-874C-455B-8E97-B3396B5C0EE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{DCB23E00-17D1-4290-B1AB-491EDD9B102C}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveChartsCore.SkiaSharpView.WPF", "C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\skiasharp\LiveChartsCore.SkiaSharp.WPF\LiveChartsCore.SkiaSharpView.WPF.csproj", "{B9B12A42-EED8-BAE6-BC21-A541BA3C4540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerProj", "LoggerProj\LoggerProj.csproj", "{CAE5DABA-B9C3-4A00-AA46-5005DADB678B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSK.Core", "CSK.Core\CSK.Core.csproj", "{EF8A2A6B-F304-4B6F-9F88-C737BB7B067C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{CAE5DABA-B9C3-4A00-AA46-5005DADB678B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE5DABA-B9C3-4A00-AA46-5005DADB678B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE5DABA-B9C3-4A00-AA46-5005DADB678B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF8A2A6B-F304-4B6F-9F88-C737BB7B067C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF8A2A6B-F304-4B6F-9F88-C737BB7B067C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF8A2A6B-F304-4B6F-9F88-C737BB7B067C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF8A2A6B-F304-4B6F-9F88-C737BB7B067C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

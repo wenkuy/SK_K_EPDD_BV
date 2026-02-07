@@ -1,5 +1,5 @@
-﻿using BaseProj;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using CSK.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

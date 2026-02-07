@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseProj\BaseProj.csproj" />
+    <ProjectReference Include="..\BaseProj\CS.Base.csproj" />
+    <ProjectReference Include="..\CSK.Core\CSK.Core.csproj" />
     <ProjectReference Include="..\DataAnalasisProj\DataAnalysisProj.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\LoggerProj\LoggerProj.csproj" />

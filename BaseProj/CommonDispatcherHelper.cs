@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BaseProj
+namespace CS.Base
 {
     public class CommonDispatcherHelper
     {

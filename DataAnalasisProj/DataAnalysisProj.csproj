@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseProj\BaseProj.csproj" />
+    <ProjectReference Include="..\BaseProj\CS.Base.csproj" />
+    <ProjectReference Include="..\CSK.Core\CSK.Core.csproj" />
     <ProjectReference Include="C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\LiveChartsCore\LiveChartsCore.csproj" />
     <ProjectReference Include="C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\skiasharp\LiveChartsCore.SkiaSharp.WPF\LiveChartsCore.SkiaSharpView.WPF.csproj" />
   </ItemGroup>

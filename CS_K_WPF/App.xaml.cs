@@ -1,7 +1,8 @@
-﻿using BaseProj;
+﻿global using CS.Base;
 using CommunityToolkit.Mvvm.Messaging;
 using CS_K_WPF.view;
 using CS_K_WPF.viewModel;
+using CSK.Core;
 using DataAnalasisProj.View;
 using Database;
 using LoggerProj;
