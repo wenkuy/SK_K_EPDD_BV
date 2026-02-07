@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UdpSenderProj
+namespace CS.Communication
 {
     internal class CacheMes
     {

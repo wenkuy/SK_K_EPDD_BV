@@ -1,4 +1,5 @@
-﻿using CS.Database;
+﻿using CS.Communication;
+using CS.Database;
 using CS.Database.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using UdpSenderProj;
 using static CS_K_WPF.Protocals;
 
 namespace CS_K_WPF
@@ -19,7 +19,7 @@ namespace CS_K_WPF
         private ILogger<ReceiveMessages> _logger;
         public ReceiveMessages(ILogger<ReceiveMessages> logger)
         {
-            UdpReceive.UDPMessAction = DelMessage;
+            UdpReceiver.UDPMessAction = DelMessage;
             _logger = logger;
         }
 

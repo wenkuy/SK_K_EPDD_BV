@@ -8,15 +8,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UdpSenderProj
+namespace CS.Communication
 {
-    public class UdpReceive
+    public class UdpReceiver
     {
         public static  Action<byte[]> UDPMessAction ;
         private Queue<CacheMes> CacheMessages = new Queue<CacheMes>();
         private static readonly object _lockobj = new object();
 
-        public UdpReceive()
+        public UdpReceiver()
         {
            
 

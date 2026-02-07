@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CS.Communication;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,8 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TCPServer;
-using UdpSenderProj;
 
 namespace CS_K_WPF
 {
@@ -32,13 +31,13 @@ namespace CS_K_WPF
             Task.Run(() =>
             {
 
-                TcpServerFun tcpServer = new TcpServerFun();
+                TcpServer tcpServer = new TcpServer();
                 tcpServer.TcpServerRun();
             });
 
             Task.Run(() =>
             {
-                UdpReceive udpReceive = new UdpReceive();
+                UdpReceiver udpReceive = new UdpReceiver();
                 udpReceive.UdpReceiveRun();
             });
         }

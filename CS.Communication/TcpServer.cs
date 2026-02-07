@@ -7,9 +7,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCPServer
+namespace CS.Communication
 {
-    public class TcpServerFun
+    public class TcpServer
     {
 
         static void Main(string[] args)
