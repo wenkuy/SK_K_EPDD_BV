@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Model
+namespace Database.Entity
 {
     [ProtoContract]
     public class EquipmentStateRecord

@@ -1,12 +1,14 @@
 ﻿using Database;
-using Database.Model;
+using Database.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using UdpSenderProj;
 using static CS_K_WPF.Protocals;
 
@@ -41,7 +43,7 @@ namespace CS_K_WPF
                 case 1: //商品信息
                     productInfo = ProtocolParsing.Deserialize<ProducttProductionRecord>(content);
                     ModelLocator.Instance.LocHomePageVM.Udp_ProductDates(productInfo);
-                    DatebaseServiceProvider.DatabaseServicesProvider().DBSaveObj(productInfo); //保存到数据库
+                    if (!DatebaseServiceProvider.DatabaseServicesProvider().DBSaveObj(productInfo)) Debug.WriteLine( "数据操作失败！");//保存到数据库
                     _logger.LogInformation($"LogInformation: 设备编号:{productInfo.ProductNumber}, 产品批次:{productInfo.Param.Humidity}");
                     
                     break;

@@ -24,7 +24,7 @@ namespace Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Database.Model.ProducttProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.ProducttProductionRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Database.Migrations
                     b.ToTable("T_ProducttProductionRecords", (string)null);
                 });
 
-            modelBuilder.Entity("Database.Model.ProducttProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.ProducttProductionRecord", b =>
                 {
                     b.OwnsOne("Database.Structs.ProductEnvironmentPraram", "Param", b1 =>
                         {

@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BaseProj\BaseProj.csproj" />
-    <ProjectReference Include="..\DataAnalasisProj\DataAnalasisProj.csproj" />
+    <ProjectReference Include="..\DataAnalasisProj\DataAnalysisProj.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\LoggerProj\LoggerProj.csproj" />
     <ProjectReference Include="..\Server\TCPServer.csproj" />

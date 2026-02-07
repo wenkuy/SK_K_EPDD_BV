@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProj", "BaseProj\BasePr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{DCB23E00-17D1-4290-B1AB-491EDD9B102C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalasisProj", "DataAnalasisProj\DataAnalasisProj.csproj", "{4970B5FF-082C-438A-A57D-30E6218DA383}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysisProj", "DataAnalasisProj\DataAnalysisProj.csproj", "{4970B5FF-082C-438A-A57D-30E6218DA383}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveChartsCore", "C:\Users\k2206\Desktop\LiveCharts2官网示例\LiveCharts2\src\LiveChartsCore\LiveChartsCore.csproj", "{47C7FF49-6A32-7884-1A72-03AE2F5C83FC}"
 EndProject

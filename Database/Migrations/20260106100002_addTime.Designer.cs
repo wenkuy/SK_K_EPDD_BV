@@ -24,7 +24,7 @@ namespace Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Database.Model.LineProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.LineProductionRecord", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace Database.Migrations
                     b.ToTable("T_LineProductionRecords", (string)null);
                 });
 
-            modelBuilder.Entity("Database.Model.MaterialRecord", b =>
+            modelBuilder.Entity("Database.Entity.MaterialRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace Database.Migrations
                     b.ToTable("T_MaterialRecords", (string)null);
                 });
 
-            modelBuilder.Entity("Database.Model.ProducttProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.ProducttProductionRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace Database.Migrations
                     b.ToTable("T_ProducttProductionRecords", (string)null);
                 });
 
-            modelBuilder.Entity("Database.Model.LineProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.LineProductionRecord", b =>
                 {
                     b.OwnsOne("Database.Structs.ProductOutput", "ProductsOutput", b1 =>
                         {
@@ -156,7 +156,7 @@ namespace Database.Migrations
                     b.Navigation("ProductsRate");
                 });
 
-            modelBuilder.Entity("Database.Model.MaterialRecord", b =>
+            modelBuilder.Entity("Database.Entity.MaterialRecord", b =>
                 {
                     b.OwnsOne("Database.Structs.QualityControl", "QualityPArams", b1 =>
                         {
@@ -192,7 +192,7 @@ namespace Database.Migrations
                     b.Navigation("QualityPArams");
                 });
 
-            modelBuilder.Entity("Database.Model.ProducttProductionRecord", b =>
+            modelBuilder.Entity("Database.Entity.ProducttProductionRecord", b =>
                 {
                     b.OwnsOne("Database.Structs.ProductEnvironmentPraram", "Param", b1 =>
                         {

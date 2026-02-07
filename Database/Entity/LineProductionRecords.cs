@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Model
+namespace Database.Entity
 {
     /// <summary>
     /// 产线生产记录

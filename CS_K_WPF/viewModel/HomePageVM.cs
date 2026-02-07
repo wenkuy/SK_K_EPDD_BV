@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Database;
-using Database.Model;
+using Database.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

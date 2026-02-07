@@ -1,5 +1,5 @@
 ﻿using Database.Config;
-using Database.Model;
+using Database.Entity;
 using Database.Structs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
