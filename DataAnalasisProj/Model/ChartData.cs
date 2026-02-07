@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAnalasisProj.Model
+namespace CS.DataAnalasis.Model
 {
     /// <summary>
     /// 自定义

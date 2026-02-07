@@ -14,7 +14,7 @@ using LiveChartsGeneratedCode;
 using System.Windows.Input;
 using LiveChartsCore.Measure;
 
-namespace DataAnalasisProj.View
+namespace CS.DataAnalasis.View
 {
     /// <summary>
     /// DataAnalysisWnd.xaml 的交互逻辑

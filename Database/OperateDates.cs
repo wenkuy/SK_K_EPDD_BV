@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace CS.Database
 {
     /// <summary>
     /// 不可鞥每个类都写一套查询，所以搞了泛型操作类，实现对数据库的增删查改

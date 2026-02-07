@@ -1,5 +1,5 @@
 ﻿
-using Database.Enum;
+using CS.Database.Enum;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Entity
+namespace CS.Database.Entity
 {
     [ProtoContract]
     public class EquipmentStateRecord

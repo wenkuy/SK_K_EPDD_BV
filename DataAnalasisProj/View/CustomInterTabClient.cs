@@ -1,7 +1,7 @@
 ﻿using Dragablz;
 using System.Windows;
 
-namespace DataAnalasisProj.View
+namespace CS.DataAnalasis.View
 {
     public class CustomInterTabClient : IInterTabClient
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DataAnalasisProj.View
+namespace CS.DataAnalasis.View
 {
     public class ViewManeger
     {

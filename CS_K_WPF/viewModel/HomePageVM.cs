@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Database;
-using Database.Entity;
+using CS.Database;
+using CS.Database.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -231,7 +231,7 @@ namespace CS_K_WPF.viewModel
             //修改测试
             DatebaseServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
 
-            return new LineProductionRecord() { ProductsRate = new Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
+            return new LineProductionRecord() { ProductsRate = new CS.Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
         }
     }
 }

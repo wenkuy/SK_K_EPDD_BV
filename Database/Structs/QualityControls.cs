@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Structs
+namespace CS.Database.Structs
 {
     [ProtoContract]
     public class QualityControl

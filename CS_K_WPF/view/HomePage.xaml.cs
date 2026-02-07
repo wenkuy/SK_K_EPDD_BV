@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using CS_K_WPF.view;
 using CSK.Core;
-using DataAnalasisProj.View;
+using CS.DataAnalasis.View;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

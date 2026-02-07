@@ -1,5 +1,5 @@
-﻿using Database;
-using Database.Entity;
+﻿using CS.Database;
+using CS.Database.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;

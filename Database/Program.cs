@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Database
+namespace CS.Database
 {
     internal class Program
     {

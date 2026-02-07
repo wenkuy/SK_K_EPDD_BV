@@ -1,6 +1,6 @@
-﻿using Database.Config;
-using Database.Entity;
-using Database.Structs;
+﻿using CS.Database.Config;
+using CS.Database.Entity;
+using CS.Database.Structs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Database
+namespace CS.Database
 {
     public class CSK_DBContext : DbContext
     {
@@ -20,7 +20,7 @@ namespace Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //string str = "Server=.;Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //string str = "Server=.;CS.Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true";
             string str = "Server=.;Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
             optionsBuilder.UseSqlServer(str);
         }

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAnalasisProj.View
+namespace CS.DataAnalasis.View
 {
     public class SimpleViewModel : INotifyPropertyChanged
     {
