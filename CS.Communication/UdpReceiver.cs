@@ -12,15 +12,9 @@ namespace CS.Communication
 {
     public class UdpReceiver
     {
-        public static  Action<byte[]> UDPMessAction ;
+        public static Action<byte[]> UDPMessAction;
         private Queue<CacheMes> CacheMessages = new Queue<CacheMes>();
         private static readonly object _lockobj = new object();
-
-        public UdpReceiver()
-        {
-           
-
-        }
 
         public void UdpReceiveRun()
         {

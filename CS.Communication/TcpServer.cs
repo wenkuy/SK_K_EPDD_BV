@@ -11,14 +11,8 @@ namespace CS.Communication
 {
     public class TcpServer
     {
-
-        static void Main(string[] args)
-        {
-
-        }
-
         private int _numOfMaxLinks = 500;
-        private ConcurrentQueue<TcpClient> _clientsQueue = new ConcurrentQueue<TcpClient>();
+        private ConcurrentQueue<TcpClient> _clientsQueue = new ConcurrentQueue<TcpClient>(); //这个是线程安全的队列，适合多线程环境下使用，避免了锁的使用，提高了性能
 
 
         public void TcpServerRun()
@@ -59,11 +53,10 @@ namespace CS.Communication
         private void AcceptClients(TcpListener server)
         {
             // 无限循环监听客户端
-            Console.Write("等待连接... ");
             while (true)
             {
                 // 阻塞调用：等待客户端连接（也可以用 server.AcceptSocket() 替代）
-                //using TcpClient client = server.AcceptTcpClient();
+                //using TcpClient client = server.AcceptTcpClient(); 用了using就完蛋，直接释放
                 TcpClient client = server.AcceptTcpClient();
                 _clientsQueue.Enqueue(client);
             }
