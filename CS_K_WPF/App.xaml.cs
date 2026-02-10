@@ -31,6 +31,7 @@ namespace CS_K_WPF
             RegisterWndServices(service);
             RegisterPageServides(service);
             LogRegister.Register(service);//日志注册
+            Resources["ModelLocator"] =  service.AddSingleton<ModelLocator>(); 
             service.AddSingleton<ReceiveMessages>(); //通信服务注册
             GlobalServiceProvider = service.BuildServiceProvider(); //服务容器构建完成，不可再添加服务，只能获取服务【重点】
 
