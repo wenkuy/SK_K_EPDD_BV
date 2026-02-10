@@ -35,7 +35,7 @@ namespace CS_K_WPF
             GlobalServiceProvider = service.BuildServiceProvider(); //服务容器构建完成，不可再添加服务，只能获取服务【重点】
 
             //这个数数据库模块的初始化必须在应用程序启动时就进行，否则后续调用会报错
-            DatebaseServiceProvider.Initialize();
+            DatabaseServiceProvider.Register(service);
 
             //数据分析模块需要在这里提前注册消息
             //ViewManeger.ViewRegisterManeger();

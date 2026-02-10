@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -16,11 +17,14 @@ namespace CS.Database
     public class OperationDate : IDBRecordPOperation
     {
         
-        private readonly CSK_DBContext _dbc;
-        public OperationDate(CSK_DBContext dbc)
+        private readonly CSK_DBContext _dbc; //DI注入
+        private ILogger<OperationDate> _logger;
+        public OperationDate(CSK_DBContext dbc , ILogger<OperationDate> logger) 
         {
             _dbc = dbc;
+            _logger = logger;
         }
+
         public bool DBDeleteObj<T>(Expression<Func<T, bool>> expression) where T : class
         {
 
@@ -29,8 +33,9 @@ namespace CS.Database
                 _dbc.Set<T>().Where(expression).ExecuteDelete();//查出符合条件的数据，批量删除
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return false ;
             }
         }
@@ -42,8 +47,9 @@ namespace CS.Database
             {
                 return _dbc.Set<T>().Where(expression).ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return null;
             }
         }
@@ -56,8 +62,9 @@ namespace CS.Database
                 // Attempt to retrieve a single entity matching the expression
                 return _dbc.Set<T>().FirstOrDefault(expression);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return null; // Return false if an exception occurs
             }
 
@@ -77,8 +84,9 @@ namespace CS.Database
                 _dbc.SaveChanges(); // Save changes to the database
                 return true; // Return true if the operation succeeds
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return false; // Return false if an exception occurs
             }
         }
@@ -99,8 +107,9 @@ namespace CS.Database
                 _dbc.Set<T>().Where(expression).ExecuteUpdate(updateExpression);//查出符合条件的数据，批量更新
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return false;
             }
         }

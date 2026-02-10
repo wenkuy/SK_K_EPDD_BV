@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Azure;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CS.Database;
@@ -105,8 +106,12 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private ObservableCollection<LineProductionRecord> lineProductionRecordColloections = new ObservableCollection<LineProductionRecord>();
 
-        public HomePageVM(IServiceProvider serviceProvider)
+        private IDBRecordPOperation _dbOperation;
+
+        public HomePageVM(IServiceProvider serviceProvider, IDBRecordPOperation dbOperation)
         {
+            _dbOperation = dbOperation;
+
             this.serviceProvider = serviceProvider;
             ButtonClickCMD = new RelayCommand(async () =>
             {
@@ -213,12 +218,12 @@ namespace CS_K_WPF.viewModel
             //   e => StrTimeToDateTime.StrToDateTIme(e.ProductTime) >= startTime && StrTimeToDateTime.StrToDateTIme(e.ProductTime) <= startTime.AddHours(hours));
 
             //1. 按小时 -天 -周 -月 -年统计
-            string strtime = DatebaseServiceProvider.DatabaseServicesProvider().DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
+            string strtime = _dbOperation.DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
             DateTime time = StrTimeToDateTime.StrToDateTime(strtime);
 
             //ProducttProductionRecord[] productRocords = ServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
             //  e => time <= StrTimeToDateTime.StrToDateTime(e.ProductTime) && StrTimeToDateTime.StrToDateTime(e.ProductTime) <= time.AddHours(hours));
-            ProducttProductionRecord[] productRocords = DatebaseServiceProvider.DatabaseServicesProvider().DBGetObjs<ProducttProductionRecord>(
+            ProducttProductionRecord[] productRocords = _dbOperation.DBGetObjs<ProducttProductionRecord>(
               e => e.ProductNumber == "A-XH-GHTY0215");
 
 
@@ -234,10 +239,10 @@ namespace CS_K_WPF.viewModel
             }
 
             //删除测试
-            DatebaseServiceProvider.DatabaseServicesProvider().DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
+            _dbOperation.DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
 
             //修改测试
-            DatebaseServiceProvider.DatabaseServicesProvider().EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
+            _dbOperation.EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
 
             return new LineProductionRecord() { ProductsRate = new CS.Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
         }
