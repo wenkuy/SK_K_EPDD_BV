@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS_K_WPF
+namespace CS.Base
+
 {
     public class ProtocolParsing
     {

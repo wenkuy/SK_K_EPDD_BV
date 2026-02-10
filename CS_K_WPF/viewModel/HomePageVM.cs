@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using CS.Database;
 using CS.Database.Entity;
+using CSK.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -112,9 +114,15 @@ namespace CS_K_WPF.viewModel
                 LineProductionRecord r = await Task.Run<LineProductionRecord>(() => StatisticalData(2));
                 LineProductionRecordColloections.Add(r);
             });
+
+            //注册：接受来自CS.Communication模块发来的UDP数据(已经根据协议去掉了头的content---byte[])
+            WeakReferenceMessenger.Default.Register<UdpDataForProducttProductionRecordMes>(this, (recipient, message) =>
+            {
+                RealtimeProduct = ProtocolParsing.Deserialize<ProducttProductionRecord>(message.Content);//字节流转成对象
+            });
         }
 
-    
+
 
 
 

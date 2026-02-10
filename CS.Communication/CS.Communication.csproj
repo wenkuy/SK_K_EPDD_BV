@@ -7,4 +7,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="protobuf-net" Version="3.2.56" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseProj\CS.Base.csproj" />
+    <ProjectReference Include="..\CSK.Core\CSK.Core.csproj" />
+    <ProjectReference Include="..\LoggerProj\LoggerProj.csproj" />
+  </ItemGroup>
+
 </Project>

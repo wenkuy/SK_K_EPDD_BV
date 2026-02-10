@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace CS_K_WPF
+namespace CS_K_WPF.Helper
 {
     public class DispacherHelper
     {

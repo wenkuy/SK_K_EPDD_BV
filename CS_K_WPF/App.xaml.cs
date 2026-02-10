@@ -11,6 +11,7 @@ using ProtoBuf.Meta;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using CS.Communication;
 
 namespace CS_K_WPF
 {
@@ -29,10 +30,8 @@ namespace CS_K_WPF
             service  = new ServiceCollection();
             RegisterWndServices(service);
             RegisterPageServides(service);
-            //日志注册
-            LogRegister.Register(service);
-
-            service.AddSingleton<ReceiveMessages>();
+            LogRegister.Register(service);//日志注册
+            service.AddSingleton<ReceiveMessages>(); //通信服务注册
             GlobalServiceProvider = service.BuildServiceProvider(); //服务容器构建完成，不可再添加服务，只能获取服务【重点】
 
             //这个数数据库模块的初始化必须在应用程序启动时就进行，否则后续调用会报错
