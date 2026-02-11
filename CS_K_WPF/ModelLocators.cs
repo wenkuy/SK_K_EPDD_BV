@@ -9,7 +9,6 @@ namespace CS_K_WPF
 {
     public class ModelLocator
     {
-
         public HomePageVM LocHomePageVM { get; init; } //不要{set}，杜绝被修改
         public NavigationPageVM LocNavigationPageVM { get; init; }
         public MainPageVM LocMainPageVM { get; init; }
@@ -17,7 +16,7 @@ namespace CS_K_WPF
 
         public ModelLocator(HomePageVM homePageVM,NavigationPageVM navigationPageVM, MainPageVM mainPageVM)
         {
-            LocHomePageVM = homePageVM; //【2】享受服务
+            LocHomePageVM = homePageVM; 
             LocNavigationPageVM = navigationPageVM;
             LocMainPageVM = mainPageVM;
         }

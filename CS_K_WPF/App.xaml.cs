@@ -27,20 +27,25 @@ namespace CS_K_WPF
         private IServiceCollection service;
         public App()
         {
-            service  = new ServiceCollection();
+            
+        }
+
+        private void DIContainerInit()
+        {
+            service = new ServiceCollection();
             RegisterWndServices(service);
             RegisterPageServides(service);
             LogRegister.Register(service);//日志注册
-            Resources["ModelLocator"] =  service.AddSingleton<ModelLocator>(); 
+            service.AddSingleton<ModelLocator>();
             service.AddSingleton<ReceiveMessages>(); //通信服务注册
-            GlobalServiceProvider = service.BuildServiceProvider(); //服务容器构建完成，不可再添加服务，只能获取服务【重点】
-
-            //这个数数据库模块的初始化必须在应用程序启动时就进行，否则后续调用会报错
             DatabaseServiceProvider.Register(service);
-
-            //数据分析模块需要在这里提前注册消息
-            //ViewManeger.ViewRegisterManeger();
-            ViewManeger.ViewRegisterManegerGeneral<OpenAnalysisWindowMes,DataAnalysisWnd>();
+            //-----------服务容器构建完成，不可再添加服务，只能获取服务【重点】-------------
+            GlobalServiceProvider = service.BuildServiceProvider(); 
+            
+            
+            Resources["ModelLocator"] = GlobalServiceProvider.GetRequiredService<ModelLocator>();
+            
+            ViewManeger.ViewRegisterManegerGeneral<OpenAnalysisWindowMes, DataAnalysisWnd>();
         }
 
 
@@ -63,6 +68,14 @@ namespace CS_K_WPF
             service.AddSingleton<MainPageVM>();
         }
 
+        private void Application_StartUp(object sender, StartupEventArgs e)
+        {
+            DIContainerInit();
+
+            //// 直接new MainWindow并显示，和之前逻辑一致
+            //MainWindow mainWindow = new MainWindow();
+            //mainWindow.Show();
+        }
     }
 
 
