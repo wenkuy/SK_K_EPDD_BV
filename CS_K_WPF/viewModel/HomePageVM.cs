@@ -120,7 +120,7 @@ namespace CS_K_WPF.viewModel
                 LineProductionRecordColloections.Add(r);
             });
 
-            //注册：接受来自CS.Communication模块发来的UDP数据(已经根据协议去掉了头的content---byte[])
+            //注册：接受来自CS.Communication模块发来的UDP数据(已经根据协议去掉了头的content---byte[]) -- 为了解耦采用该方式
             WeakReferenceMessenger.Default.Register<UdpDataForProducttProductionRecordMes>(this, (recipient, message) =>
             {
                 RealtimeProduct = ProtocolParsing.Deserialize<ProducttProductionRecord>(message.Content);//字节流转成对象
