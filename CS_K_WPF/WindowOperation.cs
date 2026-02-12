@@ -19,9 +19,11 @@ namespace CS_K_WPF
         /*你在 App 里构建的 GlobalServiceProvider 就是整个程序的 DI 容器本身。
          * 当你通过 GlobalServiceProvider.GetRequiredService<IWindowOperation>() 获取 WindowOperation 实例时，
          * DI 容器会自动把  它自己（IServiceProvider 接口的实现）注入到 WindowOperation 的构造函数里
-         这样 WindowOperation 内部的 _serviceProvider 就是全局容器的引用，
-        它可以用这个容器去获取任何你注册过的服务（比如 DataAnalysisWnd、各种 ViewModel 等）
-        解耦更彻底：WindowOperation 不依赖 App 类，只依赖标准的 IServiceProvider 接口，复用性更强。
+         这样 WindowOperation 内部的 _serviceProvider 就是全局容器的引用。
+
+        但是这是一种伪DI用法(也叫服务定位器用法ServiceLocator)，仅在特殊情况下，其他的服务获取还是的遵循正常的依赖注入方式，
+        不能在构造函数里直接获取全局容器来获取服务实例，这样会导致代码耦合度过高，难以维护和测试。
+        
          */
         public WindowOperation(IServiceProvider serviceProvider)  //DI会自己注入自己，这里获取全局的容器
         {
