@@ -28,9 +28,18 @@ namespace CS.DataAnalasis.View
         /// 窗体注册管理器 --- 泛型灵活方式
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void ViewRegisterManegerGeneral<TMes, TWnd>() where TWnd : Window, new() where TMes : class
+        //public static void ViewRegisterManegerGeneral<TMes, TWnd>() where TWnd : Window, new() where TMes : class
+        //{
+        //    WeakReferenceMessenger.Default.Register<TMes>(typeof(TWnd), (obj, message) => { (new TWnd()).Show(); });
+        //}
+
+        //你这个东西不应该放到其他模块去，让其他模块依赖这些窗体类。
+
+
+        public static void Init()
         {
-            WeakReferenceMessenger.Default.Register<TMes>(typeof(TWnd), (obj, message) => { (new TWnd()).Show(); });
+            WeakReferenceMessenger.Default.Register<OpenAnalysisWindowMes>(typeof(DataAnalysisWnd), (obj, message) => { (new DataAnalysisWnd()).Show(); });
         }
+
     }
 }

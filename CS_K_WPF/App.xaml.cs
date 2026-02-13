@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using CS.Communication;
+using System.Reflection;
 
 namespace CS_K_WPF
 {
@@ -44,8 +45,8 @@ namespace CS_K_WPF
 
 
             Resources["ModelLocator"] = GlobalServiceProvider.GetRequiredService<ModelLocator>();
-
-            ViewManeger.ViewRegisterManegerGeneral<OpenAnalysisWindowMes, DataAnalysisWnd>();
+            MessageRegister(GlobalServiceProvider); //报警窗口Message注册
+            ViewManeger.Init();
         }
 
 
@@ -56,6 +57,7 @@ namespace CS_K_WPF
         {
             service.AddTransient<IWindowOperation, WindowOperation>();
             service.AddTransient<DataAnalysisWnd>();
+            service.AddTransient<ExceptionWnd>();
         }
 
         /// <summary>
@@ -66,6 +68,22 @@ namespace CS_K_WPF
             service.AddSingleton<HomePageVM>();
             service.AddSingleton<NavigationPageVM>();
             service.AddSingleton<MainPageVM>();
+
+            service.AddTransient<ExceptionWndVM>();
+        }
+
+        private void MessageRegister(IServiceProvider provider)
+        {
+            WeakReferenceMessenger.Default.Register<OpenExceptionWindowMes>(typeof(ExceptionWnd), (obj, TMes) =>
+            {
+                var wnd = provider.GetRequiredService<ExceptionWnd>();
+                var vm = provider.GetRequiredService<ExceptionWndVM>();
+                vm.Title = TMes.Title;
+                vm.MesForDev = TMes.ExpMesForDeveloper;
+                vm.MesForUser = TMes.ExpMesForUser;
+                wnd.DataContext = vm;
+                wnd.Show();
+            });
         }
 
         private void Application_StartUp(object sender, StartupEventArgs e)
@@ -91,7 +109,9 @@ namespace CS_K_WPF
         private void UIExceptionHandler(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             // 这里可以记录日志、显示错误信息等
-            MessageBox.Show($"[UIExcep]拦截到未处理的UI异常: {e.Exception.Message}", "kk错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            //MessageBox.Show($"[UIExcep]拦截到未处理的UI异常: {e.Exception.Message}", "kk错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            WeakReferenceMessenger.Default.Send(new OpenExceptionWindowMes("[UIExcep]拦截到未处理的UI异常", e.Exception.Message, e.Exception.StackTrace.ToString()));
+
             e.Handled = true; // 标记异常已处理，防止程序崩溃
         }
 

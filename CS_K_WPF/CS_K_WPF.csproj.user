@@ -11,6 +11,9 @@
     <Compile Update="view\EquipmentPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="view\ExceptionWnd.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="view\HomePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

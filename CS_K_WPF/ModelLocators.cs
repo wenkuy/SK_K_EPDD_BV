@@ -9,16 +9,21 @@ namespace CS_K_WPF
 {
     public class ModelLocator
     {
-        public HomePageVM LocHomePageVM { get; init; } //不要{set}，杜绝被修改
-        public NavigationPageVM LocNavigationPageVM { get; init; }
-        public MainPageVM LocMainPageVM { get; init; }
+        public HomePageVM LocHomePageVM { get => serviceProvider.GetRequiredService<HomePageVM>(); }
+        public NavigationPageVM LocNavigationPageVM { get => serviceProvider.GetRequiredService<NavigationPageVM>(); }
+        public MainPageVM LocMainPageVM { get => serviceProvider.GetRequiredService<MainPageVM>(); }
+
+        public ExceptionWndVM LocExceptionWndVM { get => serviceProvider.GetRequiredService<ExceptionWndVM>(); }
 
 
-        public ModelLocator(HomePageVM homePageVM,NavigationPageVM navigationPageVM, MainPageVM mainPageVM)
+
+
+        private IServiceProvider serviceProvider { get; init; }//不要{set}，杜绝被修改
+        public ModelLocator(IServiceProvider serviceProvider)
         {
-            LocHomePageVM = homePageVM; 
-            LocNavigationPageVM = navigationPageVM;
-            LocMainPageVM = mainPageVM;
+            this.serviceProvider = serviceProvider;
         }
+
+
     }
 }

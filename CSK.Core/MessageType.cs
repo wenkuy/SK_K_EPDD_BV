@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,19 @@ using System.Threading.Tasks;
 namespace CSK.Core
 {
     public class OpenAnalysisWindowMes { }
+    public class OpenExceptionWindowMes 
+    {
+        public OpenExceptionWindowMes(string Title, string ExpMesForUser, string ExpMesForDeveloper)
+        {
+            this.Title = Title;
+            this.ExpMesForUser = ExpMesForUser;
+            this.ExpMesForDeveloper = ExpMesForDeveloper;
+        }
+        public string Title;
+        public string ExpMesForUser;
+        public string ExpMesForDeveloper;
+
+    }
     public class UdpDataForProducttProductionRecordMes
     {
        public byte[] Content;

@@ -111,7 +111,7 @@ namespace CS_K_WPF.viewModel
         public HomePageVM(IServiceProvider serviceProvider, IDBRecordPOperation dbOperation)
         {
             _dbOperation = dbOperation;
-
+           
             this.serviceProvider = serviceProvider;
             ButtonClickCMD = new RelayCommand(async () =>
             {
@@ -225,7 +225,6 @@ namespace CS_K_WPF.viewModel
             //  e => time <= StrTimeToDateTime.StrToDateTime(e.ProductTime) && StrTimeToDateTime.StrToDateTime(e.ProductTime) <= time.AddHours(hours));
             ProducttProductionRecord[] productRocords = _dbOperation.DBGetObjs<ProducttProductionRecord>(
               e => e.ProductNumber == "A-XH-GHTY0215");
-
 
             // 2.统计分析
             // 2.1统计time内产量 合格率  故障率
