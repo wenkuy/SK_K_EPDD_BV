@@ -26,6 +26,9 @@ namespace CS_K_WPF
         /// </summary>
         public static IServiceProvider GlobalServiceProvider { get; private set; }
         private IServiceCollection service;
+
+        private string uniqueToken = "F88E8E09-7905-4F2F-8A9E-98D7B6E87C12";
+        private static Mutex mutex;
         public App()
         {
 
@@ -88,11 +91,13 @@ namespace CS_K_WPF
 
         private void Application_StartUp(object sender, StartupEventArgs e)
         {
+            Application_IsCAnRun();
 
             //1.拦截UI异常
             DispatcherUnhandledException += UIExceptionHandler;
 
-            //2.拦截异步任务异常
+            //2.拦截异步任务异常(防止task内的异常，此异常不会抛而给到了返回值内，如果从未用过返回值，没取出来去catch或者throw出来，
+            //则到该task被GC回收时，触发异常导致报错或者崩溃)
             TaskScheduler.UnobservedTaskException += TaskExceptionHandler;
 
             //3.全局兜底异常拦截
@@ -127,6 +132,25 @@ namespace CS_K_WPF
             // 这里可以记录日志、显示错误信息等
             MessageBox.Show($"[TaskExcep]拦截到未处理的异步任务异常: {e.Exception.Message}", "kk错误", MessageBoxButton.OK, MessageBoxImage.Error);
             e.SetObserved(); // 标记异常已观察，防止程序崩溃
+        }
+
+
+        private void Application_IsCAnRun()
+        {
+            //uniqueToken一定要确保唯一，如果不唯一的话存在重名，系统就会判定这是同一个锁，会认为这个程序已经在运行了，导致你无法启动，或者导致其他程序无法启动，这既是误伤！
+            mutex = new Mutex(true, uniqueToken, out bool iscanRun);
+            if(!iscanRun)
+            {
+                MessageBox.Show("程序已经在运行了！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                mutex.Dispose();
+                App.Current.Shutdown(); //WPF 推荐的正常退出方式，走生命周期、优雅收尾；
+                //Environment.Exit(0); //强制退出，绕过生命周期，直接杀进程；
+            }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            mutex?.Dispose();
         }
     }
 }

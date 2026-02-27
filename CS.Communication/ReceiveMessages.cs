@@ -49,7 +49,6 @@ namespace CS.Communication
                 case 3:
                     WeakReferenceMessenger.Default.Send(new UdpMaterialRecordMes(content));
                     break;
-
                 default:
                     break;
             }

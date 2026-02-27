@@ -19,7 +19,7 @@ namespace CS.Database
         
         private readonly CSK_DBContext _dbc; //DI注入
         private ILogger<OperationDate> _logger;
-        public OperationDate(CSK_DBContext dbc , ILogger<OperationDate> logger) 
+        public OperationDate(CSK_DBContext dbc , ILogger<OperationDate> logger) //Logger注入，记录日志
         {
             _dbc = dbc;
             _logger = logger;

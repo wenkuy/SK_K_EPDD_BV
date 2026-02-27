@@ -6,6 +6,7 @@ using CS.Database;
 using CS.Database.Entity;
 using CSK.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -107,11 +108,12 @@ namespace CS_K_WPF.viewModel
         private ObservableCollection<LineProductionRecord> lineProductionRecordColloections = new ObservableCollection<LineProductionRecord>();
 
         private IDBRecordPOperation _dbOperation;
-
-        public HomePageVM(IServiceProvider serviceProvider, IDBRecordPOperation dbOperation)
+        private ILogger<HomePageVM> _log;
+        public HomePageVM(IServiceProvider serviceProvider, IDBRecordPOperation dbOperation, ILogger<HomePageVM> logger) //Logger注入，记录日志
         {
             _dbOperation = dbOperation;
-           
+            _log = logger;
+
             this.serviceProvider = serviceProvider;
             ButtonClickCMD = new RelayCommand(async () =>
             {
@@ -124,6 +126,7 @@ namespace CS_K_WPF.viewModel
             WeakReferenceMessenger.Default.Register<UdpDataForProducttProductionRecordMes>(this, (recipient, message) =>
             {
                 RealtimeProduct = ProtocolParsing.Deserialize<ProducttProductionRecord>(message.Content);//字节流转成对象
+                
             });
         }
 
@@ -163,6 +166,10 @@ namespace CS_K_WPF.viewModel
                     }
                 }
             }
+
+          
+            // With this corrected line:
+            _log.LogInformation($"ProductsDynamicData: ProductNumber={mes.ProductNumber}, TimeConsumed={mes.TimeConsumed}, QualityInspectionResult={mes.QualityInspectionResult}, ProductTime={mes.ProductTime}");
         }
 
 

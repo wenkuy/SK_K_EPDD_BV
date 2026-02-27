@@ -35,11 +35,11 @@ namespace CS_K_WPF
                 tcpServer.TcpServerRun();
             });
 
-            Task.Run(() =>
+            Task.Factory.StartNew(() => //目的是不用thread，也不占用线程池资源
             {
                 UdpReceiver udpReceive = new UdpReceiver();
                 udpReceive.UdpReceiveRun();
-            });
+            },TaskCreationOptions.LongRunning);
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

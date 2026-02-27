@@ -97,10 +97,13 @@ namespace CS.Communication
                     Console.WriteLine("发送数据: {0}", data);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 client.Dispose();
                 client = null;
+                throw ;
+                //throw ex;  听说这种会丢失原始异常的堆栈信息，不推荐使用，直接 throw 就行了，能保留原始异常的堆栈信息，更有利于调试和定位问题。
+
             }
 
 
