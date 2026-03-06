@@ -13,7 +13,8 @@ namespace CS.Communication
     public class UdpReceiver
     {
         public static Action<byte[]> UDPMessAction;
-        private Queue<CacheMes> CacheMessages = new Queue<CacheMes>();
+        //private Queue<CacheMes> CacheMessages = new Queue<CacheMes>();
+        private ConcurrentQueue<CacheMes> CacheMessages = new ConcurrentQueue<CacheMes>();
         private static readonly object _lockobj = new object();
 
         public void UdpReceiveRun()
@@ -45,16 +46,17 @@ namespace CS.Communication
                         string ip = senderEndPoint.Address.MapToIPv4().ToString();
                         int port = senderEndPoint.Port;
 
-                        lock (_lockobj)
-                        {
+                        //lock (_lockobj)
+                        //{
                             CacheMessages.Enqueue(new CacheMes() { IP = ip, Port = port, Datas = dates });
 
                             //队列缓存限制
                             if (CacheMessages.Count > 100)
                             {
-                                CacheMessages.Dequeue();
+                                //CacheMessages.Dequeue();
+                                CacheMessages.TryDequeue(out _);
                             }
-                        }
+                        //}
 
                     }
                     catch (Exception ex)
@@ -74,19 +76,20 @@ namespace CS.Communication
             byte[] dates = new byte[1];
             while (true)
             {
-                lock (_lockobj)
-                {
+                //lock (_lockobj)
+                //{
                     if (CacheMessages.Count > 0)
                     {
-                        dates = CacheMessages.Dequeue().Datas;
-                        //Debug.WriteLine($"手打字节数：{dates.Length}");
+                        //dates = CacheMessages.Dequeue().Datas;
+                        CacheMessages.TryDequeue(out var item);
+                        dates = item.Datas;
                     }
-                }
+                //}
                 if (dates.Length > 1)
                 {
                     UDPMessAction?.Invoke(dates);
                 }
-                dates = new byte[1];
+                //dates = new byte[1];
             }
         }
     }

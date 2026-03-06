@@ -44,7 +44,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                         <TextBlock Text="设备编号" />
-                        <ComboBox
+                        <ComboBox ItemsPanel="StackPanel"
                             Width="250"
                             Height="40"
                             VerticalAlignment="Top">
