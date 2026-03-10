@@ -5,10 +5,83 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CS_K_WPF.view"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:CS_K_WPF.Model"
     Title="UserPage"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding UserPageVM, Source={StaticResource ModelLocator}}"
     mc:Ignorable="d">
+    <Page.Resources>
 
-    <Grid />
+        <!--  按钮的外观  -->
+        <ControlTemplate x:Key="K1" TargetType="{x:Type Button}">
+            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+
+        数据展示形式
+        <DataTemplate x:Key="K2" DataType="{x:Type model:ButtonCLass}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Txt}" />
+                <Image Grid.Column="1" Source="{Binding ImgPath}" />
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Row="0" Grid.Column="0">
+            <ListBoxItem>124</ListBoxItem>
+            <ListBoxItem>124</ListBoxItem>
+            <ListBoxItem>124</ListBoxItem>
+        </ListBox>
+
+        <ListView
+            Grid.Row="1"
+            Grid.Column="0"
+            ItemsSource="{Binding StudentCollections}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding StudentId}" Header="学号" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="姓名" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Header="年龄" />
+
+                    <!--<GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="修改密码" Command="{Binding EditPasswordCommand}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="250"
+            Height="80"
+            Background="DarkSeaGreen"
+            Content="{Binding MyButtonOne}"
+            ContentTemplate="{StaticResource K2}"
+            FontSize="20"
+            Template="{StaticResource K1}" />
+    </Grid>
 </Page>

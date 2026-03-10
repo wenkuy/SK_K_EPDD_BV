@@ -34,7 +34,6 @@ namespace CS_K_WPF.viewModel
 
         public RelayCommand ButtonClickCMD { get; }
 
-
         // 在 HomePageVM 类的开头添加
         private readonly object _LockOnProducts = new object();
 

@@ -71,6 +71,8 @@ namespace CS_K_WPF
             service.AddSingleton<HomePageVM>();
             service.AddSingleton<NavigationPageVM>();
             service.AddSingleton<MainPageVM>();
+            service.AddSingleton<SettingPageVm>();
+            service.AddSingleton<UserPageVM>();
 
             service.AddTransient<ExceptionWndVM>();
         }

@@ -8,7 +8,61 @@
     Title="SettingPage"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding SettingPageVm, Source={StaticResource ModelLocator}}"
     mc:Ignorable="d">
+    <Page.Resources>
+        <HierarchicalDataTemplate x:Key="TreevireOne">
 
-    <Grid />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+        </HierarchicalDataTemplate>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <TreeView ItemsSource="{Binding TestClassCollections}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                            <Ellipse Grid.Column="1" Fill="{Binding LightOne}" />
+                            <Ellipse Grid.Column="2" Fill="{Binding LightTwo}" />
+                        </Grid>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+
+            </TreeView>
+        </Grid>
+
+        <Grid Grid.Column="0">
+            <TreeView ItemsSource="{Binding TestClassCollections}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock FontSize="32" Text="{Binding Name}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+
+            </TreeView>
+        </Grid>
+
+    </Grid>
 </Page>

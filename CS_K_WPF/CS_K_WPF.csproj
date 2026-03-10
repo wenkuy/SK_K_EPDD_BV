@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resource\PhonePng.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BaseProj\CS.Base.csproj" />
     <ProjectReference Include="..\CS.Communication\CS.Communication.csproj" />
     <ProjectReference Include="..\CSK.Core\CSK.Core.csproj" />
@@ -29,7 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Resource Include="Resource\PhonePng.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

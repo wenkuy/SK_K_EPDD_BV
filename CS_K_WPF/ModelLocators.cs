@@ -12,6 +12,8 @@ namespace CS_K_WPF
         public HomePageVM LocHomePageVM { get => serviceProvider.GetRequiredService<HomePageVM>(); }
         public NavigationPageVM LocNavigationPageVM { get => serviceProvider.GetRequiredService<NavigationPageVM>(); }
         public MainPageVM LocMainPageVM { get => serviceProvider.GetRequiredService<MainPageVM>(); }
+        public SettingPageVm SettingPageVm { get => serviceProvider.GetRequiredService<SettingPageVm>(); }
+        public UserPageVM UserPageVM { get => serviceProvider.GetRequiredService<UserPageVM>(); }
 
         public ExceptionWndVM LocExceptionWndVM { get => serviceProvider.GetRequiredService<ExceptionWndVM>(); }
 
