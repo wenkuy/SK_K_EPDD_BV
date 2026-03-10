@@ -20,7 +20,7 @@
             </Border>
         </ControlTemplate>
 
-        数据展示形式
+        <!--  数据展示形式  -->
         <DataTemplate x:Key="K2" DataType="{x:Type model:ButtonCLass}">
             <Grid>
                 <Grid.ColumnDefinitions>
