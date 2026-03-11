@@ -22,7 +22,7 @@
 
         <!--  数据展示形式  -->
         <DataTemplate x:Key="K2" DataType="{x:Type model:ButtonCLass}">
-            <Grid>
+            <Grid Height="80">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -31,6 +31,13 @@
                 <Image Grid.Column="1" Source="{Binding ImgPath}" />
             </Grid>
         </DataTemplate>
+
+        <ControlTemplate x:Key="K3_List" TargetType="{x:Type ListBox}">
+            <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                <ItemsPresenter  />
+            </Border>
+        </ControlTemplate>
+
 
     </Page.Resources>
 
@@ -44,11 +51,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Row="0" Grid.Column="0">
-            <ListBoxItem>124</ListBoxItem>
-            <ListBoxItem>124</ListBoxItem>
-            <ListBoxItem>124</ListBoxItem>
-        </ListBox>
+        <ListBox Background="LightGray"
+            Template="{StaticResource K3_List}"
+            Grid.Row="1"
+            Grid.Column="1"
+            ItemTemplate="{StaticResource K2}"
+            ItemsSource="{Binding MyButtonCollections}" />
+
+        <!--  ItemTemplate="{StaticResource K2}"  -->
 
         <ListView
             Grid.Row="1"
@@ -60,13 +70,13 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="姓名" />
                     <GridViewColumn DisplayMemberBinding="{Binding Age}" Header="年龄" />
 
-                    <!--<GridViewColumn>
+                    <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="修改密码" Command="{Binding EditPasswordCommand}"/>
+                                <Button Command="{Binding EditPasswordCommand}" Content="修改密码" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -83,5 +93,12 @@
             ContentTemplate="{StaticResource K2}"
             FontSize="20"
             Template="{StaticResource K1}" />
+
+        <ListBox>
+            <ListBoxItem>item-1</ListBoxItem>
+            <ListBoxItem>item-2</ListBoxItem>
+            <ListBoxItem>item-3</ListBoxItem>
+        </ListBox>
+
     </Grid>
 </Page>

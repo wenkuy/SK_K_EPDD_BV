@@ -18,6 +18,8 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private ButtonCLass myButtonOne;
 
+        [ObservableProperty]        
+        private ObservableCollection<ButtonCLass> myButtonCollections = new ObservableCollection<ButtonCLass>();
 
         public UserPageVM()
         {
@@ -26,7 +28,13 @@ namespace CS_K_WPF.viewModel
             studentCollections.Add(new Schoolclass() { Name = "王五", Age = 20, StudentId = 2023003 });
 
             //@"Resource/PhonePng.png" 
-            myButtonOne = new ButtonCLass() { Txt = "按钮1", ImgPath = new BitmapImage(new Uri(@"/Resource/PhonePng.png",UriKind.Relative)) };
+            MyButtonOne = new ButtonCLass() { Txt = "按钮1", ImgPath = new BitmapImage(new Uri(@"/Resource/PhonePng.png",UriKind.Relative)) };
+
+            MyButtonCollections.Add(MyButtonOne);
+            MyButtonCollections.Add(new ButtonCLass() { Txt = "ggg", ImgPath = new BitmapImage(new Uri(@"/Resource/AnimaPng.png", UriKind.Relative)) });
+            MyButtonCollections.Add(new ButtonCLass() { Txt = "啥", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
+
+
         }
     }
 }
