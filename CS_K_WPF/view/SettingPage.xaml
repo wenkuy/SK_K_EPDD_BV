@@ -5,25 +5,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CS_K_WPF.view"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:CS_K_WPF.Model"
     Title="SettingPage"
     d:DesignHeight="450"
     d:DesignWidth="800"
     DataContext="{Binding SettingPageVm, Source={StaticResource ModelLocator}}"
     mc:Ignorable="d">
     <Page.Resources>
-        <HierarchicalDataTemplate x:Key="TreevireOne">
+        <!--  这种嵌套的只能利用WPF自己去找模板了，直接指定嵌套太麻烦  -->
+        <HierarchicalDataTemplate DataType="{x:Type model:TreeViewYear}" ItemsSource="{Binding Months}">
+            <TextBlock Text="{Binding Year}" />
+        </HierarchicalDataTemplate>
 
+        <HierarchicalDataTemplate DataType="{x:Type model:TreeViewMonth}" ItemsSource="{Binding Days}">
+            <TextBlock Text="{Binding Month}" />
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type model:TreeViewDay}" ItemsSource="{Binding Files}">
+            <TextBlock Text="{Binding Day}" />
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type model:TreeViewLight}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
-
+                <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                <Ellipse
+                    Grid.Column="1" Width="20" Height="20" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Fill="{Binding LightOne}" />
+                <Ellipse
+                    Grid.Column="2" Width="20" Height="20" HorizontalAlignment="Right"
+                    VerticalAlignment="Center"  Fill="{Binding LightTwo}" />
             </Grid>
-
-        </HierarchicalDataTemplate>
-
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -32,27 +49,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <!--  多层次的树形结构  -->
         <Grid Grid.Column="1">
-            <TreeView ItemsSource="{Binding TestClassCollections}">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                            <Ellipse Grid.Column="1" Fill="{Binding LightOne}" />
-                            <Ellipse Grid.Column="2" Fill="{Binding LightTwo}" />
-                        </Grid>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-
-            </TreeView>
+            <TreeView ItemsSource="{Binding TreeViewYeads}" />
         </Grid>
 
+        <!--  这种属于递归结构树形结构  -->
         <Grid Grid.Column="0">
             <TreeView ItemsSource="{Binding TestClassCollections}">
                 <TreeView.ItemTemplate>

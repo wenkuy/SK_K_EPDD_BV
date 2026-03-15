@@ -31,12 +31,41 @@
                 <Image Grid.Column="1" Source="{Binding ImgPath}" />
             </Grid>
         </DataTemplate>
-
+        <!--  ListBox外观  -->
         <ControlTemplate x:Key="K3_List" TargetType="{x:Type ListBox}">
             <Border Background="{TemplateBinding Background}" CornerRadius="12">
-                <ItemsPresenter  />
+                <ItemsPresenter />
             </Border>
         </ControlTemplate>
+
+        <Style x:Key="subStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Name="BD" CornerRadius="30" Margin="20,0,20,0">
+                            <ContentPresenter />
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="BD" Property="Background" Value="DarkCyan" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<ControlTemplate x:Key="subK1" TargetType="{x:Type ListBoxItem}">
+            <Border CornerRadius="20">
+                <ContentPresenter />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="DarkCyan" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>-->
 
 
     </Page.Resources>
@@ -51,12 +80,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListBox Background="LightGray"
-            Template="{StaticResource K3_List}"
+        <ListBox
             Grid.Row="1"
             Grid.Column="1"
+            Background="LightGray"
+            ItemContainerStyle="{StaticResource subStyle}"
             ItemTemplate="{StaticResource K2}"
-            ItemsSource="{Binding MyButtonCollections}" />
+            ItemsSource="{Binding MyButtonCollections}"
+            Template="{StaticResource K3_List}" />
 
         <!--  ItemTemplate="{StaticResource K2}"  -->
 

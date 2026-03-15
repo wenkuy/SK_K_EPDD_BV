@@ -21,10 +21,14 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private string myText;
 
+        [ObservableProperty]
+        ObservableCollection<TreeViewYear> treeViewYeads = new ObservableCollection<TreeViewYear>();
+
         public SettingPageVm()
         {
             Tree1_Datas();
             Tree2_Datas();
+            TreeView3();
         }
 
         private void Tree1_Datas()
@@ -49,13 +53,45 @@ namespace CS_K_WPF.viewModel
             TestClassCollections.Add(fo2);
         }
 
+      
         private void Tree2_Datas()
         {
-            var green = new SolidColorBrush(Color.FromRgb(85, 177, 85));
-            var red = new SolidColorBrush(Color.FromRgb(196, 62, 28));
 
+            SolidColorBrush green = new SolidColorBrush(Color.FromRgb(85, 177, 85));
+            SolidColorBrush red = new SolidColorBrush(Color.FromRgb(196, 62, 28));
+            SolidColorBrush yellow = new SolidColorBrush(Color.FromRgb(220, 220, 170));
+            TreeViewLight item1 = new TreeViewLight() { Name = "TCH_2354665", LightOne = green, LightTwo = green };
+            TreeViewLight item2 = new TreeViewLight() { Name = "TCH_dsfsg", LightOne = green, LightTwo = red };
+            TreeViewLight item3 = new TreeViewLight() { Name = "TCH_uyk6eg", LightOne = green, LightTwo = yellow };
 
-            TreeViewLight item1 = new TreeViewLight() { Name = "TCH_2354665", LightOne = green, LightTwo =green };
+            TreeViewLightCollections.Add(item1);
+            TreeViewLightCollections.Add(item2);
+            TreeViewLightCollections.Add(item3);
+        }
+
+        private void TreeView3()
+        {
+            SolidColorBrush green = new SolidColorBrush(Color.FromRgb(85, 177, 85));
+            SolidColorBrush red = new SolidColorBrush(Color.FromRgb(196, 62, 28));
+            SolidColorBrush yellow = new SolidColorBrush(Color.FromRgb(220, 220, 170));
+
+            TreeViewLight item1 = new TreeViewLight() { Name = "TCH_2354665", LightOne = green, LightTwo = green };
+            TreeViewLight item2 = new TreeViewLight() { Name = "TCH_dsfsg", LightOne = green, LightTwo = red };
+            TreeViewLight item3 = new TreeViewLight() { Name = "TCH_uyk6eg", LightOne = green, LightTwo = yellow };
+            List<TreeViewLight> k1 = new List<TreeViewLight>();
+            List<TreeViewLight> k2 = new List<TreeViewLight>();
+            k1.Add(item1);
+            k1.Add(item2);
+            k2.Add(item3);  
+
+            TreeViewDay d1 = new TreeViewDay() { Day = "9日", Files = k1 };
+            TreeViewDay d2 = new TreeViewDay() { Day = "10日", Files = k2 };
+
+            TreeViewMonth M = new TreeViewMonth() { Month = "11月", Days = new List<TreeViewDay>() { d1, d2 } };
+
+            TreeViewYear Y = new TreeViewYear() { Year = "2026年", Months = new List<TreeViewMonth>() { M } };
+
+            TreeViewYeads.Add(Y);
         }
     }
 }
