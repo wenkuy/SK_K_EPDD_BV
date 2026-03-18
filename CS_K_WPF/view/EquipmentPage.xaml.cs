@@ -23,6 +23,13 @@ namespace CS_K_WPF.view
         public EquipmentPage()
         {
             InitializeComponent();
+            this.Unloaded += EquipmentPage_Unloaded;
+        }
+
+        private void EquipmentPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= EquipmentPage_Unloaded;
+            this.DataContext = null;
         }
     }
 }

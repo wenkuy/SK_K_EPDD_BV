@@ -28,6 +28,14 @@ namespace CS_K_WPF
         public HomePage()
         {
             InitializeComponent();
+            this.Unloaded += HomePage_Unloaded;
+        }
+
+        private void HomePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= HomePage_Unloaded;
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            this.DataContext = null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

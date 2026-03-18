@@ -23,6 +23,13 @@ namespace CS_K_WPF.view
         public MonitorPage()
         {
             InitializeComponent();
+            this.Unloaded += MonitorPage_Unloaded;
+        }
+
+        private void MonitorPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= MonitorPage_Unloaded;
+            this.DataContext = null;
         }
     }
 }
