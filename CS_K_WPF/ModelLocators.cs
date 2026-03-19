@@ -14,6 +14,7 @@ namespace CS_K_WPF
         public MainPageVM LocMainPageVM { get => serviceProvider.GetRequiredService<MainPageVM>(); }
 
         public ExceptionWndVM LocExceptionWndVM { get => serviceProvider.GetRequiredService<ExceptionWndVM>(); }
+        public SettingPageVM SettingPageVM { get => serviceProvider.GetRequiredService<SettingPageVM>(); }
 
 
 
