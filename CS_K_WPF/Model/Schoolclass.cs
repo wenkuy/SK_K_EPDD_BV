@@ -7,6 +7,13 @@ using System.Windows.Input;
 
 namespace CS_K_WPF.Model
 {
+
+    public class StudentIDclass
+    {
+       public string Name { get; set; }
+       public int Id { get; set; }
+    }
+
     public class Schoolclass
     {
         public string Name { get; set; }

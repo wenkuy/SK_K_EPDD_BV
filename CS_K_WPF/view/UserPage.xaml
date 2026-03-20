@@ -38,7 +38,7 @@
             </Border>
         </ControlTemplate>
 
-        <!--  改ListBoxItem的模板  -->
+        <!--  改ListBoxItem的控件模板  -->
         <Style x:Key="subStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -60,6 +60,37 @@
             </Setter>
         </Style>
 
+        <!--  改ListBoxItem的控件模板- 专为listview  -->
+        <Style x:Key="subStyle_listview" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border
+                            Name="BD"
+                            Margin="20,0,20,0"
+                            CornerRadius="30">
+                            <GridViewRowPresenter />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="BD" Property="Background" Value="DarkCyan" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Name="ToListView" TargetType="{x:Type ListViewItem}">
+            <Style.Triggers>
+                <!--  <Trigger Property="IsFocused"  -->
+            </Style.Triggers>
+        </Style>
+
+
+
         <!--<ControlTemplate x:Key="subK1" TargetType="{x:Type ListBoxItem}">
             <Border CornerRadius="20">
                 <ContentPresenter />
@@ -75,66 +106,140 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <!--Template这里针对整个ListBox，虽然item有Controltemplate属性但是没地方设置，只能通过ItemContainerStyle设置ListBoxItem的ControlTemplate。-->
-        <ListBox
-            Grid.Row="1"
-            Grid.Column="1"
-            Background="LightGray"
-            ItemContainerStyle="{StaticResource subStyle}"
-            ItemTemplate="{StaticResource K2}"
-            ItemsSource="{Binding MyButtonCollections}"
-            Template="{StaticResource K3_List}" />
-
-        <!--  ItemTemplate="{StaticResource K2}"  -->
-
-        <ListView Name="MyListVIew"
-            Grid.Row="1"
-            Grid.Column="0"
-            ItemsSource="{Binding StudentCollections}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding StudentId}" Header="学号" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="姓名" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Age}" Header="年龄" />
-
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Command="{Binding CMD}" Content="修改密码"  CommandParameter="{Binding SelectedIndex ,ElementName = MyListVIew}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
 
+            <!--  Template这里针对整个ListBox，虽然item有Controltemplate属性但是没地方设置，只能通过ItemContainerStyle设置ListBoxItem的ControlTemplate。  -->
+            <ListBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10"
+                Background="LightGray"
+                ItemContainerStyle="{StaticResource subStyle}"
+                ItemTemplate="{StaticResource K2}"
+                ItemsSource="{Binding MyButtonCollections}"
+                Template="{StaticResource K3_List}" />
 
-        <Button
+            <!--  ItemTemplate="{StaticResource K2}"  -->
+
+            <ListView
+                Name="MyListVIew"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10"
+                ItemContainerStyle="{StaticResource subStyle_listview}"
+                ItemsSource="{Binding StudentCollections}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding StudentId}" Header="学号" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="姓名" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Age}" Header="年龄" />
+
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <!--<Button Command="{Binding CMD}" Content="修改密码"  CommandParameter="{Binding SelectedIndex ,ElementName = MyListVIew}" />-->
+                                    <Button
+                                        Command="{Binding CMD}"
+                                        CommandParameter="{Binding}"
+                                        Content="修改密码" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="250"
+                Height="80"
+                Margin="10"
+                Background="DarkSeaGreen"
+                Content="{Binding MyButtonOne}"
+                ContentTemplate="{StaticResource K2}"
+                FontSize="20"
+                Template="{StaticResource K1}" />
+
+            <ListBox Margin="10">
+                <ListBoxItem>item-1</ListBoxItem>
+                <ListBoxItem>item-2</ListBoxItem>
+                <ListBoxItem>item-3</ListBoxItem>
+            </ListBox>
+
+        </Grid>
+
+        <DataGrid
             Grid.Row="0"
             Grid.Column="1"
-            Width="250"
-            Height="80"
-            Background="DarkSeaGreen"
-            Content="{Binding MyButtonOne}"
-            ContentTemplate="{StaticResource K2}"
-            FontSize="20"
-            Template="{StaticResource K1}" />
+            AutoGenerateColumns="False"
+            CanUserAddRows="True"
+            CanUserDeleteRows="True"
+            CanUserResizeColumns="True"
+            ItemsSource="{Binding StudentCollections}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="姓名" />
+                <DataGridComboBoxColumn
+                    Width="100"
+                    DisplayMemberPath="Name"
+                    Header="学生ID"
+                    ItemsSource="{Binding StudentIDCollects}"
+                    SelectedValueBinding="{Binding StudentId}"
+                    SelectedValuePath="Id" />
 
-        <ListBox>
-            <ListBoxItem>item-1</ListBoxItem>
-            <ListBoxItem>item-2</ListBoxItem>
-            <ListBoxItem>item-3</ListBoxItem>
-        </ListBox>
+                <!--  ItemsSource="{Binding UserPageVM.StudentIDCollects ,Source= {StaticResource ModelLocator}}" 虽然行但是感觉有点死胡同  -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Age}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Command="{Binding CMD}"
+                                CommandParameter="{Binding}"
+                                Content="按钮" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="100"
+            Height="50"
+            Margin="10"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding StudentIDCollects}"
+            SelectedValuePath="Id" />
     </Grid>
 </Page>
