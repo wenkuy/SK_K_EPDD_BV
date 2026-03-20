@@ -38,14 +38,18 @@
             </Border>
         </ControlTemplate>
 
+        <!--  改ListBoxItem的模板  -->
         <Style x:Key="subStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border Name="BD" CornerRadius="30" Margin="20,0,20,0">
+                        <Border
+                            Name="BD"
+                            Margin="20,0,20,0"
+                            CornerRadius="30">
                             <ContentPresenter />
                         </Border>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="BD" Property="Background" Value="DarkCyan" />
@@ -80,6 +84,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <!--Template这里针对整个ListBox，虽然item有Controltemplate属性但是没地方设置，只能通过ItemContainerStyle设置ListBoxItem的ControlTemplate。-->
         <ListBox
             Grid.Row="1"
             Grid.Column="1"
@@ -91,7 +96,7 @@
 
         <!--  ItemTemplate="{StaticResource K2}"  -->
 
-        <ListView
+        <ListView Name="MyListVIew"
             Grid.Row="1"
             Grid.Column="0"
             ItemsSource="{Binding StudentCollections}">
@@ -104,7 +109,7 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding EditPasswordCommand}" Content="修改密码" />
+                                <Button Command="{Binding CMD}" Content="修改密码"  CommandParameter="{Binding SelectedIndex ,ElementName = MyListVIew}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

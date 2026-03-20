@@ -13,7 +13,7 @@ namespace CS_K_WPF
         public event EventHandler? CanExecuteChanged;//事件是由开发者触发，wpf框架订阅
         private Action<object> ExecuteAction { get; set; }
         private Action ExecuteActionNoParam { get; set; } //为什么不用Func是因为Execute方法没有返回值，所以用Action更合适
-        private object? _parameter; //这个参数是用来传递给Execute方法的参数，可以在构造函数中设置，也可以通过属性设置
+        private object? _parameter; //这个参数是用来传递给Execute方法的参数，可以在构造函数中设置，也可以通过xaml上的CommandParameter去属性设置
         private Func<bool>? _canExecuteFunc; //这个是用来判断命令是否可以执行的函数，可以在构造函数中设置，也可以通过属性设置
 
         public MyCommand(Action<object> act, object parameter, Func<bool> func = null)
