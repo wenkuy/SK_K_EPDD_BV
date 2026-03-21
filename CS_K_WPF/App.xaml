@@ -9,6 +9,12 @@
     <!--  Startup="Application_StartUp">  -->
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="RSDictionary/ConverterDictionary.xaml" />
+
+
+            </ResourceDictionary.MergedDictionaries>
+
             <!--  这个会创建实例，导致报错，因为为了安全把构造给私有化了（之前ModelLocator的构造方法是静态私有的）  -->
             <!--<local:ModelLocator x:Key="ModelLocator" />-->
             <!--<ObjectDataProvider x:Key="ModelLocator" ObjectInstance="{x:Static local:ModelLocator.Instance}" />-->
