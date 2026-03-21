@@ -13,12 +13,19 @@
         <Rectangle
             Width="{Binding Width, ElementName=batteryUc}"
             Height="{Binding Height, ElementName=batteryUc}"
-            Fill="Gray" />
+            Fill="Gray"
+            StrokeThickness="2" />
 
-        <Rectangle
-            Width="{Binding Width, ElementName=batteryUc}"
-            Height="{Binding Height, ElementName=batteryUc}"
-            Fill="{Binding Background, ElementName=batteryUc}">
+        <!--  Fill="{Binding Background, ElementName=batteryUc}  -->
+        <Rectangle Width="{Binding Width, ElementName=batteryUc}" Height="{Binding Height, ElementName=batteryUc}">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="White" />
+                    <GradientStop Offset="0.5" Color="{Binding BatteryColor, ElementName=batteryUc}" />
+                    <GradientStop Offset="1" Color="White" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+
             <Rectangle.RenderTransformOrigin>
                 <Point X="0" Y="1" />
             </Rectangle.RenderTransformOrigin>

@@ -5,5 +5,6 @@
 
     <CVT:NumberToColor x:Key="NumberToColor_Converter" />
     <CVT:ElectricityToHeight x:Key="ElectricityToHeight_Converter" />
+    <CVT:NumberToColorNoBrush x:Key="NumberToColorNoBrush_Converter" />
 
 </ResourceDictionary>

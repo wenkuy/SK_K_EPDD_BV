@@ -63,8 +63,20 @@ namespace CS_K_WPF.UserControls
 
 
 
-     
 
+        public Color BatteryColor
+        {
+            get { return (Color)GetValue(BatteryColorProperty); }
+            set { SetValue(BatteryColorProperty, value); }
+        }
 
+        // Using a DependencyProperty as the backing store for BatteryColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BatteryColorProperty =
+            DependencyProperty.Register("BatteryColor", typeof(Color), typeof(BatteryUC), new PropertyMetadata(Color.FromRgb(30, 30, 30),ColorPropertyChangedCallback));
+
+        private static void ColorPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+           
+        }
     }
 }

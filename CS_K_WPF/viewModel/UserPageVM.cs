@@ -66,7 +66,7 @@ namespace CS_K_WPF.viewModel
                 {
 
                     Eletricity = random.Next(-1, 100) * 1d; // 生成0到100之间的随机数
-                    await Task.Delay(100); // 每隔1秒更新一次
+                    await Task.Delay(200); // 每隔1秒更新一次
 
                 }
 
