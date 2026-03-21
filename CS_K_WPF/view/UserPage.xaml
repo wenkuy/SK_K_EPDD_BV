@@ -252,13 +252,21 @@
                     FontSize="20"
                     Text="{Binding Eletricity}" />
                 <usercontrols:BatteryUC
-                    Width="60"
-                    Height="115"
+                    Width="100"
+                    Height="185"
                     BatteryColor="{Binding Eletricity, Converter={StaticResource NumberToColorNoBrush_Converter}}"
                     Electricity="{Binding Eletricity, Converter={StaticResource ElectricityToHeight_Converter}}"
                     Temperature="20" />
             </StackPanel>
 
+
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="150"
+                Height="80"
+                Text="{Binding NumberTest, Mode=TwoWay}"
+                ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Mode=Self}}" />
 
             <ComboBox
                 Grid.Row="1"

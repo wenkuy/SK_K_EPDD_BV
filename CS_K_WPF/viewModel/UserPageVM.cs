@@ -31,6 +31,9 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private double eletricity = 0f;
 
+        [ObservableProperty]
+        private float numberTest;
+
         public UserPageVM()
         {
 
@@ -65,8 +68,8 @@ namespace CS_K_WPF.viewModel
                 while (true)
                 {
 
-                    Eletricity = random.Next(-1, 100) * 1d; // 生成0到100之间的随机数
-                    await Task.Delay(200); // 每隔1秒更新一次
+                    Eletricity = random.Next(20, 100) * 1d; // 生成0到100之间的随机数
+                    await Task.Delay(1500); // 每隔1秒更新一次
 
                 }
 
