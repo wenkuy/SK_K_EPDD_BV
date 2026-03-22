@@ -13,7 +13,7 @@
         <Rectangle
             Width="{Binding Width, ElementName=batteryUc}"
             Height="{Binding Height, ElementName=batteryUc}"
-            StrokeThickness="2" >
+            StrokeThickness="2">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Offset="0" Color="White" />

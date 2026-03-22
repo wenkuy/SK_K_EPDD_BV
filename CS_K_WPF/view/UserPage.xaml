@@ -15,14 +15,14 @@
     mc:Ignorable="d">
     <Page.Resources>
 
-        <!--  按钮的外观  -->
+        <!--  按钮的 控件模板  -->
         <ControlTemplate x:Key="K1" TargetType="{x:Type Button}">
             <Border Background="{TemplateBinding Background}" CornerRadius="10">
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Border>
         </ControlTemplate>
 
-        <!--  数据展示形式  -->
+        <!--  按钮的 数据模板  -->
         <DataTemplate x:Key="K2" DataType="{x:Type model:ButtonCLass}">
             <Grid Height="80">
                 <Grid.ColumnDefinitions>
@@ -33,14 +33,15 @@
                 <Image Grid.Column="1" Source="{Binding ImgPath}" />
             </Grid>
         </DataTemplate>
-        <!--  ListBox外观  -->
+
+        <!--  ListBox的 控件模板  -->
         <ControlTemplate x:Key="K3_List" TargetType="{x:Type ListBox}">
             <Border Background="{TemplateBinding Background}" CornerRadius="12">
                 <ItemsPresenter />
             </Border>
         </ControlTemplate>
 
-        <!--  改ListBoxItem的控件模板  -->
+        <!--  ListBoxItem的 控件模板  -->
         <Style x:Key="subStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -62,7 +63,7 @@
             </Setter>
         </Style>
 
-        <!--  改ListBoxItem的控件模板- 专为listview  -->
+        <!--  ListViewItem的 控件模板  -->
         <Style x:Key="subStyle_listview" TargetType="{x:Type ListViewItem}">
             <Setter Property="Template">
                 <Setter.Value>
