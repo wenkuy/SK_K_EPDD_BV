@@ -13,7 +13,45 @@
     d:DesignWidth="800"
     DataContext="{Binding UserPageVM, Source={StaticResource ModelLocator}}"
     mc:Ignorable="d">
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter" SourceName="Mybutton">
+            <BeginStoryboard x:Name="kkstory">
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="Mybutton"
+                        Storyboard.TargetProperty="Height"
+                        To="83"
+                        Duration="0:0:0.1" />
+                    <DoubleAnimation
+                        Storyboard.TargetName="Mybutton"
+                        Storyboard.TargetProperty="Width"
+                        To="253"
+                        Duration="0:0:0.1" />
+
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+
+        <EventTrigger RoutedEvent="MouseLeave" SourceName="Mybutton">
+            <BeginStoryboard HandoffBehavior="Compose">
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="Mybutton"
+                        Storyboard.TargetProperty="Height"
+                        Duration="0:0:0.1" />
+                    <DoubleAnimation
+                        Storyboard.TargetName="Mybutton"
+                        Storyboard.TargetProperty="Width"
+                        Duration="0:0:0.1" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+
     <Page.Resources>
+
+
 
         <!--  按钮的 控件模板  -->
         <ControlTemplate x:Key="K1" TargetType="{x:Type Button}">
@@ -174,6 +212,7 @@
 
 
             <Button
+                Name="Mybutton"
                 Grid.Row="0"
                 Grid.Column="1"
                 Width="250"
@@ -183,7 +222,34 @@
                 Content="{Binding MyButtonOne}"
                 ContentTemplate="{StaticResource K2}"
                 FontSize="20"
-                Template="{StaticResource K1}" />
+                Template="{StaticResource K1}">
+                <!--<Button.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard SpeedRatio="">
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Height"
+                                    To="83"
+                                    Duration="0:0:0.1" />
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Width"
+                                    To="253"
+                                    Duration="0:0:0.1" />
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard HandoffBehavior="Compose">
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" Duration="0:0:0.1" />
+                                <DoubleAnimation Storyboard.TargetProperty="Width" Duration="0:0:0.1" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>-->
+            </Button>
 
             <ListBox Margin="10">
                 <ListBoxItem>item-1</ListBoxItem>
