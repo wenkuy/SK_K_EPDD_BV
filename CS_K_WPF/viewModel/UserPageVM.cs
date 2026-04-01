@@ -58,9 +58,16 @@ namespace CS_K_WPF.viewModel
             //@"Resource/PhonePng.png" 
             MyButtonOne = new ButtonCLass() { Txt = "按钮1", ImgPath = new BitmapImage(new Uri(@"/Resource/PhonePng.png", UriKind.Relative)) };
 
+            List<ButtonCLass> Butons = new List<ButtonCLass>();
+            AddElment(Butons);
+            MyButtonCollections = new ObservableCollection<ButtonCLass>(Butons);
             MyButtonCollections.Add(MyButtonOne);
             MyButtonCollections.Add(new ButtonCLass() { Txt = "ggg", ImgPath = new BitmapImage(new Uri(@"/Resource/AnimaPng.png", UriKind.Relative)) });
             MyButtonCollections.Add(new ButtonCLass() { Txt = "啥", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
+            MyButtonCollections.Add(new ButtonCLass() { Txt = "啥1", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
+
+
+
 
             Random random = new Random();
             Task.Run(async () =>
@@ -69,12 +76,22 @@ namespace CS_K_WPF.viewModel
                 {
 
                     Eletricity = random.Next(20, 100) * 1d; // 生成0到100之间的随机数
-                    await Task.Delay(1500); // 每隔1秒更新一次
+                    await Task.Delay(1000); // 每隔1秒更新一次
 
                 }
 
             });
 
+        }
+
+        public void AddElment(List<ButtonCLass> Butons)
+        {
+           
+
+            for (int i = 2; i < 5000; i++)
+                Butons.Add(new ButtonCLass() { Txt = $"啥--{i}", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
+
+          
         }
     }
 }
