@@ -34,13 +34,53 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{Binding Name}" />
                 <Ellipse
-                    Grid.Column="1" Width="20" Height="20" HorizontalAlignment="Right"
-                    VerticalAlignment="Center" Fill="{Binding LightOne}" />
+                    Grid.Column="1"
+                    Width="20"
+                    Height="20"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Fill="{Binding LightOne}" />
                 <Ellipse
-                    Grid.Column="2" Width="20" Height="20" HorizontalAlignment="Right"
-                    VerticalAlignment="Center"  Fill="{Binding LightTwo}" />
+                    Grid.Column="2"
+                    Width="20"
+                    Height="20"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Fill="{Binding LightTwo}" />
             </Grid>
         </DataTemplate>
+
+
+
+        <Style x:Key="subStyle" TargetType="{x:Type TreeViewItem}">
+            <Style.Triggers>
+                <Trigger Property="HasItems" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                <Border
+                                    Name="BD"
+                                    Margin="20,0,20,0"
+                                    CornerRadius="30">
+                                    <ContentPresenter ContentSource="Header"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="BD" Property="Background" Value="DarkCyan" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
+
+
+
     </Page.Resources>
 
     <Grid>
@@ -51,7 +91,7 @@
 
         <!--  多层次的树形结构  -->
         <Grid Grid.Column="1">
-            <TreeView ItemsSource="{Binding TreeViewYeads}" />
+            <TreeView ItemsSource="{Binding TreeViewYeads}"  FontSize="24" ItemContainerStyle="{StaticResource subStyle}" />
         </Grid>
 
         <!--  这种属于递归结构树形结构  -->

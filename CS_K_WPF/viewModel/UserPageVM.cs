@@ -34,8 +34,12 @@ namespace CS_K_WPF.viewModel
         [ObservableProperty]
         private float numberTest;
 
+        CancellationTokenSource cts = new CancellationTokenSource();
+        CancellationToken token;
+
         public UserPageVM()
         {
+            token = cts.Token;
 
             RelayCommand<object> cmd = new RelayCommand<object>(param =>
             {
@@ -72,7 +76,7 @@ namespace CS_K_WPF.viewModel
             Random random = new Random();
             Task.Run(async () =>
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
 
                     Eletricity = random.Next(20, 100) * 1d; // 生成0到100之间的随机数
@@ -80,18 +84,24 @@ namespace CS_K_WPF.viewModel
 
                 }
 
-            });
+            },token);
 
         }
 
         public void AddElment(List<ButtonCLass> Butons)
         {
-           
 
-            for (int i = 2; i < 5000; i++)
+
+            for (int i = 2; i < 52000; i++)
                 Butons.Add(new ButtonCLass() { Txt = $"啥--{i}", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
 
-          
+
+        }
+
+        public void Exit()
+        {
+            //token.ThrowIfCancellationRequested();
+             cts.Cancel(); // 取消任务
         }
     }
 }

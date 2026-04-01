@@ -9,6 +9,7 @@
     xmlns:model="clr-namespace:CS_K_WPF.Model"
     xmlns:usercontrols="clr-namespace:CS_K_WPF.UserControls"
     Title="UserPage"
+    Unloaded="Page_Unloaded"
     d:DesignHeight="450"
     d:DesignWidth="800"
     DataContext="{Binding UserPageVM, Source={StaticResource ModelLocator}}"
@@ -366,9 +367,9 @@
                 <Rectangle.Fill>
                     <VisualBrush Visual="{Binding ElementName=MyListVIew}" />
                 </Rectangle.Fill>
-                <Rectangle.RenderTransform>
+                <Rectangle.LayoutTransform>
                     <SkewTransform />
-                </Rectangle.RenderTransform>
+                </Rectangle.LayoutTransform>
                 <Rectangle.Triggers>
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
