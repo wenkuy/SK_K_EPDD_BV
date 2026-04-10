@@ -1,4 +1,5 @@
-﻿using CS_K_WPF.viewModel;
+﻿using CS_K_WPF.Model;
+using CS_K_WPF.viewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +26,27 @@ namespace CS_K_WPF.view
         public UserPage()
         {
             InitializeComponent();
-           
+
+            Button butons = new Button();
+            butons.Content = "测试自动以路由事件";
+            LeftDownArea_Grid.Children.Add(butons);
+            Grid.SetRow(butons, 1);
+            Grid.SetColumn(butons, 1);
+
+            MyRoutedEventClass myRoutedEventClass = new MyRoutedEventClass();
+            myRoutedEventClass.Name = "自定义路由事件";
+            butons.RaiseEvent(new RoutedEventArgs(MyRoutedEventClass.NameChangedEvent, butons));
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             ((UserPageVM)this.DataContext).Exit();
             this.DataContext = null; // 解除数据绑定，帮助垃圾回收器回收内存
+        }
+
+        private void myNameChanged_routedEvent(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace CS_K_WPF.viewModel
@@ -70,6 +71,7 @@ namespace CS_K_WPF.viewModel
             MyButtonCollections.Add(new ButtonCLass() { Txt = "啥", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
             MyButtonCollections.Add(new ButtonCLass() { Txt = "啥1", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
 
+            
 
 
 

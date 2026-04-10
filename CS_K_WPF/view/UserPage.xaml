@@ -350,7 +350,7 @@
                 SelectedValuePath="Id" />
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid x:Name="LeftDownArea_Grid" Grid.Row="1" Grid.Column="0"  model:MyRoutedEventClass.NameChanged="myNameChanged_routedEvent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
