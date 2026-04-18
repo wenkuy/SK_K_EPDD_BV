@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:CS_K_WPF"
     Exit="Application_Exit"
+    LoadCompleted="Application_LoadCompleted"
     Startup="Application_StartUp"
     StartupUri="MainWindow.xaml">
     <!--  Startup="Application_StartUp">  -->

@@ -1,18 +1,20 @@
-﻿global using CS.Base;
+﻿﻿﻿global using CS.Base;
 using CommunityToolkit.Mvvm.Messaging;
+using CS.Communication;
+using CS.DataAnalasis.View;
+using CS.Database;
 using CS_K_WPF.view;
 using CS_K_WPF.viewModel;
 using CSK.Core;
-using CS.DataAnalasis.View;
-using CS.Database;
+using CSK.Core.Messaging;
+using LiveChartsCore;
 using LoggerProj;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Meta;
 using System.Configuration;
 using System.Data;
-using System.Windows;
-using CS.Communication;
 using System.Reflection;
+using System.Windows;
 
 namespace CS_K_WPF
 {
@@ -34,15 +36,18 @@ namespace CS_K_WPF
 
         }
 
+        
+
         private void DIContainerInit()
         {
             service = new ServiceCollection();
-            RegisterWndServices(service);
-            RegisterPageServides(service);
-            LogRegister.Register(service);//日志注册
-            service.AddSingleton<ModelLocator>();
-            service.AddSingleton<ReceiveMessages>(); //通信服务注册
-            DatabaseServiceProvider.Register(service);
+            
+            // 自动发现并注册所有服务
+            RegisterAllServices(service);
+
+
+
+
             //-----------服务容器构建完成，不可再添加服务，只能获取服务【重点】-------------
             GlobalServiceProvider = service.BuildServiceProvider();
 
@@ -52,43 +57,85 @@ namespace CS_K_WPF
             ViewManeger.Init();
         }
 
-
         /// <summary>
-        /// DI注册窗体windows
+        /// 自动发现并注册所有服务
         /// </summary>
-        private void RegisterWndServices(IServiceCollection service)
+        private void RegisterAllServices(IServiceCollection services)
         {
-            service.AddTransient<IWindowOperation, WindowOperation>();
-            service.AddTransient<DataAnalysisWnd>();
-            service.AddTransient<ExceptionWnd>();
-        }
-
-        /// <summary>
-        /// DI注册viewModelVM
-        /// </summary>
-        private void RegisterPageServides(IServiceCollection service)
-        {
-            service.AddSingleton<HomePageVM>();
-            service.AddSingleton<NavigationPageVM>();
-            service.AddSingleton<MainPageVM>();
-            service.AddSingleton<SettingPageVm>();
-
-            service.AddTransient<UserPageVM>();
-            service.AddTransient<ExceptionWndVM>();
+            
+            // 【1】获取当前程序集
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            var assemblies = new List<Assembly>
+            { 
+                currentAssembly ,
+                Assembly.Load("LoggerProj") //手动强制加载程序集的方式
+            };
+            
+            // 【2】获取所有引用的程序集。要不然其他的引用项目无法注册到DI中
+            foreach (var referencedAssemblyName in currentAssembly.GetReferencedAssemblies())
+            {
+                try
+                {
+                    var assembly = Assembly.Load(referencedAssemblyName);
+                    assemblies.Add(assembly);
+                }
+                catch { }
+            }
+            
+            // 查找所有实现了IServiceRegistration接口的类型
+            var registrationTypes = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                try
+                {
+                    var types = assembly.GetTypes()
+                        .Where(t => typeof(IServiceRegistration).IsAssignableFrom(t) && !t.IsAbstract); //判断t是不是IServiceRegistration派生类 && 不是抽象类。
+                    registrationTypes.AddRange(types);
+                }
+                catch { }
+            }
+            
+            // 实例化并执行服务注册(以前的老办法是主程序引用其他程序集并直接调用，现在其他程序集依赖于base，利用反射注册)
+            foreach (var type in registrationTypes)
+            {
+                try
+                {
+                    var registration = (IServiceRegistration)Activator.CreateInstance(type);
+                    registration.RegisterServices(services); //将容器传入(这个方式和以前不一样，以前是传到模块去，这里是通过反射得到的传送通道，没有耦和模块)
+                }
+                catch { }
+            }
+            
+            // 注册核心服务
+            services.AddSingleton<ModelLocator>();
+            DatabaseServiceProvider.Register(services);
         }
 
         private void MessageRegister(IServiceProvider provider)
         {
-            WeakReferenceMessenger.Default.Register<OpenExceptionWindowMes>(typeof(ExceptionWnd), (obj, TMes) =>
+            //消息总线方式：
+            GlobalServiceProvider.GetRequiredService<IMessageBus>().Register<OpenExceptionWindowMes>((sender, message) =>
             {
                 var wnd = provider.GetRequiredService<ExceptionWnd>();
                 var vm = provider.GetRequiredService<ExceptionWndVM>();
-                vm.Title = TMes.Title;
-                vm.MesForDev = TMes.ExpMesForDeveloper;
-                vm.MesForUser = TMes.ExpMesForUser;
+                vm.Title = message.Title;
+                vm.MesForDev = message.ExpMesForDeveloper;
+                vm.MesForUser = message.ExpMesForUser;
                 wnd.DataContext = vm;
                 wnd.Show();
             });
+
+            //老按本(原生消息)方式
+            //WeakReferenceMessenger.Default.Register<OpenExceptionWindowMes>(this, (sender, message) =>
+            //{
+            //    var wnd = provider.GetRequiredService<ExceptionWnd>();
+            //    var vm = provider.GetRequiredService<ExceptionWndVM>();
+            //    vm.Title = message.Title;
+            //    vm.MesForDev = message.ExpMesForDeveloper;
+            //    vm.MesForUser = message.ExpMesForUser;
+            //    wnd.DataContext = vm;
+            //    wnd.Show();
+            //});
         }
 
         private void Application_StartUp(object sender, StartupEventArgs e)
@@ -107,6 +154,10 @@ namespace CS_K_WPF
 
 
             DIContainerInit();
+
+            // 启动通信服务(前面已经通过反射实现了DI注册，因此这里可以直接获取服务，直接调用)
+            var communicationStarter = GlobalServiceProvider.GetRequiredService<ICommunicationServiceStarter>();
+            communicationStarter.Start();
 
             //// 直接new MainWindow并显示，和之前逻辑一致
             //MainWindow mainWindow = new MainWindow();
@@ -152,7 +203,21 @@ namespace CS_K_WPF
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            // 停止通信服务
+            try
+            {
+                var communicationStarter = GlobalServiceProvider?.GetRequiredService<CS.Communication.ICommunicationServiceStarter>();
+                communicationStarter?.Stop();
+            }
+            catch { }
+            
             mutex?.Dispose();
+        }
+
+        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+       
         }
     }
 }

@@ -16,7 +16,7 @@ using static CS.Communication.Protocals;
 
 namespace CS.Communication
 {
-    public class ReceiveMessages
+    public class ReceiveMessages : IReceiveMessages
     {
         private ILogger<ReceiveMessages> _logger;
         public ReceiveMessages(ILogger<ReceiveMessages> logger)

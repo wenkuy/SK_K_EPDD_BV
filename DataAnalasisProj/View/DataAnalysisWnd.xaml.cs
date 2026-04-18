@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using LiveChartsGeneratedCode;
 using System.Windows.Input;
 using LiveChartsCore.Measure;
 
@@ -22,8 +21,8 @@ namespace CS.DataAnalasis.View
     public partial class DataAnalysisWnd : Window
     {
         public ObservableCollection<SimpleViewModel> ToolItems { get; }
-        private Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>> chartAndSeries = new Dictionary<SourceGenCartesianChart, ObservableCollection<ISeries>>();
-        private Dictionary<SourceGenCartesianChart, ObservableCollection<TabItem>> tabItems = new Dictionary<SourceGenCartesianChart, ObservableCollection<TabItem>>();
+        private Dictionary<CartesianChart, ObservableCollection<ISeries>> chartAndSeries = new Dictionary<CartesianChart, ObservableCollection<ISeries>>();
+        private Dictionary<CartesianChart, ObservableCollection<TabItem>> tabItems = new Dictionary<CartesianChart, ObservableCollection<TabItem>>();
 
         private string floatingPanelHeaderName;
         private CartesianChart currentChart;

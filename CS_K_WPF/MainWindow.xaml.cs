@@ -1,4 +1,4 @@
-﻿using CS.Communication;
+using CS.Communication;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Windows;
@@ -25,21 +25,8 @@ namespace CS_K_WPF
 
             CommonDispatcherHelper.Init();
 
-            //???? 临时放一下，后续解决如何在合适的地方让其实例化，实现委托绑定，要不然udp的Action没人委托，没法传出来 
-            ReceiveMessages receiveMessages = App.GlobalServiceProvider.GetRequiredService<ReceiveMessages>();
-
-            Task.Run(() =>
-            {
-
-                TcpServer tcpServer = new TcpServer();
-                tcpServer.TcpServerRun();
-            });
-
-            Task.Factory.StartNew(() => //目的是不用thread，也不占用线程池资源
-            {
-                UdpReceiver udpReceive = new UdpReceiver();
-                udpReceive.UdpReceiveRun();
-            },TaskCreationOptions.LongRunning);
+            // 通信服务已在App.xaml.cs中启动
+            // ReceiveMessages通过依赖注入自动实例化
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

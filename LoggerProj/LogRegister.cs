@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CS.Base;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LoggerProj
 {
-    public class LogRegister
+    public class LogRegister : IServiceRegistration
     {
-        public static void Register(IServiceCollection services)
+        public void RegisterServices(IServiceCollection services)
         {
 #if DEBUG
             //配置日志参数
@@ -38,5 +39,7 @@ namespace LoggerProj
                 configure.AddSerilog(); // 直接传入已初始化的 Log.Logger，无需再传参数
             });
         }
+
+      
     }
 }
