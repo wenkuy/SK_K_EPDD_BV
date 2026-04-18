@@ -21,14 +21,14 @@ namespace CS.Database
              *    a.因为每次频繁创建实例DbContext，频繁创建可能导致报错。
              *    b.效率低下，如果一次性操作多个数据，完全可以复用该实例，频繁多次创建销毁，导致效率低下！
              * 
-               2. 不搞单例。DbContext 本身不 “持有” 物理数据库连接，执行查询 / 新增 / 修改操作才会从连接池借一个物理连接，执行完 SQL 后立即把连接归还到连接池。
-                  连接池的连接数量，取决于 “并发执行的数据库操作数。
-            
-                  a.但由于是 DbContext “线程不安全” 的特性，多线程的话可能导致重复不断的借用连接，而其他连接又未返还，由于这个特性可能导致连接池沾满
+               2. 不搞单例。DbContext 本身不 "持有" 物理数据库连接，执行查询 / 新增 / 修改操作才会从连接池借一个物理连接，执行完 SQL 后立即把连接归还到连接池。
+                  连接池的连接数量，取决于 "并发执行的数据库操作数。
+
+                  a.但由于是 DbContext "线程不安全" 的特性，多线程的话可能导致重复不断的借用连接，而其他连接又未返还，由于这个特性可能导致连接池沾满
                    导致报错：连接池已满，无法打开新的连接。
                   b. DbContext 本身不是线程安全的！单例模式下，多线程（比如多个请求）同时调用这个 DbContext，会导致：
                      ① 操作冲突，SQL 执行卡住；
-                     ② 连接释放异常，连接池里的连接被 “挂起”，无法复用最终连接池连接数飙升至数据库的 “最大连接数”。
+                     ② 连接释放异常，连接池里的连接被 "挂起"，无法复用最终连接池连接数飙升至数据库的 "最大连接数"。
 
                3.换成scoped「一个业务操作（比如一次接口请求 / 一次批量数据处理）对应一个 CSK_DBContext 实例」，同一业务内多次调用 OperationDate 会复用这个实例，避免重复建连接。
              */
@@ -42,8 +42,8 @@ namespace CS.Database
         //【问题2】不可能这里获取服务，这里去引用主容器获取服务，引用就颠覆了：下层引用上层。
         //public static IDBRecordPOperation DatabaseServicesProvider()
         //{
-        //    
-        //    return App.GlobalServiceProvider.GetRequiredService<IDBRecordPOperation>(); 
+
+        //    return App.GlobalServiceProvider.GetRequiredService<IDBRecordPOperation>();
         //}
 
 
