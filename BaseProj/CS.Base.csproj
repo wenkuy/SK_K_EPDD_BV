@@ -10,4 +10,10 @@
     <PackageReference Include="protobuf-net" Version="3.2.56" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="CommonDispatcherHelper.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

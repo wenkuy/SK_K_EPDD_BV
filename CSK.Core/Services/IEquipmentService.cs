@@ -12,5 +12,12 @@ namespace CSK.Core.Services
         /// </summary>
         /// <param name="equipment">设备状态记录</param>
         void HandleEquipmentStateDynamicData(EquipmentStateRecord equipment);
+        
+        /// <summary>
+        /// 获取设备状态统计数据
+        /// </summary>
+        /// <param name="hours">统计时间范围（小时）</param>
+        /// <returns>设备状态统计</returns>
+        System.Collections.Generic.Dictionary<string, int> GetEquipmentStateStatistics(float hours = 12);
     }
 }

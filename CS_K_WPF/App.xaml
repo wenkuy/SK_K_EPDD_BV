@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:CS_K_WPF"
     Exit="Application_Exit"
-    LoadCompleted="Application_LoadCompleted"
     Startup="Application_StartUp"
     StartupUri="MainWindow.xaml">
     <!--  Startup="Application_StartUp">  -->
@@ -12,13 +11,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="RSDictionary/ConverterDictionary.xaml" />
-
-
+                <!--  这个会创建实例，导致报错，因为为了安全把构造给私有化了（之前ModelLocator的构造方法是静态私有的）  -->
+                <!--<local:ModelLocator x:Key="ModelLocator" />-->
+                <!--<ObjectDataProvider x:Key="ModelLocator" ObjectInstance="{x:Static local:ModelLocator.Instance}" />-->
             </ResourceDictionary.MergedDictionaries>
-
-            <!--  这个会创建实例，导致报错，因为为了安全把构造给私有化了（之前ModelLocator的构造方法是静态私有的）  -->
-            <!--<local:ModelLocator x:Key="ModelLocator" />-->
-            <!--<ObjectDataProvider x:Key="ModelLocator" ObjectInstance="{x:Static local:ModelLocator.Instance}" />-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

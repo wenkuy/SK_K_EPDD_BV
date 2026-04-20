@@ -45,7 +45,10 @@ namespace CS_K_WPF.viewModel
             _productService.HandleProductDynamicData(e);
             
             // 更新UI数据
-            CommonDispatcherHelper.BeginExecuteOnUiThread(() => { ProductsDynamicData(e); });
+            CommonDispatcherHelper.BeginExecuteOnUiThread(() => 
+            {
+                ProductsDynamicData(e);
+            });
         }
 
         partial void OnEquipmentUDPInfoChanged(EquipmentStateRecord e)

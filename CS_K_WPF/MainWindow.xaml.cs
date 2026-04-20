@@ -1,3 +1,4 @@
+using CS.Base;
 using CS.Communication;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
@@ -21,12 +22,8 @@ namespace CS_K_WPF
         public MainWindow()
         {
             InitializeComponent();
-
-
             CommonDispatcherHelper.Init();
 
-            // 通信服务已在App.xaml.cs中启动
-            // ReceiveMessages通过依赖注入自动实例化
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

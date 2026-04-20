@@ -1,7 +1,13 @@
 using CS.Base;
 using CS.Database;
 using CS.Database.Entity;
+using CS.Database.Repository;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CSK.Core.Services
 {
@@ -10,27 +16,26 @@ namespace CSK.Core.Services
     /// </summary>
     public class ProductService : IProductService
     {
-        private readonly IDBRecordPOperation _dbOperation;
+        private readonly IProductRepository _productRepository;
         private readonly ILogger<ProductService> _logger;
         
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="dbOperation">数据库操作接口</param>
+        /// <param name="productRepository">产品仓储接口</param>
         /// <param name="logger">日志记录器</param>
-        public ProductService(IDBRecordPOperation dbOperation, ILogger<ProductService> logger)
+        public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
         {
-            _dbOperation = dbOperation;
+            _productRepository = productRepository;
             _logger = logger;
         }
         
         /// <summary>
         /// 处理产品动态数据
         /// </summary>
-        /// <param name="product">产品生产记录</param>
+        /// <param name="product">产品数据</param>
         public void HandleProductDynamicData(ProducttProductionRecord product)
         {
-            // 这里可以添加业务逻辑处理
             _logger.LogInformation($"处理产品数据: ProductNumber={product.ProductNumber}, TimeConsumed={product.TimeConsumed}, QualityInspectionResult={product.QualityInspectionResult}");
         }
         
@@ -43,32 +48,31 @@ namespace CSK.Core.Services
         {
             return await Task.Run(() =>
             {
-                // 1. 按小时 -天 -周 -月 -年统计
-                string strtime = _dbOperation.DBGetSingleObj<ProducttProductionRecord>(e => true).ProductTime;
-                DateTime time = StrTimeToDateTime.StrToDateTime(strtime);
+                // 通过仓储层获取原始数据
+                var productRecords = _productRepository.GetProductRecords("A-XH-GHTY0215");
 
-                // 获取指定产品的数据
-                ProducttProductionRecord[] productRocords = _dbOperation.DBGetObjs<ProducttProductionRecord>(
-                  e => e.ProductNumber == "A-XH-GHTY0215");
-
-                // 2.统计分析
-                // 2.1统计time内产量 合格率  故障率
-                int goods = 0;
-                for (int i = 0; i < productRocords.Length; i++)
+                if (productRecords == null || productRecords.Length == 0)
                 {
-                    if (true == productRocords[i].QualityInspectionResult)
-                    {
-                        goods++;
-                    }
+                    _logger.LogInformation("没有找到产品生产记录");
+                    return new LineProductionRecord();
                 }
 
-                // 删除测试
-                _dbOperation.DBDeleteObj<ProducttProductionRecord>(e => e.Param.Temperature > 20.4f);
+                // 在业务服务层进行统计分析
+                int totalProducts = productRecords.Length;
+                int goodProducts = productRecords.Count(e => e.QualityInspectionResult);
+                float passRate = totalProducts > 0 ? (float)goodProducts / totalProducts : 0;
 
-                // 修改测试
-                _dbOperation.EditObj<ProducttProductionRecord>(e => e.Param.Temperature == 20.1f, e => e.SetProperty(p => p.Param.Humidity, 99.5f));
+                var statistics = new LineProductionRecord
+                {
+                    ProductsRate = new CS.Database.Structs.ProductQualifiedRate
+                    {
+                        Product1Rate = passRate
+                    }
+                };
 
-                return new LineProductionRecord() { ProductsRate = new CS.Database.Structs.ProductQualifiedRate() { Product1Rate = 0.5f } };
+                _logger.LogInformation($"产品统计完成: 总数={totalProducts}, 合格数={goodProducts}, 合格率={passRate:P2}");
+
+                return statistics;
             });
         }
     }

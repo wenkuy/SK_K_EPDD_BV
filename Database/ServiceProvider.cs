@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿﻿﻿﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,12 @@ namespace CS.Database
             service.AddScoped<CSK_DBContext>();
             service.AddScoped<IDBRecordPOperation, OperationDate>();
 
+            // 注册仓储层服务
+            service.AddScoped(typeof(CS.Database.Repository.IRepository<>), typeof(CS.Database.Repository.Repository<>));
+            service.AddScoped<CS.Database.Repository.IProductRepository, CS.Database.Repository.ProductRepository>();
+            service.AddScoped<CS.Database.Repository.IEquipmentRepository, CS.Database.Repository.EquipmentRepository>();
+            service.AddScoped<CS.Database.Repository.IMaterialRepository, CS.Database.Repository.MaterialRepository>();
+
             /* 首先：物理数据库连接由ADO.NET连接池管理，执行完 SQL 会归还到连接池，不会每次新建物理连接。
              * 1.这里不搞瞬态，
              *    a.因为每次频繁创建实例DbContext，频繁创建可能导致报错。
@@ -23,7 +29,7 @@ namespace CS.Database
              * 
                2. 不搞单例。DbContext 本身不 "持有" 物理数据库连接，执行查询 / 新增 / 修改操作才会从连接池借一个物理连接，执行完 SQL 后立即把连接归还到连接池。
                   连接池的连接数量，取决于 "并发执行的数据库操作数。
-
+             
                   a.但由于是 DbContext "线程不安全" 的特性，多线程的话可能导致重复不断的借用连接，而其他连接又未返还，由于这个特性可能导致连接池沾满
                    导致报错：连接池已满，无法打开新的连接。
                   b. DbContext 本身不是线程安全的！单例模式下，多线程（比如多个请求）同时调用这个 DbContext，会导致：
