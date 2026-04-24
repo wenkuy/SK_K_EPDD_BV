@@ -54,6 +54,7 @@
 
         <Style x:Key="subStyle" TargetType="{x:Type TreeViewItem}">
             <Style.Triggers>
+                <!--  这行是关键，判断没有子项，也就是最里面一层  -->
                 <Trigger Property="HasItems" Value="False">
                     <Setter Property="Template">
                         <Setter.Value>
@@ -62,7 +63,7 @@
                                     Name="BD"
                                     Margin="20,0,20,0"
                                     CornerRadius="30">
-                                    <ContentPresenter ContentSource="Header"/>
+                                    <ContentPresenter ContentSource="Header" />
                                 </Border>
 
                                 <ControlTemplate.Triggers>
@@ -91,7 +92,10 @@
 
         <!--  多层次的树形结构  -->
         <Grid Grid.Column="1">
-            <TreeView ItemsSource="{Binding TreeViewYeads}"  FontSize="24" ItemContainerStyle="{StaticResource subStyle}" />
+            <TreeView
+                FontSize="24"
+                ItemContainerStyle="{StaticResource subStyle}"
+                ItemsSource="{Binding TreeViewYeads}" />
         </Grid>
 
         <!--  这种属于递归结构树形结构  -->

@@ -94,7 +94,7 @@ namespace CS_K_WPF.viewModel
         {
 
 
-            for (int i = 2; i < 52000; i++)
+            for (int i = 2; i < 920000; i++)
                 Butons.Add(new ButtonCLass() { Txt = $"啥--{i}", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
 
 

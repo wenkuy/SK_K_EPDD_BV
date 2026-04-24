@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CS_K_WPF.viewModel
 {
@@ -24,6 +25,11 @@ namespace CS_K_WPF.viewModel
 
         private void GetPagePath(object recipient, Uri message)
         {
+            //if(message.ToString().Contains("UserPage"))
+            //{
+            //    MessageBox.Show("UserPage听过异步加载方式实现！");
+            //    return;
+            //}
             PagePath = message;
         }
 

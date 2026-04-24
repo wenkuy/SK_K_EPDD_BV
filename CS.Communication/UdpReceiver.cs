@@ -39,7 +39,7 @@ namespace CS.Communication
                     try
                     {
                         // 接收数据
-                        IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0); //自动填充“发送端的IP+端口”
+                        IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0); //自动填充"发送端的IP+端口"
                         byte[] dates = receiver.Receive(ref senderEndPoint); //这里是阻塞调用
 
                         // 消息放入队列

@@ -20,8 +20,12 @@ namespace CS.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //这是2019sql
             //string str = "Server=.;CS.Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true";
-            string str = "Server=.;Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+            //string str = "Server=.;Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+
+            //2022sql
+            string str = "Server=localhost\\SQLEXPRESS;Database=CSK_WPF;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
             optionsBuilder.UseSqlServer(str);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
