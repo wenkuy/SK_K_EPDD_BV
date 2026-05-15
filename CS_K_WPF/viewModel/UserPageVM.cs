@@ -44,7 +44,7 @@ namespace CS_K_WPF.viewModel
 
             RelayCommand<object> cmd = new RelayCommand<object>(param =>
             {
-                MessageBox.Show($"现在的index是：{param.ToString()}");
+                MessageBox.Show($"现在的index是：{((Schoolclass)param).Name +" 年龄：" +((Schoolclass)param).Age }");
 
             });
 
@@ -94,7 +94,7 @@ namespace CS_K_WPF.viewModel
         {
 
 
-            for (int i = 2; i < 920000; i++)
+            for (int i = 2; i < 900; i++)
                 Butons.Add(new ButtonCLass() { Txt = $"啥--{i}", ImgPath = new BitmapImage(new Uri(@"/Resource/LightPng.png", UriKind.Relative)) });
 
 
